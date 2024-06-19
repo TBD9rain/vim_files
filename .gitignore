@@ -5,3 +5,7 @@
 # ignore shotlink files
 *.lnk
 
+# ignore verible implementation
+languageserver/verible/*.*
+!languageserver/verible/verible-verilog-lint.config
+
