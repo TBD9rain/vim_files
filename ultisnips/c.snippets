@@ -26,27 +26,3 @@ snippet "//  head info" "automatic filling head info" rb
 $0
 endsnippet
 
-snippet todo "to do message" b
-//  TODO
-//  ${1:what to do}
-//  BY `!p import os; snip.rv = os.getenv('USERNAME') or os.getenv('USER');` AT `!v strftime("%Y-%m-%d %H:%M")`
-$0
-endsnippet
-
-snippet always "sequential always block" b
-always @(${1|posedge, negedge|} ${2:clk} or ${3|negedge, posedge|} ${4:rst_n}) begin
-	if (`!p snip.rv = '~' if t[3]=='negedge' else ''`$4) begin
-		$0
-	end
-	else begin
-	end
-end
-
-endsnippet
-
-snippet bend "begin end mark" w
-begin
-	$0
-end
-endsnippet
-
