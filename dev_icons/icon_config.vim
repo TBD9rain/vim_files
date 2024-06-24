@@ -24,4 +24,5 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['7c'] = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['tar'] = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['dll'] = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['exe'] = ''
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['snippets'] = ''
 

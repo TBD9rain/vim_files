@@ -14,5 +14,7 @@ autocmd BufNewFile *.do execute '0r ' . g:my_template_path . '/modelsim.do'
 autocmd BufNewFile *.c execute '0r ' . g:my_template_path . '/source.c'
 " git ignore template
 autocmd BufNewFile .gitignore execute '0r ' . g:my_template_path . '/template.gitignore'
+" snippet template
+autocmd BufNewFile *.snippets execute '0r ' . g:my_template_path . '/template.snippets'
 
 

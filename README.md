@@ -38,3 +38,10 @@ Download the Verible from [Verible Release](https://github.com/chipsalliance/ver
 `.\languageserver\verible\verible-verilog-lint.config` is a Verible linter configuration file.
 
 
+# UltiSnips
+
+|Filetype with Snippets     |
+|:---                       |
+|`.snippets`                |
+
+

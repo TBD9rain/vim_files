@@ -1,0 +1,16 @@
+#===============================================================
+# get help with ":help UltiSnips"
+#
+# Type "sn" or "snippet" to trigger snippet for snippet creating
+#===============================================================
+
+snippet "sn(ippet)?" "ultisnips" br
+snippet ${1:trigger_str} "${2:Description}" ${3:b}
+	$0
+${1/.*/endsnippet/}
+endsnippet
+
+snippet "py(thon)?" "python block" wr
+\`!p snip.rv='${1:return value}'\`
+endsnippet
+
