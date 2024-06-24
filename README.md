@@ -43,5 +43,6 @@ Download the Verible from [Verible Release](https://github.com/chipsalliance/ver
 |Filetype with Snippets     |
 |:---                       |
 |`.snippets`                |
+|`.v`                       |
 
 
