@@ -27,12 +27,16 @@ vmap work ./work
 # 4. COMPILE CODES
 
 # add "+libext+.v -y $pmi_lib" to compile original pmi source files
+
 # add "+incdir+<directory>" to specify directories to search "`include" files
+# add "+define+<marco_name>[=<macro_text>] to define or override a macro
 
 vlog -work work -f file_list.txt \
     +libext+.v -y $pmi_lib
 
-# 5. Optimize designs (FOR QUESTASIM ONLY)
+# 5. Optimize designs
+# FOR QUESTASIM ONLY
+# SKIP THIS STEP IN MODELSIM
 if {$sim_time <= 0} {
     vopt -64 -O4 $tb_module -o opt_tb
 } else {
@@ -47,6 +51,9 @@ if {$sim_time <= 0} {
 # add "-sdftyp <sdf_file>" for timing simulation
 # add "+transport_int_delays" and "+transport_path_delays" for timing simulation
 # add "+typdelays" or "+maxdelays" or "+mindelays" for timing simulation
+
+# add "-g<param_name>=<param_value>" to assign a value to a parameter without explicit value
+# add "-G<param_name>=<param_value>" to assign or override a parameter 
 
 vsim -lib work \
     opt_tb \
