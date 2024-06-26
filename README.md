@@ -48,11 +48,12 @@ Download the clangd from [get clangd started](https://clangd.llvm.org/installati
 
 # UltiSnips
 
-|Snippets File              |Description                    |
-|:---                       |:---                           |
-|`snippets.snippets`        |for UltiSnips snippets editing |
-|`gitignore.snippets`       |for gitignore editing          |
-|`markdown.snippets`        |for Markdown editing           |
-|`verilog.snippets`         |for Verilog editing            |
-|`c.snippets`               |for C language editing         |
+|Snippets File              |Description                        |
+|:---                       |:---                               |
+|`snippets.snippets`        |for UltiSnips snippets editing     |
+|`gitignore.snippets`       |for gitignore editing              |
+|`markdown.snippets`        |for Markdown editing               |
+|`verilog.snippets`         |for Verilog editing                |
+|`verilog_pmi.snippets`     |for Lattice Verilog PMI invoking   |
+|`c.snippets`               |for C language editing             |
 
