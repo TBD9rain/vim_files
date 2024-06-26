@@ -1,0 +1,34 @@
+#===============================================================
+# get help with ":help UltiSnips"
+#
+# Type "sn" or "snippet" to trigger snippet for snippet creating
+#===============================================================
+
+snippet "#   head info" "automatic filling head info" b
+#===================================================================================================
+# 
+#   Project         :   ${1}
+#   File            :   `!p snip.rv=fn`
+#   Version         :   v${2:1.0.0}
+#   Title           :   `!p import os; name, ext = os.path.splitext(fn); snip.rv = name`
+# 
+#   Description     :
+# 
+#   Additional info :
+#   Version history :
+#                       v$2
+# 
+#   Author          :   `!p import os; snip.rv = os.getenv('USERNAME') or os.getenv('USER');`
+#   Email           :
+# 
+#===================================================================================================
+$0
+endsnippet
+
+snippet todo "to do message" b
+#   TODO
+#   ${1:what to do}
+#   BY `!p import os; snip.rv = os.getenv('USERNAME') or os.getenv('USER');` AT `!v strftime("%Y-%m-%d %H:%M")`
+$0
+endsnippet
+
