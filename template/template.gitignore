@@ -1,6 +1,5 @@
-# ignore vim operation record files
-*~
-*.swp
-
-# ignore shotlink files
+# ignore shortlink files
 *.lnk
+
+# temp
+
