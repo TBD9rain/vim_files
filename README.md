@@ -44,6 +44,7 @@ Download the Verible from [Verible Release](https://github.com/chipsalliance/ver
 |:---                       |:---                           |
 |`snippets.snippets`        |for UltiSnips snippets editing |
 |`gitignore.snippets`       |for gitignore editing          |
+|`markdown.snippets`        |for Markdown editing           |
 |`verilog.snippets`         |for Verilog editing            |
 |`c.snippets`               |for C language editing         |
 

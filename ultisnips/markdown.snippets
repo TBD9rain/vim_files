@@ -1,0 +1,20 @@
+#===============================================================
+# get help with ":help UltiSnips"
+#
+# Type "sn" or "snippet" to trigger snippet for snippet creating
+#===============================================================
+
+snippet "todo" "to do message" rb
+<!--
+TODO
+${1:what to do}
+BY `!p import os; snip.rv = os.getenv('USERNAME') or os.getenv('USER');` AT `!v strftime("%Y-%m-%d %H:%M")`
+-->
+endsnippet
+
+snippet "table" "insert table" rb
+|${1:header1}|${2:header1}|
+|${3|:---,:---:,---:|}|$3|
+|$0||
+endsnippet
+
