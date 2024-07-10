@@ -1,5 +1,7 @@
 **This repository contains files for Vim to use.**
 
+**Branch lattice is always rebased onto main branch.**
+
 
 # User Dictionary
 
