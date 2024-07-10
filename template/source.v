@@ -1,13 +1,18 @@
 //  head info
 
 module module_name(
-    //  IO PORT DECLARATIONS
 
 );
 
 //=======================
 //  PARAMETER DEFINITIONS
 //=======================
+
+
+
+//=====================
+//  IO PORT DEFINITIONS
+//=====================
 
 
 
