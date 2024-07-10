@@ -10,19 +10,19 @@ snippet "shift(_reg)?" "distributed shift register pmi for ecp5 and nx" rb
 nx_distributed_shift_reg #(
 	.pmi_data_width         (${1:DATA_WIDTH}),
 	.pmi_num_shift          (${2:SHIFT_NUM}),
-	.pmi_num_width          (\$clog2($2 - 1)),
+	.pmi_num_width          (\$clog2($2)),
 	.pmi_max_shift          ($2),
-	.pmi_max_width          (\$clog2($2 - 1)),
-	.pmi_regmode            ("reg"     ),
-	.pmi_shiftreg_type      ("fixed"   ),
-	.pmi_init_file          ("none"    ),
-	.pmi_init_file_format   ("binary"  ),
-	.pmi_family             (FAMILY    ))
+	.pmi_max_width          (\$clog2($2)),
+	.pmi_regmode            ("reg"      ),
+	.pmi_shiftreg_type      ("fixed"    ),
+	.pmi_init_file          ("none"     ),
+	.pmi_init_file_format   ("binary"   ),
+	.pmi_family             (FAMILY     ))
 u_${3:shift_reg} (
 	.Clock                  (${4:clk}),
 	.ClockEn                (1'b1),
 	.Reset                  (${5:~rst_n}),
-	.Addr                   ({\$clog2($2 - 1){1'b0}}),
+	.Addr                   ({\$clog2($2){1'b0}}),
 	.Din                    ($0),
 	.Q                      ());
 
@@ -51,7 +51,7 @@ u_${3:true_dp_ram} (
 	.ClockEnA               (1'b1),
 	.ResetA                 (${5:~rst_n}),
 	.WrA                    ($0),
-	.AddressA               (),
+	.AddressA               ([\$clog2($1) - 1: 0]),
 	.DataInA                (),
 	.QA                     (),
 
@@ -59,7 +59,7 @@ u_${3:true_dp_ram} (
 	.ClockEnB               (1'b1),
 	.ResetB                 (${7:~rst_n}),
 	.WrB                    (),
-	.AddressB               (),
+	.AddressB               ([\$clog2($1) - 1: 0]),
 	.DataInB                (),
 	.QB                     ());
 
@@ -84,13 +84,13 @@ u_${3:dp_ram} (
 	.WrClock                (${4:clk}),
 	.WrClockEn              (1'b1),
 	.WE                     ($0),
-	.WrAddress              (),
+	.WrAddress              ([\$clog2($1) - 1: 0]),
 	.Data                   (),
 
 	.RdClock                (${5:clk}),
 	.RdClockEn              (1'b1),
 	.Reset                  (${6:~rst_n}),
-	.RdAddress              (),
+	.RdAddress              ([\$clog2($1) - 1: 0]),
 	.Q                      ());
 
 endsnippet
@@ -113,7 +113,7 @@ u_${3:dq_ram} (
 	.ClockEn                (1'b1),
 	.Reset                  (${5:~rst_n}),
 	.WE                     ($0),
-	.Address                (),
+	.Address                ([\$clog2($1) - 1: 0]),
 	.Data                   (),
 	.Q                      ());
 
@@ -152,14 +152,14 @@ pmi_distributed_dpram #(
 u_${3:dist_dp_ram} (
 	.WrClock                (${4:clk}),
 	.WrClockEn              (1'b1),
-	.Reset                  (${5:~rst_n}),
-	.WrAddress              ($0),
-	.WE                     (),
+	.WE                     ($0),
+	.WrAddress              ([\$clog2($1) - 1: 0]),
 	.Data                   (),
 
-	.RdClock                (${6:clk}),
+	.RdClock                (${5:clk}),
 	.RdClockEn              (1'b1),
-	.RdAddress              (),
+	.Reset                  (${6:~rst_n}),
+	.RdAddress              ([\$clog2($1) - 1: 0]),
 	.Q                      ());
 
 endsnippet
@@ -178,7 +178,7 @@ u_${3:dist_dq_ram} (
 	.ClockEn                (1'b1),
 	.Reset                  (${5:~rst_n}),
 	.WE                     ($0),
-	.Address                (),
+	.Address                ([\$clog2($1) - 1: 0]),
 	.Data                   (),
 	.Q                      ());
 
@@ -197,7 +197,7 @@ u_${3:dist_rom} (
 	.OutClock               (${4:clk}),
 	.OutClockEn             (1'b1),
 	.Reset                  (${5:~rst_n}),
-	.Address                ($0),
+	.Address                ($0[\$clog2($1) - 1: 0]),
 	.Q                      ());
 
 endsnippet
@@ -212,10 +212,10 @@ pmi_fifo #(
 	.pmi_almost_empty_flag  (4          ),
 	.pmi_regmode            ("reg"      ),
 	.pmi_family             (FAMILY     ),
-	.pmi_implementation     ("EBR"      ))
-u_${3:fifo} (
-	.Clock                  (${4:clk}),
-	.Reset                  (${5:~rst_n}),
+	.pmi_implementation     (${3|"EBR","LUT"|}      ))
+u_${4:fifo} (
+	.Clock                  (${5:clk}),
+	.Reset                  (${6:~rst_n}),
 
 	.Full                   ($0),
 	.AlmostFull             (),
@@ -242,18 +242,18 @@ pmi_fifo_dc #(
 	.pmi_regmode            ("reg"      ),
 	.pmi_resetmode          ("async"    ),
 	.pmi_family             (FAMILY     ),
-	.pmi_implementation     ("EBR"      ))
-u_${6:dc_fifo} (
-	.WrClock                (${7:clk}),
+	.pmi_implementation     (${6|"EBR","LUT"|}    ))
+u_${7:dc_fifo} (
+	.WrClock                (${8:clk}),
 	.WrEn                   ($0),
 	.Full                   (),
 	.AlmostFull             (),
 	.Data                   (),
 
-	.RdClock                (${8:clk}),
+	.RdClock                (${9:clk}),
 	.RdEn                   (),
-	.Reset                  (${9:~rst_n}),
-	.RPReset                (${10:~rst_n}),
+	.Reset                  (${10:~rst_n}),
+	.RPReset                (${11:~rst_n}),
 	.Empty                  (),
 	.AlmostEmpty            (),
 	.Q                      ());
@@ -269,11 +269,11 @@ pmi_mult #(
 	.pmi_input_reg              ("on"      ),
 	.pmi_output_reg             ("on"      ),
 	.pmi_family                 (FAMILY    ),
-	.pmi_implementation         ("DSP"     ))
-u_${3:mult} (
-	.Clock                      (${4:clk}),
+	.pmi_implementation         (${3|"DSP","LUT"|}     ))
+u_${4:mult} (
+	.Clock                      (${5:clk}),
 	.ClkEn                      (1'b1),
-	.Aclr                       (${5:~rst_n}),
+	.Aclr                       (${6:~rst_n}),
 	.DataA                      ($0),
 	.DataB                      (),
 	.Result                     ());
@@ -290,11 +290,11 @@ pmi_multaddsub #(
 	.pmi_input_reg              ("on"       ),
 	.pmi_output_reg             ("on"       ),
 	.pmi_family                 (FAMILY     ),
-	.pmi_implementation         ("DSP"      ))
-u_${4:multaddsub} (
-	.Clock                      (${5:clk}),
+	.pmi_implementation         (${4|"DSP","LUT"|}     ))
+u_${5:multaddsub} (
+	.Clock                      (${6:clk}),
 	.ClkEn                      (1'b1),
-	.Aclr                       (${6:~rst_n}),
+	.Aclr                       (${7:~rst_n}),
 	.DataA0                     ($0),
 	.DataA1                     (),
 	.DataB0                     (),
