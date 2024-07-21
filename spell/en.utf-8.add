@@ -18,6 +18,7 @@ UltiSnips
 Untrack
 Vim9
 addr
+clangd
 coc
 colorscheme
 combinational
@@ -44,6 +45,7 @@ inlined
 inout
 iteratively
 json
+linter
 linter
 marco
 matlab
