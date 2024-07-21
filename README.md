@@ -38,6 +38,12 @@ Download the Verible from [Verible Release](https://github.com/chipsalliance/ver
 `.\languageserver\verible\verible-verilog-lint.config` is a Verible linter configuration file.
 
 
+## clangd
+
+clangd is a language server for C / C++ coding.
+Download the clangd from [get clangd started](https://clangd.llvm.org/installation.html)
+
+
 # UltiSnips
 
 |Snippets File              |Description                    |
