@@ -4,17 +4,28 @@
 # Type "sn" or "snippet" to trigger snippet for snippet creating
 #===============================================================
 
-snippet "# temp" "temperory files" rb
-# ignore temperory files
-
-# vim
+snippet "vim" "vim temporary files" rb
+# vim temperory files
 .*~
+*.un~
 *.swp
 
-# verible
+endsnippet
+
+snippet "verilog" "verilog dev temporary files" b
+# verible 
 verible.filelist
 
+endsnippet
+
+snippet "office" "windows office temporary files" b
 # windows office
-~$*
+~$*.docx
+~$*.doc
+~$*.xlsx
+~$*.xls
+~$*.pptx
+~$*.ppt
+
 endsnippet
 
