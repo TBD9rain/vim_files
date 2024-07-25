@@ -1,4 +1,5 @@
 addr
+bitstream
 clangd
 CMD
 coc
@@ -16,6 +17,7 @@ DevIcons
 DSP
 DUT
 EBR
+ebr
 EBRs
 ECP5U
 eda
@@ -24,6 +26,7 @@ filelist
 filetype
 Foreach
 fpga
+frame_merger
 github
 gitignore
 gvim
@@ -39,8 +42,8 @@ linter
 LUT
 marco
 matlab
-modelsim
 ModelSim
+modelsim
 modport
 modports
 mult
@@ -52,11 +55,13 @@ nvim
 onboard
 pc
 PLI
-pmi
 PMI
+pmi
 powerline
 powershell
 pre
+preponed
+Preponed
 preponed
 Preponed
 pre-process
@@ -66,6 +71,7 @@ randc
 README
 rebase
 rebased
+reconfiguring
 redrive
 resize
 resized
@@ -88,6 +94,7 @@ TBD9rain
 testbench
 testcase
 testcases
+UltiSnips
 ultisnips
 UltiSnips
 unmerged
