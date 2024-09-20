@@ -25,7 +25,6 @@ u_${3:shift_reg} (
 	.Addr                   ({\$clog2($2){1'b0}}),
 	.Din                    ($0),
 	.Q                      ());
-
 endsnippet
 
 snippet "(pmi_)?ram" "true dual port ebr ram pmi" rb
@@ -62,7 +61,45 @@ u_${3:true_dp_ram} (
 	.AddressB               ([\$clog2($1) - 1: 0]),
 	.DataInB                (),
 	.QB                     ());
+endsnippet
 
+snippet "(pmi_)?ram" "true dual port ebr ram with byte enable pmi" rb
+pmi_ram_dp_true_be #(
+	.pmi_addr_depth_a       (${1:RAM_DEPTH}),
+	.pmi_addr_width_a       (\$clog2($1)),
+	.pmi_data_width_a       (${2:DATA_WIDTH}),
+	.pmi_addr_depth_b       ($1),
+	.pmi_addr_width_b       (\$clog2($1)),
+	.pmi_data_width_b       ($2),
+	.pmi_byte_size          (8          ),
+	.pmi_regmode_a          ("reg"      ),
+	.pmi_regmode_b          ("reg"      ),
+	.pmi_gsr                ("disable"  ),
+	.pmi_resetmode          ("async"    ),
+	.pmi_optimization       ("speed"    ),
+	.pmi_init_file          ("none"     ),
+	.pmi_init_file_format   ("binary"   ),
+	.pmi_write_mode_a       ("normal"   ),
+	.pmi_write_mode_b       ("normal"   ),
+	.pmi_family             (FAMILY     ))
+u_${3:true_dp_ram} (
+	.ClockA                 (${4:clk}),
+	.ClockEnA               (1'b1),
+	.ResetA                 (${5:~rst_n}),
+	.WrA                    ($0),
+	.ByteEnA                (),
+	.AddressA               ([\$clog2($1) - 1: 0]),
+	.DataInA                (),
+	.QA                     (),
+
+	.ClockB                 (${6:clk}),
+	.ClockEnB               (1'b1),
+	.ResetB                 (${7:~rst_n}),
+	.WrB                    (),
+	.ByteEnB                (),
+	.AddressB               ([\$clog2($1) - 1: 0]),
+	.DataInB                (),
+	.QB                     ());
 endsnippet
 
 snippet "(pmi_)?ram" "pseudo dual port ebr ram pmi" rb
@@ -92,7 +129,37 @@ u_${3:dp_ram} (
 	.Reset                  (${6:~rst_n}),
 	.RdAddress              ([\$clog2($1) - 1: 0]),
 	.Q                      ());
+endsnippet
 
+snippet "(pmi_)?ram" "pseudo dual port ebr ram with byte enable pmi" rb
+pmi_ram_dp_be #(
+	.pmi_wr_addr_depth      (${1:RAM_DEPTH}),
+	.pmi_wr_addr_width      (\$clog2($1)),
+	.pmi_wr_data_width      (${2:DATA_WIDTH}),
+	.pmi_rd_addr_depth      ($1),
+	.pmi_rd_addr_width      (\$clog2($1)),
+	.pmi_rd_data_width      ($2),
+	.pmi_byte_size          (8          ),
+	.pmi_regmode            ("reg"      ),
+	.pmi_gsr                ("disable"  ),
+	.pmi_resetmode          ("async"    ),
+	.pmi_optimization       ("speed"    ),
+	.pmi_init_file          ("none"     ),
+	.pmi_init_file_format   ("binary"   ),
+	.pmi_family             (FAMILY     ))
+u_${3:dp_ram} (
+	.WrClock                (${4:clk}),
+	.WrClockEn              (1'b1),
+	.WE                     ($0),
+	.ByteEn                 (),
+	.WrAddress              ([\$clog2($1) - 1: 0]),
+	.Data                   (),
+
+	.RdClock                (${5:clk}),
+	.RdClockEn              (1'b1),
+	.Reset                  (${6:~rst_n}),
+	.RdAddress              ([\$clog2($1) - 1: 0]),
+	.Q                      ());
 endsnippet
 
 snippet "(pmi_)?ram" "single port ebr ram pmi" rb
@@ -100,6 +167,7 @@ pmi_ram_dq #(
 	.pmi_addr_depth         (${1:RAM_DEPTH}),
 	.pmi_addr_width         (\$clog2($1)),
 	.pmi_data_width         (${2:DATA_WIDTH}),
+	.pmi_byte_size          (8          ),
 	.pmi_regmode            ("reg"      ),
 	.pmi_gsr                ("disable"  ),
 	.pmi_resetmode          ("async"    ),
@@ -116,7 +184,31 @@ u_${3:dq_ram} (
 	.Address                ([\$clog2($1) - 1: 0]),
 	.Data                   (),
 	.Q                      ());
+endsnippet
 
+snippet "(pmi_)?ram" "single port ebr ram with byte enable pmi" rb
+pmi_ram_dq_be #(
+	.pmi_addr_depth         (${1:RAM_DEPTH}),
+	.pmi_addr_width         (\$clog2($1)),
+	.pmi_data_width         (${2:DATA_WIDTH}),
+	.pmi_byte_size          (8          ),
+	.pmi_regmode            ("reg"      ),
+	.pmi_gsr                ("disable"  ),
+	.pmi_resetmode          ("async"    ),
+	.pmi_optimization       ("speed"    ),
+	.pmi_init_file          ("none"     ),
+	.pmi_init_file_format   ("binary"   ),
+	.pmi_write_mode         ("normal"   ),
+	.pmi_family             (FAMILY     ))
+u_${3:dq_ram} (
+	.Clock                  (${4:clk}),
+	.ClockEn                (1'b1),
+	.Reset                  (${5:~rst_n}),
+	.WE                     ($0),
+	.ByteEn                 (),
+	.Address                ([\$clog2($1) - 1: 0]),
+	.Data                   (),
+	.Q                      ());
 endsnippet
 
 snippet "(pmi_)?rom" "ebr rom pmi" rb
@@ -137,7 +229,6 @@ u_${3:rom} (
 	.Reset                  (${5:~rst_n}),
 	.Address                ($0),
 	.Q                      ());
-
 endsnippet
 
 snippet "(pmi_)?ram" "pseudo dual port distributed ram pmi" rb
@@ -161,7 +252,6 @@ u_${3:dist_dp_ram} (
 	.Reset                  (${6:~rst_n}),
 	.RdAddress              ([\$clog2($1) - 1: 0]),
 	.Q                      ());
-
 endsnippet
 
 snippet "(pmi_)?ram" "single port distributed ram pmi" rb
@@ -181,7 +271,6 @@ u_${3:dist_dq_ram} (
 	.Address                ([\$clog2($1) - 1: 0]),
 	.Data                   (),
 	.Q                      ());
-
 endsnippet
 
 snippet "(pmi_)?rom" "distributed rom pmi" rb
@@ -199,7 +288,6 @@ u_${3:dist_rom} (
 	.Reset                  (${5:~rst_n}),
 	.Address                ($0[\$clog2($1) - 1: 0]),
 	.Q                      ());
-
 endsnippet
 
 snippet "(pmi_)?fifo" "single clock fifo pmi" rb
@@ -226,7 +314,6 @@ u_${4:fifo} (
 	.AlmostEmpty            (),
 	.RdEn                   (),
 	.Q                      ());
-
 endsnippet
 
 snippet "(pmi_)?fifo" "dual clock fifo pmi" rb
@@ -257,7 +344,6 @@ u_${7:dc_fifo} (
 	.Empty                  (),
 	.AlmostEmpty            (),
 	.Q                      ());
-
 endsnippet
 
 snippet "(pmi_)?mult" "multplier pmi" rb
@@ -277,7 +363,6 @@ u_${4:mult} (
 	.DataA                      ($0),
 	.DataB                      (),
 	.Result                     ());
-
 endsnippet
 
 snippet "(pmi_)?mult(add)?(sub)?" "2 multiplier + adder / subtracter pmi" rb
@@ -300,6 +385,5 @@ u_${5:multaddsub} (
 	.DataB0                     (),
 	.DataB1                     (),
 	.Result                     ());
-
 endsnippet
 
