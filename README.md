@@ -5,7 +5,10 @@
 
 # User Dictionary
 
-Files in `.\spell` are dictionary added by user for Vim spell checking.
+`.\spell` includes the dictionary added by user for Vim spell checking.
+
+The `.\spell\vim_spellfile_sort.ps1` is an powershell script
+for automatic dictionary sorting with the git hook 'pre-commit'.
 
 
 # Template
