@@ -33,7 +33,7 @@ $0
 endsnippet
 
 snippet always "sequential always block" b
-always @(${1|posedge, negedge|} ${2:clk} or ${3|negedge, posedge|} ${4:rst_n}) begin
+always @(${1|posedge,negedge|} ${2:clk} or ${3|posedge,negedge|} ${4:rst_n}) begin
 	if (`!p snip.rv = '~' if t[3]=='negedge' else ''`$4) begin
 		$0
 	end
