@@ -1,9 +1,20 @@
-# ignore vim operation record files
+#======================================
+# snippets from Ultisnips are available
+#======================================
+
+
+#--------------------
+# Vim temporary files
+#--------------------
+
 *~
+*.un~
 *.swp
 
-# ignore shotlink files
-*.lnk
+
+#----------------
+# language server
+#----------------
 
 # ignore verible implementation
 languageserver/verible/*.*
@@ -11,4 +22,5 @@ languageserver/verible/*.*
 
 # ignore clangd implementation
 languageserver/clangd_18.1.3/**
+
 
