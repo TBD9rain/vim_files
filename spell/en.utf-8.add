@@ -46,8 +46,8 @@ LUT
 marco
 matlab
 MCU
-ModelSim
 modelsim
+ModelSim
 modport
 modports
 mult
@@ -58,6 +58,7 @@ nonintegral
 NPU
 nvim
 onboard
+OneDrive
 pc
 PLI
 PLL
