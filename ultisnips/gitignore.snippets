@@ -18,7 +18,7 @@ endsnippet
 
 snippet "verilog" "verilog dev temporary files" rb
 #-------------------------------
-# Verilog coding temporary files 
+# Verilog coding temporary files
 #-------------------------------
 
 verible.filelist
@@ -37,6 +37,43 @@ snippet "office" "windows office temporary files" rb
 ~$*.xls
 ~$*.pptx
 ~$*.ppt
+
+
+endsnippet
+
+snippet "sim" "Modelsim & Questasim files" rb
+#--------------------------------------
+# Modelsim or Questasim temporary files
+#--------------------------------------
+
+work/
+modelsim.ini
+sim.log
+vsim.wlf
+
+endsnippet
+
+snippet "diamond" "Diamond temporary files" rb
+#----------------
+# Lattice Diamond
+#----------------
+
+.recovery
+.spread_sheet.ini
+.spreadsheet_view.ini
+*.ccl
+.floorplanner.ini
+*.xml
+
+# tcl command record
+*_tcr.dir/
+*_tcl.html
+
+# implementation directory
+**/<implement_directory>/*
+!*.bit
+!*.mcs
+!*.xcf
 
 
 endsnippet
