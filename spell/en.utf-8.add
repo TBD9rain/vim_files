@@ -19,8 +19,8 @@ decompresser
 DevIcons
 DSP
 DUT
-EBR
 ebr
+EBR
 EBRs
 ECP5U
 eda
@@ -30,6 +30,7 @@ filetype
 Foreach
 fpga
 frame_merger
+fusa
 github
 gitignore
 gvim
@@ -38,6 +39,7 @@ https
 i2c
 inlined
 inout
+instantiation
 IOs
 iteratively
 JEDEC
@@ -48,14 +50,17 @@ JTCK
 linter
 linter
 LUT
+lut4
+lut6
 marco
 matlab
 MCU
-ModelSim
 modelsim
+ModelSim
 modport
 modports
 mult
+mux
 NERDTree
 nonblocking
 nondeterminism
@@ -67,8 +72,8 @@ OneDrive
 pc
 PLI
 PLL
-PMI
 pmi
+PMI
 powerline
 powershell
 pre
@@ -99,7 +104,6 @@ submodule
 submodules
 SystemVerilog
 systemverilog
-SystemVerilog
 tb
 TBD9rain
 testbench
@@ -107,7 +111,6 @@ testcase
 testcases
 UltiSnips
 ultisnips
-UltiSnips
 unmerged
 unregister
 unstaged
