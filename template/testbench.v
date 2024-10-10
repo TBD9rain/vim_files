@@ -8,7 +8,7 @@ module testbench_name;
 //  PARAMETER DEFINITIONS
 //=======================
 
-parameter   CLK_PERIOD = 10;
+parameter   CLK_PERIOD  = 10;
 
 //======================
 //  VARIABLE DEFINITIONS
