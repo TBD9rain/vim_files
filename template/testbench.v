@@ -14,11 +14,13 @@ parameter   CLK_PERIOD  = 10;
 //  VARIABLE DEFINITIONS
 //======================
 
-reg                 clk     ;
-reg                 rst_n   ;
+//  sim ctrl
+reg     disp_en = 'b1;
+reg     sim_end = 'b0;
 
-//  display enable
-reg                 disp_en = 1'b1;
+//  clock and reset
+reg     clk     ;
+reg     rst_n   ;
 
 //======================
 //  MODULE INSTANTIATION
@@ -33,7 +35,7 @@ reg                 disp_en = 1'b1;
 //  clock generator
 initial begin:  clk_sim
     # 10
-    clk = 1'b1;
+    clk = 'b1;
     forever begin:  clock_gen_dead_loop
         #(CLK_PERIOD / 2) clk = ~clk;
     end
@@ -41,11 +43,11 @@ end
 
 initial begin:  init_stimulus
     # 10;
-    rst_n   = 1'b0;
+    rst_n   = 'b0;
 
-    # ({$random} % 100)
+    # ({$urandom} % 100)
     //  stimulus editing
-    rst_n   = 1'b1;
+    rst_n   = 'b1;
 
     # 50000
     $finish(2);

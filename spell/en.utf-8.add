@@ -1,5 +1,6 @@
 32-bit
 addr
+BFM
 clangd
 CMD
 coc
@@ -13,6 +14,7 @@ covergroups
 coverpoint
 cpu
 ctrl
+curr
 datasheet
 datasheets
 decompresser
@@ -50,8 +52,8 @@ lut6
 marco
 matlab
 MCU
-ModelSim
 modelsim
+ModelSim
 modport
 modports
 mult
@@ -62,6 +64,7 @@ nondeterminism
 nonintegral
 NPU
 nvim
+nxt
 onboard
 OneDrive
 pc
@@ -70,9 +73,10 @@ PLL
 powerline
 powershell
 pre
-Preponed
 preponed
+Preponed
 pre-process
+prev
 procedurally
 QuestaSim
 randc
@@ -97,8 +101,8 @@ TBD9rain
 testbench
 testcase
 testcases
-ultisnips
 UltiSnips
+ultisnips
 unmerged
 unregister
 unstaged
