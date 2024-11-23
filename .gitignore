@@ -12,15 +12,3 @@
 *.swp
 
 
-#----------------
-# language server
-#----------------
-
-# ignore verible implementation
-languageserver/verible/*.*
-!languageserver/verible/verible-verilog-lint.config
-
-# ignore clangd implementation
-languageserver/clangd_18.1.3/**
-
-

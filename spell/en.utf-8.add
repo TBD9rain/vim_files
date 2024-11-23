@@ -52,8 +52,8 @@ lut6
 marco
 matlab
 MCU
-modelsim
 ModelSim
+modelsim
 modport
 modports
 mult
@@ -73,8 +73,8 @@ PLL
 powerline
 powershell
 pre
-preponed
 Preponed
+preponed
 pre-process
 prev
 procedurally
@@ -90,6 +90,7 @@ rom
 runtime
 spi
 src
+struct
 subclass
 subclasses
 submodule
@@ -101,8 +102,8 @@ TBD9rain
 testbench
 testcase
 testcases
-UltiSnips
 ultisnips
+UltiSnips
 unmerged
 unregister
 unstaged
