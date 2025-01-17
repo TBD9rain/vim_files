@@ -26,14 +26,13 @@ snippet "//  head info" "automatic filling head info" b
 //  Version         :   v${2:1.0.0}
 //  Title           :   `!p import os; name, ext = os.path.splitext(fn); snip.rv = name`
 //
-//  Description     :
+//  Description     :   $0
 //
 //  Additional info :
-//  Version history :
-//                      v$2
+//  Author          :   `!p import os; snip.rv = os.getenv('USERNAME') or os.getenv('USER');`
+//  Email           :
 //
 //===============================================================================
-$0
 endsnippet
 
 snippet "todo" "to do message" rbA
@@ -60,17 +59,23 @@ begin
 end
 endsnippet
 
-snippet func "function definition" bA
+snippet function "function definition" bA
 function automatic ${1:func_name};
-$0
+	begin
+		$0
+	end
 endfunction
 endsnippet
 
 snippet task "task definition" bA
 task automatic ${1:task_name};
-begin
-$0
-end
+	begin
+		$0
+	end
 endtask
+endsnippet
+
+snippet "param(eter)?" "dynamic width parameter" rb
+parameter   ${1:DYNAMIC_WIDTH} = (${2:DATA_DEPTH} > 2) ? \$clog2($2) : 1;
 endsnippet
 
