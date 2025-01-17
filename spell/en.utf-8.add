@@ -44,6 +44,8 @@ inout
 instantiation
 IOs
 iteratively
+IVC
+ivc
 JEDEC
 jitter
 json
@@ -57,8 +59,8 @@ lut6
 marco
 matlab
 MCU
-modelsim
 ModelSim
+modelsim
 modport
 modports
 mult
@@ -72,6 +74,8 @@ nvim
 nxt
 onboard
 OneDrive
+OSD
+osd
 pc
 PLI
 PLL
@@ -80,8 +84,8 @@ PMI
 powerline
 powershell
 pre
-preponed
 Preponed
+preponed
 pre-process
 prev
 procedurally
@@ -107,8 +111,8 @@ subclass
 subclasses
 submodule
 submodules
-SystemVerilog
 systemverilog
+SystemVerilog
 tb
 TBD9rain
 testbench
