@@ -4,6 +4,7 @@ BFM
 clangd
 CMD
 coc
+codeword
 colorscheme
 combinational
 combinational
@@ -13,6 +14,7 @@ covergroup
 covergroups
 coverpoint
 cpu
+CRC
 ctrl
 curr
 datasheet
@@ -25,15 +27,20 @@ eda
 enum
 filelist
 filetype
+FMEDA
 Foreach
 fpga
+FuSa
 fusa
 github
 gitignore
 gvim
+HDL
+hsync
 http
 https
 i2c
+IC
 inlined
 inout
 instantiation
@@ -46,7 +53,9 @@ JTAG
 JTCK
 linter
 linter
+LSB
 LUT
+LUT4
 lut4
 lut6
 marco
@@ -56,6 +65,7 @@ ModelSim
 modelsim
 modport
 modports
+MSB
 mult
 mux
 NERDTree
@@ -89,6 +99,7 @@ RGB
 rom
 runtime
 spi
+SRAM
 src
 struct
 subclass
@@ -102,8 +113,8 @@ TBD9rain
 testbench
 testcase
 testcases
-ultisnips
 UltiSnips
+ultisnips
 unmerged
 unregister
 unstaged
@@ -114,6 +125,7 @@ untriggered
 verible
 verilog
 Vim9
+vsync
 wildcard
 wildcards
 win32
