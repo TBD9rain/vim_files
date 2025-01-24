@@ -23,6 +23,8 @@ autocmd BufNewFile,BufRead .gitignore set filetype=gitignore
 "   Syntax Setting
 "-----------------
 
+let g:my_syntax_path = expand('<sfile>:p:h')
+
 " binary files
 autocmd BufReadPre *.bin set binary
 
@@ -32,4 +34,7 @@ autocmd FileType json syntax match Comment "\/\/.\+$"
 " gitcommit
 " work with vim default syntax script
 let g:gitcommit_summary_length=-1
+
+" python
+autocmd FileType python execute "source " . my_syntax_path . "/python.vim"
 
