@@ -29,3 +29,7 @@ autocmd BufReadPre *.bin set binary
 " set json comment prefix
 autocmd FileType json syntax match Comment "\/\/.\+$"
 
+" gitcommit
+" work with vim default syntax script
+let g:gitcommit_summary_length=-1
+
