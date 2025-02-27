@@ -38,3 +38,6 @@ let g:gitcommit_summary_length=-1
 " python
 autocmd FileType python execute "source " . my_syntax_path . "/python.vim"
 
+" markdown
+autocmd FileType markdown execute "source " . my_syntax_path . "/markdown.vim"
+
