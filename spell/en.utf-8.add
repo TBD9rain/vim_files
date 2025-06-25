@@ -1,5 +1,6 @@
 32-bit
 64-bit
+8-bit
 addr
 BFM
 clangd
@@ -20,6 +21,7 @@ ctrl
 curr
 datasheet
 datasheets
+ddr
 decompresser
 DevIcons
 dsi
@@ -27,13 +29,15 @@ DSP
 DUT
 eda
 enum
+FAE
+fifo
 filelist
 filetype
 FMEDA
 Foreach
 fpga
-FuSa
 fusa
+FuSa
 github
 gitignore
 gvim
@@ -62,7 +66,7 @@ lut6
 lvds
 marco
 matlab
-MCU
+mcu
 mipi
 ModelSim
 modelsim
@@ -76,6 +80,7 @@ nonblocking
 nondeterminism
 nonintegral
 NPU
+ns
 nvim
 nxt
 onboard
@@ -100,10 +105,10 @@ resize
 resized
 resizing
 rgb
-RGB
 rom
 runtime
 rx
+SoC
 spi
 SRAM
 src
@@ -129,6 +134,7 @@ untagged
 Untrack
 untracked
 untriggered
+vba
 verible
 verilog
 Vim9
