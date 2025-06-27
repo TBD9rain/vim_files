@@ -93,8 +93,8 @@ PLL
 powerline
 powershell
 pre
-preponed
 pre-process
+preponed
 prev
 procedurally
 QuestaSim
@@ -106,6 +106,7 @@ resized
 resizing
 rgb
 rom
+rtl
 runtime
 rx
 SoC
