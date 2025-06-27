@@ -9,7 +9,7 @@
 
 let g:my_template_path = expand('<sfile>:p:h')
 
-" verilog code template
+" verilog rtl code template
 autocmd BufNewFile *{_tb}\@<!.v execute '0r ' . g:my_template_path . '/source.v'
 " verilog testbench template
 autocmd BufNewFile *_tb.v execute '0r ' . g:my_template_path . '/testbench.v'
@@ -17,6 +17,8 @@ autocmd BufNewFile *_tb.v execute '0r ' . g:my_template_path . '/testbench.v'
 autocmd BufNewFile *.do execute '0r ' . g:my_template_path . '/modelsim.do'
 " c code template
 autocmd BufNewFile *.c execute '0r ' . g:my_template_path . '/source.c'
+" python code template
+autocmd BufNewFile *.py execute '0r ' . g:my_template_path . '/source.py'
 " git ignore template
 autocmd BufNewFile .gitignore execute '0r ' . g:my_template_path . '/template.gitignore'
 " snippet template
