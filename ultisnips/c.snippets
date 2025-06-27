@@ -8,28 +8,22 @@ snippet "//  head info" "automatic filling head info" b
 //==================================================================================================
 //
 //  Project         :   ${1}
-//  File            :   `!p snip.rv=fn`
 //  Version         :   v${2:1.0.0}
 //  Title           :   `!p import os; name, ext = os.path.splitext(fn); snip.rv = name`
 //
-//  Description     :
+//  Description     :   $0
 //
 //  Additional info :
-//  Version history :
-//                      v$2
-//
-//  Author          :   `!p import os; snip.rv = os.getenv('USERNAME') or os.getenv('USER');`
+//  Author          :   ${3:`!p import os; snip.rv = os.getenv('USERNAME') or os.getenv('USER');`}
 //  Email           :
 //
 //==================================================================================================
-$0
 endsnippet
 
 snippet "todo" "to do message" rbA
 //  TODO
-//  ${1:what to do}
+//  ${0:what to do}
 //  BY `!p import os; snip.rv = os.getenv('USERNAME') or os.getenv('USER');` AT `!v strftime("%Y-%m-%d %H:%M")`
-$0
 endsnippet
 
 snippet { "curly bracket block" wA

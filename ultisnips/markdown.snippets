@@ -7,7 +7,7 @@
 snippet "todo" "to do message" rbA
 <!--
 TODO
-${1:what to do}
+${0:what to do}
 BY `!p import os; snip.rv = os.getenv('USERNAME') or os.getenv('USER');` AT `!v strftime("%Y-%m-%d %H:%M")`
 -->
 endsnippet
@@ -16,5 +16,9 @@ snippet "table" "insert table" rb
 |${1:header1}|${2:header1}|
 |${3|:---,:---:,---:|}|$3|
 |$0||
+endsnippet
+
+snippet comment "comment block" b
+<!-- ${0:comment} -->
 endsnippet
 
