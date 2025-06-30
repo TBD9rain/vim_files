@@ -43,26 +43,51 @@ end
 endsnippet
 
 snippet function "function definition" bA
-function automatic ${1:func_name};
-	begin
-		$0
-	end
+function automatic ${1:[ 7: 0]} ${2:func_name};
+begin
+	$0
+end
 endfunction
 endsnippet
 
 snippet task "task definition" bA
 task automatic ${1:task_name};
-	begin
-		$0
-	end
+begin
+	$0
+end
 endtask
 endsnippet
 
-snippet "param(eter)?" "dynamic width parameter" rb
+snippet "if " "if condition" rA
+if (${1:1 < 0}) $0
+endsnippet
+
+snippet "case " "case selection" rbA
+case (${1:sel})
+	$0
+	default:   $2
+endcase
+endsnippet
+
+snippet "casex " "casex selection" rbA
+casex (${1:sel})
+	$0
+	default:   $2
+endcase
+endsnippet
+
+snippet "casez " "casez selection" rbA
+casez (${1:sel})
+	$0
+	default:   $2
+endcase
+endsnippet
+
+snippet "param(eter)?\?" "dynamic width parameter" rbA
 parameter   ${1:DYNAMIC_WIDTH} = (${2:DATA_DEPTH} > 2) ? \$clog2($2) : 1;
 endsnippet
 
-snippet "local(param)?" "dynamic width parameter" rb
+snippet "local(param)?\?" "dynamic width localparam" rbA
 localparam  ${1:DYNAMIC_WIDTH} = (${2:DATA_DEPTH} > 2) ? \$clog2($2) : 1;
 endsnippet
 
