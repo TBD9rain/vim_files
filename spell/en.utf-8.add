@@ -118,6 +118,8 @@ subclass
 subclasses
 submodule
 submodules
+subprocess
+sv
 SystemVerilog
 systemverilog
 tb
@@ -139,6 +141,8 @@ vba
 verible
 verilog
 Vim9
+visio
+visio
 vsync
 wildcard
 wildcards
