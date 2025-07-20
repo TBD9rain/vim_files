@@ -4,21 +4,21 @@ module module_name(
 
 );
 
-//=======================
-//  PARAMETER DEFINITIONS
-//=======================
+//======================
+//  PARAMETER DEFINITION
+//======================
+
+
+
+//====================
+//  IO PORT DEFINITION
+//====================
 
 
 
 //=====================
-//  IO PORT DEFINITIONS
+//  VARIABLE DEFINITION
 //=====================
-
-
-
-//======================
-//  VARIABLE DEFINITIONS
-//======================
 
 
 
