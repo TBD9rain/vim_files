@@ -4,6 +4,23 @@
 # Type "sn" or "snippet" to trigger snippet for snippet creating
 #===============================================================
 
+snippet "# head info" "haed info" b
+#===================================================================================================
+#
+#   Target Code     :   v$1
+#   Version         :   v${2:1.0.0}
+#
+#   Description     :   $0
+#
+#   Additional info :   Get instruction with ":help UltiSnips".
+#                       Use "snippet" or "sn" to trigger snippet for snippet edition.
+#
+#   Author          :   ${3:`!p import os; snip.rv = os.getenv('USERNAME') or os.getenv('USER');`}
+#   Email           :
+# 
+#===================================================================================================
+endsnippet
+
 snippet "sn(ippet)?" "ultisnips" br
 snippet ${1:trigger_str} "${2:Description}" ${3:b}
 $0

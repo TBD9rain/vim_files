@@ -20,7 +20,7 @@ snippet "//  head info" "automatic filling head info" b
 //==================================================================================================
 endsnippet
 
-snippet "todo" "to do message" rbA
+snippet todo "to do message" bwA
 //  TODO
 //  ${0:what to do}
 //  BY `!p import os; snip.rv = os.getenv('USERNAME') or os.getenv('USER');` AT `!v strftime("%Y-%m-%d %H:%M")`
@@ -42,45 +42,37 @@ begin
 end
 endsnippet
 
-snippet function "function definition" bA
-function automatic ${1:[ 7: 0]} ${2:func_name};
-begin
-	$0
-end
-endfunction
-endsnippet
-
-snippet task "task definition" bA
-task automatic ${1:task_name};
-begin
-	$0
-end
-endtask
-endsnippet
-
-snippet "if " "if condition" rA
+snippet if "if condition" wA
 if (${1:1 < 0}) $0
 endsnippet
 
-snippet "case " "case selection" rbA
+snippet case "case selection" bwA
 case (${1:sel})
 	$0
 	default:   $2
 endcase
 endsnippet
 
-snippet "casex " "casex selection" rbA
+snippet casex "casex selection" bwA
 casex (${1:sel})
 	$0
 	default:   $2
 endcase
 endsnippet
 
-snippet "casez " "casez selection" rbA
+snippet casez "casez selection" bwA
 casez (${1:sel})
 	$0
 	default:   $2
 endcase
+endsnippet
+
+snippet "parameter " "parameter definition" rbA
+parameter   ${1:PARAM_NAME} = ${0:8};
+endsnippet
+
+snippet "localparam " "local parameter definition" rbA
+localparam  ${1:PARAM_NAME} = ${0:8};
 endsnippet
 
 snippet "param(eter)?\?" "dynamic width parameter" rbA
@@ -89,5 +81,31 @@ endsnippet
 
 snippet "local(param)?\?" "dynamic width localparam" rbA
 localparam  ${1:DYNAMIC_WIDTH} = (${2:DATA_DEPTH} > 2) ? \$clog2($2) : 1;
+endsnippet
+
+snippet forever "forever block" bwA
+forever begin
+	$0
+end
+endsnippet
+
+priority -1
+
+snippet function "function definition" bA
+function automatic ${1:[ 7: 0]} ${2:func_name};
+${3://  varibale definition}
+begin
+	$0
+end
+endfunction
+endsnippet
+
+snippet task "task definition" bA
+task automatic ${1:task_name};
+${2://  varibale definition}
+begin
+	$0
+end
+endtask
 endsnippet
 
