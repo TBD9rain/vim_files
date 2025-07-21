@@ -1,7 +1,12 @@
 # 0. VARIABLE DEFINITIONS
 
 # when sim_time == 0, run all
-set sim_time        1000
+set sim_time        100
+
+# diamond pmi source library
+set pmi_lib         D:/lscc/diamond/3.11_x64/cae_library/simulation/verilog/pmi
+# radiant pmi source library
+# set pmi_lib         D:/lscc/radiant/3.2/ip/pmi0
 
 set tb_module       <testbench_module_name>
 set wave_do         wave.do
@@ -27,7 +32,8 @@ vmap work ./work
 # add "+incdir+<directory>" to specify directories to search "`include" files
 # add "+define+<marco_name>[=<macro_text>] to define or override a macro
 
-vlog -work work -f file_list.txt
+vlog -work work -f file_list.txt \
+    +libext+.v -y $pmi_lib
 
 # 5. Optimize designs
 # FOR QUESTASIM ONLY
