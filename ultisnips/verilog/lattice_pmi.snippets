@@ -1,0 +1,420 @@
+#===================================================================================================
+#
+#   Target Code     :   Verilog
+#   Version         :   v1.0.0
+#
+#   Description     :   Lattice PMI module invocation
+#
+#   Additional info :   Get instruction with ":help UltiSnips".
+#                       Use "snippet" or "sn" to trigger snippet for snippet edition.
+#
+#   Author          :   lshi1
+#   Email           :
+# 
+#===================================================================================================
+
+snippet "shift(_reg)?" "distributed shift register pmi for ecp5 and nx" rb
+//  while pmi_regmode is "reg"
+//  will shift register 1 more clocks
+localparam  U_${3/.*/\U$0\E/g}_NUM_SHIFT_WIDTH =
+	(($2) > 2) ? \$clog2($2) : 1;
+nx_distributed_shift_reg #(
+	.pmi_data_width         (${1:DATA_WIDTH}),
+	.pmi_num_shift          (${2:NUM_SHIFT}),
+	.pmi_num_width          (U_${3/.*/\U$0\E/g}_NUM_SHIFT_WIDTH),
+	.pmi_max_shift          ($2),
+	.pmi_max_width          (U_${3/.*/\U$0\E/g}_NUM_SHIFT_WIDTH),
+	.pmi_regmode            ("reg"),
+	.pmi_shiftreg_type      ("fixed"),
+	.pmi_init_file          ("none"),
+	.pmi_init_file_format   ("binary"),
+	.pmi_family             (FAMILY))
+u_${3:shift_reg} (
+	.Clock                  (${4:clk}),
+	.ClockEn                (1'b1),
+	.Reset                  (${5:~rst_n}),
+	.Addr                   ({U_${3/.*/\U$0\E/g}_NUM_SHIFT_WIDTH{1'b0}}),
+	.Din                    ($0),
+	.Q                      ());
+endsnippet
+
+snippet "(pmi_)?ram" "true dual port ebr ram pmi" rb
+localparam  U_${3/.*/\U$0\E/g}_ADDR_WIDTH =
+	((${1:RAM_DEPTH}) > 2) ? \$clog2($1) : 1;
+pmi_ram_dp_true #(
+	.pmi_addr_depth_a       (1 << U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_addr_width_a       (U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_data_width_a       (${2:DATA_WIDTH}),
+	.pmi_addr_depth_b       (1 << U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_addr_width_b       (U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_data_width_b       ($2),
+	.pmi_regmode_a          ("reg"),
+	.pmi_regmode_b          ("reg"),
+	.pmi_gsr                ("disable"),
+	.pmi_resetmode          ("async"),
+	.pmi_optimization       ("speed"),
+	.pmi_init_file          ("none"),
+	.pmi_init_file_format   ("binary"),
+	.pmi_write_mode_a       ("normal"),
+	.pmi_write_mode_b       ("normal"),
+	.pmi_family             (FAMILY))
+u_${3:true_dp_ram} (
+	.ClockA                 (${4:clk}),
+	.ClockEnA               (1'b1),
+	.ResetA                 (${5:~rst_n}),
+	.WrA                    ($0),
+	.AddressA               ([U_${3/.*/\U$0\E/g}_ADDR_WIDTH - 1: 0]),
+	.DataInA                (),
+	.QA                     (),
+
+	.ClockB                 (${6:clk}),
+	.ClockEnB               (1'b1),
+	.ResetB                 (${7:~rst_n}),
+	.WrB                    (),
+	.AddressB               ([U_${3/.*/\U$0\E/g}_ADDR_WIDTH - 1: 0]),
+	.DataInB                (),
+	.QB                     ());
+endsnippet
+
+snippet "(pmi_)?ram" "true dual port ebr ram with byte enable pmi" rb
+localparam  U_${3/.*/\U$0\E/g}_ADDR_WIDTH =
+	((${1:RAM_DEPTH}) > 2) ? \$clog2($1) : 1;
+pmi_ram_dp_true_be #(
+	.pmi_addr_depth_a       (1 << U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_addr_width_a       (U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_data_width_a       (${2:DATA_WIDTH}),
+	.pmi_addr_depth_b       (1 << U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_addr_width_b       (U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_data_width_b       ($2),
+	.pmi_byte_size          (8),
+	.pmi_regmode_a          ("reg"),
+	.pmi_regmode_b          ("reg"),
+	.pmi_gsr                ("disable"),
+	.pmi_resetmode          ("async"),
+	.pmi_optimization       ("speed"),
+	.pmi_init_file          ("none"),
+	.pmi_init_file_format   ("binary"),
+	.pmi_write_mode_a       ("normal"),
+	.pmi_write_mode_b       ("normal"),
+	.pmi_family             (FAMILY))
+u_${3:true_dp_ram} (
+	.ClockA                 (${4:clk}),
+	.ClockEnA               (1'b1),
+	.ResetA                 (${5:~rst_n}),
+	.WrA                    ($0),
+	.ByteEnA                (),
+	.AddressA               ([U_${3/.*/\U$0\E/g}_ADDR_WIDTH - 1: 0]),
+	.DataInA                (),
+	.QA                     (),
+
+	.ClockB                 (${6:clk}),
+	.ClockEnB               (1'b1),
+	.ResetB                 (${7:~rst_n}),
+	.WrB                    (),
+	.ByteEnB                (),
+	.AddressB               ([U_${3/.*/\U$0\E/g}_ADDR_WIDTH - 1: 0]),
+	.DataInB                (),
+	.QB                     ());
+endsnippet
+
+snippet "(pmi_)?ram" "pseudo dual port ebr ram pmi" rb
+localparam  U_${3/.*/\U$0\E/g}_ADDR_WIDTH =
+	((${1:RAM_DEPTH}) > 2) ? \$clog2($1) : 1;
+pmi_ram_dp #(
+	.pmi_wr_addr_depth      (1 << U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_wr_addr_width      (U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_wr_data_width      (${2:DATA_WIDTH}),
+	.pmi_rd_addr_depth      (1 << U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_rd_addr_width      (U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_rd_data_width      ($2),
+	.pmi_regmode            ("reg"),
+	.pmi_gsr                ("disable"),
+	.pmi_resetmode          ("async"),
+	.pmi_optimization       ("speed"),
+	.pmi_init_file          ("none"),
+	.pmi_init_file_format   ("binary"),
+	.pmi_family             (FAMILY))
+u_${3:dp_ram} (
+	.WrClock                (${4:clk}),
+	.WrClockEn              (1'b1),
+	.WE                     ($0),
+	.WrAddress              ([U_${3/.*/\U$0\E/g}_ADDR_WIDTH - 1: 0]),
+	.Data                   (),
+
+	.RdClock                (${5:clk}),
+	.RdClockEn              (1'b1),
+	.Reset                  (${6:~rst_n}),
+	.RdAddress              ([U_${3/.*/\U$0\E/g}_ADDR_WIDTH - 1: 0]),
+	.Q                      ());
+endsnippet
+
+snippet "(pmi_)?ram" "pseudo dual port ebr ram with byte enable pmi" rb
+localparam  U_${3/.*/\U$0\E/g}_ADDR_WIDTH =
+	((${1:RAM_DEPTH}) > 2) ? \$clog2($1) : 1;
+pmi_ram_dp_be #(
+	.pmi_wr_addr_depth      (1 << U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_wr_addr_width      (U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_wr_data_width      (${2:DATA_WIDTH}),
+	.pmi_rd_addr_depth      (1 << U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_rd_addr_width      (U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_rd_data_width      ($2),
+	.pmi_byte_size          (8),
+	.pmi_regmode            ("reg"),
+	.pmi_gsr                ("disable"),
+	.pmi_resetmode          ("async"),
+	.pmi_optimization       ("speed"),
+	.pmi_init_file          ("none"),
+	.pmi_init_file_format   ("binary"),
+	.pmi_family             (FAMILY))
+u_${3:dp_ram} (
+	.WrClock                (${4:clk}),
+	.WrClockEn              (1'b1),
+	.WE                     ($0),
+	.ByteEn                 (),
+	.WrAddress              ([U_${3/.*/\U$0\E/g}_ADDR_WIDTH - 1: 0]),
+	.Data                   (),
+
+	.RdClock                (${5:clk}),
+	.RdClockEn              (1'b1),
+	.Reset                  (${6:~rst_n}),
+	.RdAddress              ([U_${3/.*/\U$0\E/g}_ADDR_WIDTH - 1: 0]),
+	.Q                      ());
+endsnippet
+
+snippet "(pmi_)?ram" "single port ebr ram pmi" rb
+localparam  U_${3/.*/\U$0\E/g}_ADDR_WIDTH =
+	((${1:RAM_DEPTH}) > 2) ? \$clog2($1) : 1;
+pmi_ram_dq #(
+	.pmi_addr_depth         (1 << U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_addr_width         (U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_data_width         (${2:DATA_WIDTH}),
+	.pmi_byte_size          (8),
+	.pmi_regmode            ("reg"),
+	.pmi_gsr                ("disable"),
+	.pmi_resetmode          ("async"),
+	.pmi_optimization       ("speed"),
+	.pmi_init_file          ("none"),
+	.pmi_init_file_format   ("binary"),
+	.pmi_write_mode         ("normal"),
+	.pmi_family             (FAMILY))
+u_${3:dq_ram} (
+	.Clock                  (${4:clk}),
+	.ClockEn                (1'b1),
+	.Reset                  (${5:~rst_n}),
+	.WE                     ($0),
+	.Address                ([U_${3/.*/\U$0\E/g}_ADDR_WIDTH - 1: 0]),
+	.Data                   (),
+	.Q                      ());
+endsnippet
+
+snippet "(pmi_)?ram" "single port ebr ram with byte enable pmi" rb
+localparam  U_${3/.*/\U$0\E/g}_ADDR_WIDTH =
+	((${1:RAM_DEPTH})) > 2 ? \$clog2($1) : 1;
+pmi_ram_dq_be #(
+	.pmi_addr_depth         (1 << U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_addr_width         (U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_data_width         (${2:DATA_WIDTH}),
+	.pmi_byte_size          (8),
+	.pmi_regmode            ("reg"),
+	.pmi_gsr                ("disable"),
+	.pmi_resetmode          ("async"),
+	.pmi_optimization       ("speed"),
+	.pmi_init_file          ("none"),
+	.pmi_init_file_format   ("binary"),
+	.pmi_write_mode         ("normal"),
+	.pmi_family             (FAMILY))
+u_${3:dq_ram} (
+	.Clock                  (${4:clk}),
+	.ClockEn                (1'b1),
+	.Reset                  (${5:~rst_n}),
+	.WE                     ($0),
+	.ByteEn                 (),
+	.Address                ([U_${3/.*/\U$0\E/g}_ADDR_WIDTH - 1: 0]),
+	.Data                   (),
+	.Q                      ());
+endsnippet
+
+snippet "(pmi_)?rom" "ebr rom pmi" rb
+localparam  U_${3/.*/\U$0\E/g}_ADDR_WIDTH =
+	((${1:ROM_DEPTH}) > 2) ? \$clog2($1) : 1;
+pmi_rom #(
+	.pmi_addr_depth         (1 << U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_addr_width         (U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_data_width         (${2:DATA_WIDTH}),
+	.pmi_regmode            ("reg"),
+	.pmi_gsr                ("disable"),
+	.pmi_resetmode          ("async"),
+	.pmi_optimization       ("speed"),
+	.pmi_init_file          ("none"),
+	.pmi_init_file_format   ("binary"),
+	.pmi_family             (FAMILY))
+u_${3:rom} (
+	.OutClock               (${4:clk}),
+	.OutClockEn             (1'b1),
+	.Reset                  (${5:~rst_n}),
+	.Address                ($0[U_${3/.*/\U$0\E/g}_ADDR_WIDTH - 1: 0]),
+	.Q                      ());
+endsnippet
+
+snippet "(pmi_)?ram" "pseudo dual port distributed ram pmi" rb
+localparam  U_${3/.*/\U$0\E/g}_ADDR_WIDTH =
+	((${1:RAM_DEPTH}) > 2) ? \$clog2($1) : 1;
+pmi_distributed_dpram #(
+	.pmi_addr_depth         (1 << U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_addr_width         (U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_data_width         (${2:DATA_WIDTH}),
+	.pmi_regmode            ("reg"),
+	.pmi_init_file          ("none"),
+	.pmi_init_file_format   ("binary"),
+	.pmi_family             (FAMILY))
+u_${3:dist_dp_ram} (
+	.WrClock                (${4:clk}),
+	.WrClockEn              (1'b1),
+	.WE                     ($0),
+	.WrAddress              ([U_${3/.*/\U$0\E/g}_ADDR_WIDTH - 1: 0]),
+	.Data                   (),
+
+	.RdClock                (${5:clk}),
+	.RdClockEn              (1'b1),
+	.Reset                  (${6:~rst_n}),
+	.RdAddress              ([U_${3/.*/\U$0\E/g}_ADDR_WIDTH - 1: 0]),
+	.Q                      ());
+endsnippet
+
+snippet "(pmi_)?ram" "single port distributed ram pmi" rb
+localparam  U_${3/.*/\U$0\E/g}_ADDR_WIDTH =
+	((${1:RAM_DEPTH}) > 2) ? \$clog2($1) : 1;
+pmi_distributed_spram #(
+	.pmi_addr_depth         (1 << U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_addr_width         (U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_data_width         (${2:DATA_WIDTH}),
+	.pmi_regmode            ("reg"),
+	.pmi_init_file          ("none"),
+	.pmi_init_file_format   ("binary"),
+	.pmi_family             (FAMILY))
+u_${3:dist_dq_ram} (
+	.Clock                  (${4:clk}),
+	.ClockEn                (1'b1),
+	.Reset                  (${5:~rst_n}),
+	.WE                     ($0),
+	.Address                ([U_${3/.*/\U$0\E/g}_ADDR_WIDTH - 1: 0]),
+	.Data                   (),
+	.Q                      ());
+endsnippet
+
+snippet "(pmi_)?rom" "distributed rom pmi" rb
+localparam  U_${3/.*/\U$0\E/g}_ADDR_WIDTH =
+	((${1:ROM_DEPTH}) > 2) ? \$clog2($1) : 1;
+pmi_distributed_rom #(
+	.pmi_addr_depth         (1 << U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_addr_width         (U_${3/.*/\U$0\E/g}_ADDR_WIDTH),
+	.pmi_data_width         (${2:DATA_WIDTH}),
+	.pmi_regmode            ("reg"),
+	.pmi_init_file          ("none"),
+	.pmi_init_file_format   ("binary"),
+	.pmi_family             (FAMILY))
+u_${3:dist_rom} (
+	.OutClock               (${4:clk}),
+	.OutClockEn             (1'b1),
+	.Reset                  (${5:~rst_n}),
+	.Address                ($0[U_${3/.*/\U$0\E/g}_ADDR_WIDTH - 1: 0]),
+	.Q                      ());
+endsnippet
+
+snippet "(pmi_)?fifo" "single clock fifo pmi" rb
+pmi_fifo #(
+	.pmi_data_depth         (${1:FIFO_DEPTH}),
+	.pmi_data_width         (${2:DATA_WIDTH}),
+	.pmi_full_flag          ($1),
+	.pmi_almost_full_flag   ($1 - 4),
+	.pmi_empty_flag         (0),
+	.pmi_almost_empty_flag  (4),
+	.pmi_regmode            ("reg"),
+	.pmi_family             (FAMILY),
+	.pmi_implementation     (${3|"EBR","LUT"|}))
+u_${4:fifo} (
+	.Clock                  (${5:clk}),
+	.Reset                  (${6:~rst_n}),
+
+	.Full                   ($0),
+	.AlmostFull             (),
+	.WrEn                   (),
+	.Data                   (),
+
+	.Empty                  (),
+	.AlmostEmpty            (),
+	.RdEn                   (),
+	.Q                      ());
+endsnippet
+
+snippet "(pmi_)?fifo" "dual clock fifo pmi" rb
+pmi_fifo_dc #(
+	.pmi_data_depth_w       (${1:FIFO_WIDTH}),
+	.pmi_data_width_w       (${2:DATA_WIDTH}),
+	.pmi_data_depth_r       (${3:FIFO_WIDTH}),
+	.pmi_data_width_r       (${4:DATA_WIDTH}),
+	.pmi_full_flag          (${5}),
+	.pmi_almost_full_flag   ($5 - 4),
+	.pmi_empty_flag         (0),
+	.pmi_almost_empty_flag  (4),
+	.pmi_regmode            ("reg"),
+	.pmi_resetmode          ("async"),
+	.pmi_family             (FAMILY),
+	.pmi_implementation     (${6|"EBR","LUT"|}))
+u_${7:dc_fifo} (
+	.WrClock                (${8:clk}),
+	.WrEn                   ($0),
+	.Full                   (),
+	.AlmostFull             (),
+	.Data                   (),
+
+	.RdClock                (${9:clk}),
+	.RdEn                   (),
+	.Reset                  (${10:~rst_n}),
+	.RPReset                (${11:~rst_n}),
+	.Empty                  (),
+	.AlmostEmpty            (),
+	.Q                      ());
+endsnippet
+
+snippet "(pmi_)?mult" "multplier pmi" rb
+pmi_mult #(
+	.pmi_dataa_width            (${1:9}),
+	.pmi_datab_width            ($1),
+	.pmi_sign                   (${2|"on", "off"|}),
+	.pmi_additional_pipeline    (0),
+	.pmi_input_reg              ("on"),
+	.pmi_output_reg             ("on"),
+	.pmi_family                 (FAMILY),
+	.pmi_implementation         (${3|"DSP","LUT"|}))
+u_${4:mult} (
+	.Clock                      (${5:clk}),
+	.ClkEn                      (1'b1),
+	.Aclr                       (${6:~rst_n}),
+	.DataA                      ($0),
+	.DataB                      (),
+	.Result                     ());
+endsnippet
+
+snippet "(pmi_)?mult(add)?(sub)?" "2 multiplier + adder / subtracter pmi" rb
+pmi_multaddsub #(
+	.pmi_dataa_width            (${1:9}),
+	.pmi_datab_width            ($1),
+	.pmi_sign                   (${2|"on", "off"|}),
+	.pmi_additional_pipeline    (0),
+	.pmi_add_sub                (${3|"add", "sub"|}),
+	.pmi_input_reg              ("on"),
+	.pmi_output_reg             ("on"),
+	.pmi_family                 (FAMILY),
+	.pmi_implementation         (${4|"DSP","LUT"|}))
+u_${5:multaddsub} (
+	.Clock                      (${6:clk}),
+	.ClkEn                      (1'b1),
+	.Aclr                       (${7:~rst_n}),
+	.DataA0                     ($0),
+	.DataA1                     (),
+	.DataB0                     (),
+	.DataB1                     (),
+	.Result                     ());
+endsnippet
+
