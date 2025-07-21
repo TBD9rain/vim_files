@@ -1,3 +1,4 @@
+16-bit
 32-bit
 64-bit
 8-bit
@@ -33,6 +34,7 @@ EBRs
 ECP5
 ECP5U
 eda
+endian
 enum
 FAE
 fifo
@@ -134,6 +136,8 @@ subclass
 subclasses
 submodule
 submodules
+subprocess
+sv
 systemverilog
 SystemVerilog
 tb
@@ -155,6 +159,8 @@ vba
 verible
 verilog
 Vim9
+visio
+visio
 vsync
 wildcard
 wildcards

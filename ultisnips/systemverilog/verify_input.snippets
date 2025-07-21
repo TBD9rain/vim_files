@@ -1,0 +1,187 @@
+#===================================================================================================
+#
+#   Target Code     :   SystemVerilog
+#   Version         :   v1.0.0
+#
+#   Description     :   DUT input
+#
+#   Additional info :   Get instruction with ":help UltiSnips".
+#                       Use "snippet" or "sn" to trigger snippet for snippet edition.
+#
+#   Author          :   TBD9rain
+#   Email           :
+# 
+#===================================================================================================
+
+snippet "Input(Drv)?" "input driver skeleton" rb
+class ${1:InputDrv}${2: #()};
+	//  input transaction class
+	typedef InputTxn${3: #()} INPUT_TXN;
+
+	virtual interface ${4:if_name}.drv_mp vif;
+
+	InputSeqr seqr;
+
+	function new();
+		print_msg($typename(this), "initialization completed.", INFO, HIGH, LOG);
+	endfunction
+
+	task run;
+		INPUT_TXN tc_txn;
+
+		forever begin
+			@vif.drv_cb;
+			if (~vif.rst_n) begin
+				no_drive;
+			end
+			else begin
+				seqr.get(tc_txn);
+				assert (tc_txn) begin
+					drive(tc_txn);
+				end
+				else begin
+					no_drive;
+				end
+			end
+		end
+	endtask
+
+	task drive(
+		input INPUT_TXN tc_txn);
+
+		vif.drv_cb.data_in_vld <= 'b1;
+		vif.drv_cb.${5:data} <= tc_txn.$5;$0
+	endtask
+
+	task no_drive;
+		vif.drv_cb.data_in_vld <= 'b0;
+		vif.drv_cb.$5 <= 'b0;
+	endtask
+endclass
+endsnippet
+
+snippet "Input(Mon)?" "input monitor skeleton" rb
+class ${1:InputMon}${2: #()};
+
+	//  input transaction class
+	typedef InputTxn${3: #()} INPUT_TXN;
+
+	virtual interface ${4:if_name}.mon_mp vif;
+
+	mailbox #(INPUT_TXN) i2cov_mbox;
+	mailbox #(INPUT_TXN) i2ref_mbox;
+	mailbox #(INPUT_TXN) i2score_mbox;
+
+	longint unsigned ptn_cnt;
+
+	function new();
+		this.ptn_cnt = 0;
+		print_msg($typename(this), "initialization completed.", INFO, HIGH, LOG);
+	endfunction
+
+	task run;
+		forever begin
+			@vif.mon_cb;
+			if (~vif.rst_n) begin
+				continue;
+			end
+			catch;
+		end
+	endtask
+
+	task catch;
+		string msg;
+		INPUT_TXN txn_caught;
+
+		bit [${5: 7}: 0] ${6:data};
+
+		longint unsigned timestamp;
+
+		if (vif.mon_cb.${7:data_in_vld}) begin
+			$6 = vif.mon_cb.$6;$0
+
+			timestamp = vif.mon_cb.clk_cnt;
+
+			txn_caught = new($6, timestamp);
+
+			msg = $sformatf({
+				"DUT input pattern caught:\n",
+				"\tNO. %0d\n",
+				data_print_str(txn_caught)},
+				ptn_cnt);
+			print_msg($typename(this), msg, INFO, LOW, LOG);
+
+			i2cov_mbox.put(txn_caught);
+			i2ref_mbox.put(txn_caught);
+			i2score_mbox.put(txn_caught);
+
+			ptn_cnt++;
+		end
+	endtask
+
+	function string data_print_str(
+		input INPUT_TXN txn_print);
+
+		data_print_str  = $sformatf({
+			"\t$6: %d\n"
+			}, txn_print.$6);
+	endfunction
+endclass
+endsnippet
+
+snippet "Input(Agent)?" "input agent skeleton" rb
+class ${1:InputAgent}${2: #()};
+
+	//  input transaction class
+	typedef InputTxn${3: #()} INPUT_TXN;
+
+	virtual interface ${4:if_name} vif;
+
+	InputSeqr${5: #()} seqr;
+	InputDrv${6: #()} driver;
+	InputMon${7: #()} monitor;
+
+	mailbox #(INPUT_TXN) i2cov_mbox;
+	mailbox #(INPUT_TXN) i2ref_mbox;
+	mailbox #(INPUT_TXN) i2score_mbox;
+
+	bit drive_en;
+
+	event tc_done;
+
+	function new(
+		input bit drive_en = 'b1);
+
+		this.drive_en = drive_en;
+		if (this.drive_en) begin
+			this.seqr = new();
+			this.driver = new();
+		end
+		this.monitor = new();$0
+		print_msg($typename(this), "initialization completed.", INFO, HIGH, LOG);
+	endfunction
+
+	function void connect;
+		if (drive_en) begin
+			driver.vif = vif;
+			driver.seqr = seqr;
+			tc_done = seqr.tc_done;
+		end
+		monitor.vif = vif;
+		monitor.i2cov_mbox = i2cov_mbox;
+		monitor.i2ref_mbox = i2ref_mbox;
+		monitor.i2score_mbox = i2score_mbox;
+		print_msg($typename(this), "connection completed.", INFO, HIGH, LOG);
+	endfunction
+
+	task run;
+		fork
+			if (drive_en) begin
+				driver.run;
+			end
+			monitor.run;
+		join_none
+	endtask
+endclass
+endsnippet
+

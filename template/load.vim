@@ -23,4 +23,8 @@ autocmd BufNewFile *.py execute '0r ' . g:my_template_path . '/source.py'
 autocmd BufNewFile .gitignore execute '0r ' . g:my_template_path . '/template.gitignore'
 " snippet template
 autocmd BufNewFile *.snippets execute '0r ' . g:my_template_path . '/template.snippets'
+" systemverilog code template
+autocmd BufNewFile *{_tb}\@<!.sv execute '0r ' . g:my_template_path . '/general.sv'
+" systemverilog testbench template
+autocmd BufNewFile *_tb.sv execute '0r ' . g:my_template_path . '/testbench.sv'
 

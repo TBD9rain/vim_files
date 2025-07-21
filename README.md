@@ -18,10 +18,12 @@ The `./template/config.vim` is the vim script for template automatically loading
 |Template File          |Description                                |
 |:---                   |:---                                       |
 |`template.gitignore`   |.gitignore                                 |
-|`source.v`             |empty Verilog source code                  |
-|`testbench.v`          |empty Verilog testbench                    |
-|`modelsim.do`          |ModelSim & QuestaSim simulation script     |
+|`source.v`             |Verilog source code                        |
+|`testbench.v`          |Verilog testbench                          |
+|`questasim.do`         |QuestaSim & ModelSim simulation script     |
 |`source.c`             |empty C language code                      |
+|`general.sv`           |general SystemVerilog code                 |
+|`testbench.sv`         |SystemVerilog testbench                    |
 
 
 # Icon Configuration for Vim-DevIcons
@@ -41,6 +43,7 @@ Verible is a language server for for verilog and systemverilog coding.
 Download the Verible from [Verible Release](https://github.com/chipsalliance/verible/releases).
 
 `.\languageserver\verible\verible-verilog-lint.config` is a Verible linter configuration file.
+For instruction about lint rule configuration, refer to *Rule Configuration* in [Verible Lint README](https://github.com/chipsalliance/verible/blob/master/verible/verilog/tools/lint/README.md).
 
 
 ## clangd
@@ -59,4 +62,5 @@ Download the clangd from [get clangd started](https://clangd.llvm.org/installati
 |`verilog.snippets`         |for Verilog editing                |
 |`verilog_pmi.snippets`     |for Lattice Verilog PMI invoking   |
 |`c.snippets`               |for C language editing             |
+|`systemverilog.snippets`   |for SystemVerilog editing          |
 

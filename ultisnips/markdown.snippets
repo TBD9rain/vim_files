@@ -1,10 +1,19 @@
-#===============================================================
-# get help with ":help UltiSnips"
+#===================================================================================================
 #
-# Type "sn" or "snippet" to trigger snippet for snippet creating
-#===============================================================
+#   Target Code     :   Markdown
+#   Version         :   v1.0.0
+#
+#   Description     :
+#
+#   Additional info :   Get instruction with ":help UltiSnips".
+#                       Use "snippet" or "sn" to trigger snippet for snippet edition.
+#
+#   Author          :   TBD9rain
+#   Email           :
+# 
+#===================================================================================================
 
-snippet "todo" "to do message" rbA
+snippet todo "to do message" bwA
 <!--
 TODO
 ${0:what to do}
@@ -12,7 +21,7 @@ BY `!p import os; snip.rv = os.getenv('USERNAME') or os.getenv('USER');` AT `!v 
 -->
 endsnippet
 
-snippet "table" "insert table" rb
+snippet table "insert table" bw
 |${1:header1}|${2:header1}|
 |${3|:---,:---:,---:|}|$3|
 |$0||

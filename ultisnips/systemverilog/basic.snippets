@@ -1,0 +1,80 @@
+#===================================================================================================
+#
+#   Target Code     :   SystemVerilog
+#   Version         :   v1.0.0
+#
+#   Description     :
+#
+#   Additional info :   Get instruction with ":help UltiSnips".
+#                       Use "snippet" or "sn" to trigger snippet for snippet edition.
+#
+#   Author          :   TBD9rain
+#   Email           :
+# 
+#===================================================================================================
+
+extends verilog
+
+
+#--------------
+# general class
+#--------------
+
+snippet class "empty class skeleton" bw
+class ${1:cls_name};
+
+	$0
+
+	function new;
+		
+	endfunction
+
+endclass
+endsnippet
+
+#---------
+# variable
+#---------
+
+snippet "rand " "rand variable definition" rbA
+rand    bit [ ${1:7}: 0] ${2:var_name};
+endsnippet
+
+snippet "randc " "randc variable definition" rbA
+randc   bit [ ${1:7}: 0] ${2:var_name};
+endsnippet
+
+snippet "mailbox " "mailbox definition" rbA
+mailbox #(${1:data_type}) ${0:mb_name};
+endsnippet
+
+#------
+# block
+#------
+
+snippet "assert " "instant assert" rbA
+assert (${1:assert condition}) $0
+endsnippet
+
+snippet "fork " "fork block" rbA
+fork
+	$0
+${1|join,join_any,join_none|}
+endsnippet
+
+#-----------
+# subprocess
+#-----------
+
+snippet function "function skeleton" bA
+function ${1:automatic }${2:func_name};
+$0
+endfunction
+endsnippet
+
+snippet task "task skeleton" bA
+task ${1:automatic }${2:task_name};
+$0
+endtask
+endsnippet
+

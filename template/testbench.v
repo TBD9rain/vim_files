@@ -4,15 +4,16 @@
 
 module testbench_name;
 
-//=======================
-//  PARAMETER DEFINITIONS
-//=======================
+//======================
+//  PARAMETER DEFINITION
+//======================
 
 parameter   CLK_PERIOD  = 10;
 
-//======================
-//  VARIABLE DEFINITIONS
-//======================
+
+//=====================
+//  VARIABLE DEFINITION
+//=====================
 
 //  sim ctrl
 reg     disp_en = 'b1;
@@ -21,6 +22,7 @@ reg     sim_end = 'b0;
 //  clock and reset
 reg     clk     ;
 reg     rst_n   ;
+
 
 //======================
 //  MODULE INSTANTIATION
@@ -52,6 +54,7 @@ initial begin:  init_stimulus
     # 50000
     $finish(2);
 end
+
 
 //==================
 //  DUT OUTPUT CHECK

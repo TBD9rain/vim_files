@@ -1,10 +1,19 @@
-#===============================================================
-# get help with ":help UltiSnips"
+#===================================================================================================
 #
-# Type "sn" or "snippet" to trigger snippet for snippet creating
-#===============================================================
+#   Target Code     :   .gitignore
+#   Version         :   v1.0.0
+#
+#   Description     :
+#
+#   Additional info :   Get instruction with ":help UltiSnips".
+#                       Use "snippet" or "sn" to trigger snippet for snippet edition.
+#
+#   Author          :   TBD9rain
+#   Email           :
+# 
+#===================================================================================================
 
-snippet "vim" "vim temporary files" rb
+snippet vim "vim temporary files" bw
 #--------------------
 # Vim temporary files
 #--------------------
@@ -12,21 +21,17 @@ snippet "vim" "vim temporary files" rb
 *~
 *.un~
 *.swp
-
-
 endsnippet
 
-snippet "verible" "verible generated files" rb
+snippet verible "verible generated files" bw
 #--------------------------
 # Verible code linking list 
 #--------------------------
 
 verible.filelist
-
-
 endsnippet
 
-snippet "office" "windows office temporary files" rb
+snippet office "windows office temporary files" bw
 #---------------
 # Windows office
 #---------------
@@ -37,8 +42,17 @@ snippet "office" "windows office temporary files" rb
 ~$*.xls
 ~$*.pptx
 ~$*.ppt
+endsnippet
 
+snippet "(?:Q|q)uestasim" "Modelsim or Questasim temporary files" rb
+#--------------------------------------
+# Modelsim or Questasim temporary files
+#--------------------------------------
 
+/work/
+modelsim.ini
+sim.log
+vsim.wlf
 endsnippet
 
 snippet "sim" "Modelsim & Questasim files" rb
