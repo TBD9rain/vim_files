@@ -14,7 +14,7 @@ autocmd BufNewFile *{_tb}\@<!.v execute '0r ' . g:my_template_path . '/source.v'
 " verilog testbench template
 autocmd BufNewFile *_tb.v execute '0r ' . g:my_template_path . '/testbench.v'
 " modelsim do file template
-autocmd BufNewFile *.do execute '0r ' . g:my_template_path . '/modelsim.do'
+autocmd BufNewFile *.do execute '0r ' . g:my_template_path . '/questasim.do'
 " c code template
 autocmd BufNewFile *.c execute '0r ' . g:my_template_path . '/source.c'
 " python code template
