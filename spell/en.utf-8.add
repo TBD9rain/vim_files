@@ -1,3 +1,4 @@
+16-bit
 32-bit
 64-bit
 8-bit
@@ -28,6 +29,7 @@ dsi
 DSP
 DUT
 eda
+endian
 enum
 FAE
 fifo
