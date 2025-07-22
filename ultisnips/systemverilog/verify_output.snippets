@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.0
+#   Version         :   v1.0.1
 #
 #   Description     :   DUT output
 #
@@ -15,7 +15,6 @@
 
 snippet "Output(Mon)?" "output monitor skeleton" rb
 class ${1:OutputMon}${2: #()};
-
 	//  input transaction class
 	typedef OutputTxn${3: #()} OUTPUT_TXN;
 
@@ -48,7 +47,7 @@ class ${1:OutputMon}${2: #()};
 
 		longint unsigned timestamp;
 
-		if (vif.mon_cb.${7:data_out_vld}) begin
+		if (vif.mon_cb.data_out_vld) begin
 			$6 = vif.mon_cb.$6;
 
 			timestamp = vif.mon_cb.clk_cnt;
@@ -80,7 +79,6 @@ endsnippet
 
 snippet "Output(Agent)?" "output agent skeleton" rb
 class ${1:OutputAgent}${2: #()};
-
 	//  input transaction class
 	typedef OutputTxn${3: #()} OUTPUT_TXN;
 

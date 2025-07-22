@@ -56,7 +56,7 @@ class ${1:ClockCnt};
 	longint unsigned clk_cnt;
 
 	function new();
-		this.clk_cnt = 0;
+		this.clk_cnt = 0;$0
 		print_msg($typename(this), "initialization completed.", INFO, HIGH, LOG);
 	endfunction
 
@@ -67,7 +67,7 @@ class ${1:ClockCnt};
 			vif.env_cb.clk_cnt  <= clk_cnt;
 		end
 	endtask
-endclass$0
+endclass
 endsnippet
 
 snippet "Input(Seqr)?" "testcase sequencer skeleton" rb
@@ -138,8 +138,8 @@ class ${1:InputSeq}${2: #()};
 			else begin
 				print_msg($typename(this), "randomization failed.", ERROR, HIGHEST, STOP);
 			end
-			seqr.put(txn_data);$0
-		end
+			seqr.put(txn_data);
+		end$0
 		print_msg($typename(this), $sformatf("added %0d random testcases.", tc_num), INFO, MEDIUM, LOG);
 	endtask
 
