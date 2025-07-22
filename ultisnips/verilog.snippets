@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   Verilog
-#   Version         :   v1.0.0
+#   Version         :   v1.0.1
 #
 #   Description     :
 #
@@ -76,20 +76,20 @@ casez (${1:sel})
 endcase
 endsnippet
 
-snippet "parameter " "parameter definition" rbA
-parameter   ${1:PARAM_NAME} = ${0:8};
+snippet parameter "parameter definition" bw
+parameter ${1:PARAM_NAME} = ${0:8}
 endsnippet
 
-snippet "localparam " "local parameter definition" rbA
-localparam  ${1:PARAM_NAME} = ${0:8};
+snippet localparam "local parameter definition" bw
+localparam ${1:PARAM_NAME} = ${0:8}
 endsnippet
 
 snippet "param(eter)?\?" "dynamic width parameter" rbA
-parameter   ${1:DYNAMIC_WIDTH} = (${2:DATA_DEPTH} > 2) ? \$clog2($2) : 1;
+parameter ${1:DYNAMIC_WIDTH} = (${2:DATA_DEPTH} > 2) ? \$clog2($2) : 1$0
 endsnippet
 
 snippet "local(param)?\?" "dynamic width localparam" rbA
-localparam  ${1:DYNAMIC_WIDTH} = (${2:DATA_DEPTH} > 2) ? \$clog2($2) : 1;
+localparam ${1:DYNAMIC_WIDTH} = (${2:DATA_DEPTH} > 2) ? \$clog2($2) : 1$0
 endsnippet
 
 snippet forever "forever block" bwA
