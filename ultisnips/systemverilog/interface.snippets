@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.2
+#   Version         :   v1.0.3
 #
 #   Description     :   verification interface
 #
@@ -73,8 +73,8 @@ interface ${1:if_name}${2: #()};
 		input data_in_vld,
 		input $7,
 
-		input data_out_vld,
-		input $9
+		output data_out_vld,
+		output $9
 	);
 endinterface
 endsnippet
