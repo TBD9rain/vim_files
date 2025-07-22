@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.1
+#   Version         :   v1.0.2
 #
 #   Description     :   verification top
 #
@@ -54,7 +54,7 @@ class ${1:TestEnv}${2: #()};
 		if (this.drive_en) begin
 			this.seq = new();
 		end
-		this.input_agt = new(this.drive_en);
+		this.input_agt = new(this.drive_en, this.cover_en);
 		if (this.cover_en) begin
 			this.cov_coll = new();
 		end

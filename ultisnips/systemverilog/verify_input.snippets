@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.1
+#   Version         :   v1.0.2
 #
 #   Description     :   DUT input
 #
@@ -73,7 +73,12 @@ class ${1:InputMon}${2: #()};
 
 	longint unsigned ptn_cnt;
 
-	function new();
+	bit cover_en;
+
+	function new(
+		input bit cover_en = 'b1);
+
+		this.cover_en = cover_en;
 		this.ptn_cnt = 0;
 		print_msg($typename(this), "initialization completed.", INFO, HIGH, LOG);
 	endfunction
@@ -110,7 +115,9 @@ class ${1:InputMon}${2: #()};
 				ptn_cnt);
 			print_msg($typename(this), msg, INFO, LOW, LOG);
 
-			i2cov_mbox.put(txn_caught);
+			if (cover_en) begin
+				i2cov_mbox.put(txn_caught);
+			end
 			i2ref_mbox.put(txn_caught);
 			i2score_mbox.put(txn_caught);
 
@@ -144,6 +151,7 @@ class ${1:InputAgent}${2: #()};
 	mailbox #(INPUT_TXN) i2score_mbox;
 
 	bit drive_en;
+	bit cover_en;
 
 	event tc_done;
 
@@ -151,11 +159,12 @@ class ${1:InputAgent}${2: #()};
 		input bit drive_en = 'b1);
 
 		this.drive_en = drive_en;
+		this.cover_en = cover_en;
 		if (this.drive_en) begin
 			this.seqr = new();
 			this.driver = new();
 		end
-		this.monitor = new();$0
+		this.monitor = new(this.cover_en);$0
 		print_msg($typename(this), "initialization completed.", INFO, HIGH, LOG);
 	endfunction
 
