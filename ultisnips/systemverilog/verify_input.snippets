@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.0
+#   Version         :   v1.0.1
 #
 #   Description     :   DUT input
 #
@@ -62,7 +62,6 @@ endsnippet
 
 snippet "Input(Mon)?" "input monitor skeleton" rb
 class ${1:InputMon}${2: #()};
-
 	//  input transaction class
 	typedef InputTxn${3: #()} INPUT_TXN;
 
@@ -93,12 +92,12 @@ class ${1:InputMon}${2: #()};
 		string msg;
 		INPUT_TXN txn_caught;
 
-		bit [${5: 7}: 0] ${6:data};
+		bit [${5: 7}: 0] ${6:data};$0
 
 		longint unsigned timestamp;
 
-		if (vif.mon_cb.${7:data_in_vld}) begin
-			$6 = vif.mon_cb.$6;$0
+		if (vif.mon_cb.data_in_vld) begin
+			$6 = vif.mon_cb.$6;
 
 			timestamp = vif.mon_cb.clk_cnt;
 
@@ -131,7 +130,6 @@ endsnippet
 
 snippet "Input(Agent)?" "input agent skeleton" rb
 class ${1:InputAgent}${2: #()};
-
 	//  input transaction class
 	typedef InputTxn${3: #()} INPUT_TXN;
 

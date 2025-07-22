@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.0
+#   Version         :   v1.0.1
 #
 #   Description     :   verification functional coverage
 #
@@ -15,7 +15,6 @@
 
 snippet "Cov(Collector)?" "coverage collector skeleton" rb
 class ${1:CovCollector}${2: #()};
-
 	//  input transaction class
 	typedef InputTxn${3: #()} INPUT_TXN;
 
@@ -28,7 +27,7 @@ class ${1:CovCollector}${2: #()};
 
 	function new();
 		//  instantiate coverage group
-		
+
 		print_msg($typename(this), "initialization completed.", INFO, HIGH, LOG);
 	endfunction
 
@@ -36,7 +35,7 @@ class ${1:CovCollector}${2: #()};
 		forever begin
 			i2cov_mbox.get(txn_data);
 			//  coverage sample
-			
+
 		end
 	endtask
 
@@ -50,7 +49,7 @@ endclass
 endsnippet
 
 #---------
-# coverage 
+# coverage
 #---------
 
 snippet covergroup "coverage model definition" bw
@@ -58,7 +57,7 @@ covergroup ${1:covergroup_name}${2: @(${3:sample_event})};
 	//  coverage point definition
 	$0
 	//  cross coverage definition
-	
+
 endgroup
 endsnippet
 

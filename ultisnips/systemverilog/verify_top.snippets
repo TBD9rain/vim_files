@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.0
+#   Version         :   v1.0.1
 #
 #   Description     :   verification top
 #
@@ -15,7 +15,6 @@
 
 snippet TestEnv "test environment skeleton" bw
 class ${1:TestEnv}${2: #()};
-
 	//  input transaction class
 	typedef InputTxn${3: #()} INPUT_TXN;
 	typedef OutputTxn${4: #()} OUTPUT_TXN;
@@ -152,7 +151,7 @@ package ${1:pkg_name};
 //  PACKAGE IMPORTATION
 //=====================
 
-${2:import msg_log_pkg::*;}
+${2:import msg_print_pkg::*;}
 
 
 //==================

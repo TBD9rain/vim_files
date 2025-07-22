@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.0
+#   Version         :   v1.0.1
 #
 #   Description     :   DUT output check
 #
@@ -15,7 +15,6 @@
 
 snippet RefModel "reference model skeleton" bw
 class ${1:RefModel}${2: #()};
-
 	//  input transaction class
 	typedef InputTxn${3: #()} INPUT_TXN;
 	typedef OutputTxn${4: #()} OUTPUT_TXN;
@@ -38,18 +37,17 @@ class ${1:RefModel}${2: #()};
 		end
 	endtask
 
-	task ${11:dut_ref_func_name}(
+	funciton ${11:dut_ref_func_name}(
 		input INPUT_TXN txn_in,
 		output OUTPUT_TXN txn_ref);
 
 		$0
-	endtask
+	endfunction
 endclass
 endsnippet
 
 snippet "Score(board)?" "scoreboard skeleton" rb
 class ${1:Scoreboard}${2: #()};
-
 	//  input transaction class
 	typedef InputTxn${3: #()} INPUT_TXN;
 	typedef OutputTxn${4: #()} OUTPUT_TXN;
@@ -148,7 +146,7 @@ class ${1:Scoreboard}${2: #()};
 		input INPUT_TXN txn_in,
 		input OUTPUT_TXN txn_out);
 
-		timing_check = (txn_out.timestamp - txn_in.timestamp) == ${$8:?};
+		timing_check = (txn_out.timestamp - txn_in.timestamp) == ${8:?};
 	endfunction
 
 	function string data_print_str(
