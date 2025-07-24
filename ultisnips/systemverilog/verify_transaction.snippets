@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.0
+#   Version         :   v1.1.0
 #
 #   Description     :   DUT in out transaction
 #
@@ -28,6 +28,12 @@ class ${1:InputTxn}${2: #()};
 		this.$5 = $5;
 		this.timestamp = timestamp;
 	endfunction
+
+	function string print;
+		print = $sformatf({
+			"$5 : %0d\n",
+			}, $5):
+	endfunction
 endclass
 endsnippet
 
@@ -45,6 +51,18 @@ class ${1:OutputTxn}${2: #()};
 
 		this.$4 = $4;
 		this.timestamp = timestamp;
+	endfunction
+
+	function string print;
+		print = $sformatf({
+			"$4 : %0d\n",
+			}, $4):
+	endfunction
+
+	function bit compare(
+		input OutputTxn txn);
+
+		compare = (txn.$4 === $4);
 	endfunction
 endclass
 endsnippet
