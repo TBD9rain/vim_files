@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.1.0
+#   Version         :   v1.1.1
 #
 #   Description     :   DUT input
 #
@@ -23,7 +23,7 @@ class ${1:InputDrv}${2: #()};
 	InputSeqr seqr;
 
 	function new();
-		print_msg($typename(this), "initialization completed.", INFO, HIGH, LOG);
+		print_msg($typename(this), "initialization completed.", INFO, MEDIUM, LOG);
 	endfunction
 
 	task run;
@@ -80,7 +80,7 @@ class ${1:InputMon}${2: #()};
 
 		this.cover_en = cover_en;
 		this.ptn_cnt = 0;
-		print_msg($typename(this), "initialization completed.", INFO, HIGH, LOG);
+		print_msg($typename(this), "initialization completed.", INFO, MEDIUM, LOG);
 	endfunction
 
 	task run;
@@ -113,7 +113,7 @@ class ${1:InputMon}${2: #()};
 				"\tNO. %0d\n",
 				txn_caught.print},
 				ptn_cnt);
-			print_msg($typename(this), msg, INFO, LOW, LOG);
+			print_msg($typename(this), msg, INFO, DEBUG, LOG);
 
 			if (cover_en) begin
 				i2cov_mbox.put(txn_caught);
@@ -157,7 +157,7 @@ class ${1:InputAgent}${2: #()};
 			this.driver = new();
 		end
 		this.monitor = new(this.cover_en);$0
-		print_msg($typename(this), "initialization completed.", INFO, HIGH, LOG);
+		print_msg($typename(this), "initialization completed.", INFO, MEDIUM, LOG);
 	endfunction
 
 	function void connect;
@@ -170,7 +170,7 @@ class ${1:InputAgent}${2: #()};
 		monitor.i2cov_mbox = i2cov_mbox;
 		monitor.i2ref_mbox = i2ref_mbox;
 		monitor.i2score_mbox = i2score_mbox;
-		print_msg($typename(this), "connection completed.", INFO, HIGH, LOG);
+		print_msg($typename(this), "connection completed.", INFO, MEDIUM, LOG);
 	endfunction
 
 	task run;

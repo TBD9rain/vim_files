@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.1
+#   Version         :   v1.0.2
 #
 #   Description     :   verification functional coverage
 #
@@ -28,7 +28,7 @@ class ${1:CovCollector}${2: #()};
 	function new();
 		//  instantiate coverage group
 
-		print_msg($typename(this), "initialization completed.", INFO, HIGH, LOG);
+		print_msg($typename(this), "initialization completed.", INFO, MEDIUM, LOG);
 	endfunction
 
 	task run;
