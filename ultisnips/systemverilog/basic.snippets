@@ -37,11 +37,11 @@ endsnippet
 #---------
 
 snippet "rand " "rand variable definition" rbA
-rand    bit [ ${1:7}: 0] ${2:var_name};
+rand bit ${1:[${2: 7}: 0]} ${0:var_name};
 endsnippet
 
 snippet "randc " "randc variable definition" rbA
-randc   bit [ ${1:7}: 0] ${2:var_name};
+randc bit ${1:[${2: 7}: 0]} ${0:var_name};
 endsnippet
 
 snippet "mailbox " "mailbox definition" rbA

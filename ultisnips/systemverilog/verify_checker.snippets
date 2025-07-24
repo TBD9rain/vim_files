@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.1
+#   Version         :   v1.0.2
 #
 #   Description     :   DUT output check
 #
@@ -23,7 +23,7 @@ class ${1:RefModel}${2: #()};
 	mailbox #(OUTPUT_TXN) ref2score_mbox;
 
 	function new();
-		print_msg($typename(this), "initialization completed.", INFO, HIGH, LOG);
+		print_msg($typename(this), "initialization completed.", INFO, MEDIUM, LOG);
 	endfunction
 
 	task run;
@@ -62,7 +62,7 @@ class ${1:Scoreboard}${2: #()};
 
 	function new();
 		this.ptn_cnt    = 0;
-		print_msg($typename(this), "initialization completed.", INFO, HIGH, LOG);
+		print_msg($typename(this), "initialization completed.", INFO, MEDIUM, LOG);
 	endfunction
 
 	task run;
@@ -109,7 +109,7 @@ class ${1:Scoreboard}${2: #()};
 					"ref ", txn_ref.print
 					}, ptn_cnt);
 
-				print_msg($typename(this), msg, INFO, MEDIUM, LOG);
+				print_msg($typename(this), msg, INFO, DEBUG, LOG);
 			end
 			else begin
 				msg = $sformatf({
@@ -120,7 +120,7 @@ class ${1:Scoreboard}${2: #()};
 					"ref ", txn_ref.print
 					}, ptn_cnt);
 
-				print_msg($typename(this), msg, ERROR, HIGHEST, STOP);
+				print_msg($typename(this), msg, ERROR, HIGH, STOP);
 			end
 
 			//  timing check
@@ -132,7 +132,7 @@ class ${1:Scoreboard}${2: #()};
 					"\toutput time: %d\n"
 					}, ptn_cnt, txn_in.timestamp, txn_out.timestamp);
 
-				print_msg($typename(this), msg, ERROR, HIGHEST, STOP);
+				print_msg($typename(this), msg, ERROR, HIGH, STOP);
 			end
 
 			ptn_cnt++;
