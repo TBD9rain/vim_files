@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   Verilog
-#   Version         :   v1.0.1
+#   Version         :   v1.0.2
 #
 #   Description     :
 #
@@ -51,7 +51,7 @@ begin
 end
 endsnippet
 
-snippet if "if condition" wA
+snippet "(?<!`)\bif\b" "if condition" rA
 if (${1:1 < 0}) $0
 endsnippet
 
@@ -97,6 +97,23 @@ forever begin
 	$0
 end
 endsnippet
+
+snippet `def "define macro" bA
+\`define ${1:MACRO_NAME} ${2:TEXT}$0
+endsnippet
+
+snippet	`ifdef "if define macro" bA
+\`ifdef ${1:MACRO_NAME}
+	$0
+\`endif
+endsnippet
+
+snippet	`ifndef "if not define macro" bA
+\`ifndef ${1:MACRO_NAME}
+	$0
+\`endif
+endsnippet
+
 
 priority -1
 
