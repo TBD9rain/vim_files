@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.2
+#   Version         :   v1.0.3
 #
 #   Description     :   DUT output check
 #
@@ -13,7 +13,7 @@
 #
 #===================================================================================================
 
-snippet RefModel "reference model skeleton" bw
+snippet class "reference model skeleton" b
 class ${1:RefModel}${2: #()};
 	//  input transaction class
 	typedef InputTxn${3: #()} INPUT_TXN;
@@ -46,7 +46,7 @@ class ${1:RefModel}${2: #()};
 endclass
 endsnippet
 
-snippet "Score(board)?" "scoreboard skeleton" rb
+snippet class "scoreboard skeleton" b
 class ${1:Scoreboard}${2: #()};
 	//  input transaction class
 	typedef InputTxn${3: #()} INPUT_TXN;

@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.1.1
+#   Version         :   v1.1.2
 #
 #   Description     :   DUT input
 #
@@ -13,7 +13,7 @@
 #
 #===================================================================================================
 
-snippet "Input(Drv)?" "input driver skeleton" rb
+snippet class "input driver skeleton" b
 class ${1:InputDrv}${2: #()};
 	//  input transaction class
 	typedef InputTxn${3: #()} INPUT_TXN;
@@ -60,7 +60,7 @@ class ${1:InputDrv}${2: #()};
 endclass
 endsnippet
 
-snippet "Input(Mon)?" "input monitor skeleton" rb
+snippet class "input monitor skeleton" b
 class ${1:InputMon}${2: #()};
 	//  input transaction class
 	typedef InputTxn${3: #()} INPUT_TXN;
@@ -127,7 +127,7 @@ class ${1:InputMon}${2: #()};
 endclass
 endsnippet
 
-snippet "Input(Agent)?" "input agent skeleton" rb
+snippet class "input agent skeleton" b
 class ${1:InputAgent}${2: #()};
 	//  input transaction class
 	typedef InputTxn${3: #()} INPUT_TXN;

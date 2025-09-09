@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.2
+#   Version         :   v1.0.3
 #
 #   Description     :   verification top
 #
@@ -13,7 +13,7 @@
 #
 #===================================================================================================
 
-snippet TestEnv "test environment skeleton" bw
+snippet class "test environment skeleton" b
 class ${1:TestEnv}${2: #()};
 	//  input transaction class
 	typedef InputTxn${3: #()} INPUT_TXN;
@@ -144,7 +144,7 @@ class ${1:TestEnv}${2: #()};
 endclass
 endsnippet
 
-snippet package "verification environment package" bw
+snippet package "verification environment package" b
 package ${1:pkg_name};
 
 //=====================

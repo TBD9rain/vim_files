@@ -13,7 +13,7 @@
 #
 #===================================================================================================
 
-snippet "Input(Txn)?" "DUT input transaction skeleton" rb
+snippet class "DUT input transaction skeleton" b
 class ${1:InputTxn}${2: #()};
 	//  variable definition
 	${3|rand,randc|} bit [${4: 7}: 0] ${5:var_name};$0
@@ -37,7 +37,7 @@ class ${1:InputTxn}${2: #()};
 endclass
 endsnippet
 
-snippet "Output(Txn)?" "DUT output transaction skeleton" rb
+snippet class "DUT output transaction skeleton" b
 class ${1:OutputTxn}${2: #()};
 	//  variable definition
 	logic [${3: 7}: 0] ${4:var_name};$0
@@ -67,7 +67,7 @@ class ${1:OutputTxn}${2: #()};
 endclass
 endsnippet
 
-snippet ClockCnt "clock counter for timestamp" bw
+snippet class "clock counter for timestamp" b
 class ${1:ClockCnt};
 	virtual interface ${2:if_name}.env_mp vif;
 
@@ -88,7 +88,7 @@ class ${1:ClockCnt};
 endclass
 endsnippet
 
-snippet "Input(Seqr)?" "testcase sequencer skeleton" rb
+snippet class "testcase sequencer skeleton" b
 class ${1:InputSeqr}${2: #()};
 
 	//  input transaction class
@@ -134,7 +134,7 @@ class ${1:InputSeqr}${2: #()};
 endclass
 endsnippet
 
-snippet "Input(Seq)?" "testcase sequence skeleton" rb
+snippet class "testcase sequence skeleton" b
 class ${1:InputSeq}${2: #()};
 	//  input transaction class
 	typedef InputTxn${3: #()} INPUT_TXN;

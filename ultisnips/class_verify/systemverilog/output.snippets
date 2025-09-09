@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.1.1
+#   Version         :   v1.1.2
 #
 #   Description     :   DUT output
 #
@@ -13,7 +13,7 @@
 #
 #===================================================================================================
 
-snippet "Output(Mon)?" "output monitor skeleton" rb
+snippet class "output monitor skeleton" b
 class ${1:OutputMon}${2: #()};
 	//  input transaction class
 	typedef OutputTxn${3: #()} OUTPUT_TXN;
@@ -69,7 +69,7 @@ class ${1:OutputMon}${2: #()};
 endclass
 endsnippet
 
-snippet "Output(Agent)?" "output agent skeleton" rb
+snippet class "output agent skeleton" b
 class ${1:OutputAgent}${2: #()};
 	//  input transaction class
 	typedef OutputTxn${3: #()} OUTPUT_TXN;
