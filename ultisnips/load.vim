@@ -8,7 +8,9 @@
 "-----------------------
 
 let s:snippet_path = expand('<sfile>:p:h')
-let s:snippet_dir_list = [s:snippet_path]
+let s:snippet_dir_list = []
+call add(s:snippet_dir_list, s:snippet_path.'/basic')
+call add(s:snippet_dir_list, s:snippet_path.'/class_verify')
 
 
 "--------------------------------

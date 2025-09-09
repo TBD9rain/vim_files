@@ -1,0 +1,51 @@
+#===================================================================================================
+#
+#   Target Code     :   SystemVerilog
+#   Version         :   v1.0.3
+#
+#   Description     :   verification functional coverage
+#
+#   Additional info :   Get instruction with ":help UltiSnips".
+#                       Use "snippet" or "sn" to trigger snippet for snippet edition.
+#
+#   Author          :   TBD9rain
+#   Email           :
+#
+#===================================================================================================
+
+snippet "Cov(Collector)?" "coverage collector skeleton" rb
+class ${1:CovCollector}${2: #()};
+	//  input transaction class
+	typedef InputTxn${3: #()} INPUT_TXN;
+
+	mailbox #(INPUT_TXN) i2cov_mbox;
+
+	INPUT_TXN txn_data;
+
+	//  coverage group definition
+	$0
+
+	function new();
+		//  instantiate coverage group
+
+		print_msg($typename(this), "initialization completed.", INFO, MEDIUM, LOG);
+	endfunction
+
+	task run;
+		forever begin
+			i2cov_mbox.get(txn_data);
+			//  coverage sample
+
+		end
+	endtask
+
+	function real get_coverage(
+		ref int num_bins_covered,
+		ref int num_bins_total);
+
+		get_coverage = .get_coverage(num_bins_covered, num_bins_total);
+	endfunction
+endclass
+endsnippet
+
+

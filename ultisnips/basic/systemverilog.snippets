@@ -1,9 +1,9 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.2
+#   Version         :   v1.0.1
 #
-#   Description     :   verification functional coverage
+#   Description     :
 #
 #   Additional info :   Get instruction with ":help UltiSnips".
 #                       Use "snippet" or "sn" to trigger snippet for snippet edition.
@@ -13,39 +13,69 @@
 #
 #===================================================================================================
 
-snippet "Cov(Collector)?" "coverage collector skeleton" rb
-class ${1:CovCollector}${2: #()};
-	//  input transaction class
-	typedef InputTxn${3: #()} INPUT_TXN;
+extends verilog
 
-	mailbox #(INPUT_TXN) i2cov_mbox;
 
-	INPUT_TXN txn_data;
+#--------------
+# general class
+#--------------
 
-	//  coverage group definition
+snippet class "empty class skeleton" bw
+class ${1:cls_name};
+
 	$0
 
-	function new();
-		//  instantiate coverage group
-
-		print_msg($typename(this), "initialization completed.", INFO, MEDIUM, LOG);
+	function new;
+		
 	endfunction
 
-	task run;
-		forever begin
-			i2cov_mbox.get(txn_data);
-			//  coverage sample
-
-		end
-	endtask
-
-	function real get_coverage(
-		ref int num_bins_covered,
-		ref int num_bins_total);
-
-		get_coverage = .get_coverage(num_bins_covered, num_bins_total);
-	endfunction
 endclass
+endsnippet
+
+#---------
+# variable
+#---------
+
+snippet "rand " "rand variable definition" rbA
+rand bit ${1:[${2: 7}: 0]} ${0:var_name};
+endsnippet
+
+snippet "randc " "randc variable definition" rbA
+randc bit ${1:[${2: 7}: 0]} ${0:var_name};
+endsnippet
+
+snippet "mailbox " "mailbox definition" rbA
+mailbox #(${1:data_type}) ${0:mb_name};
+endsnippet
+
+#------
+# block
+#------
+
+snippet "assert " "instant assert" rbA
+assert (${1:assert condition}) $0
+endsnippet
+
+snippet "fork " "fork block" rbA
+fork
+	$0
+${1|join,join_any,join_none|}
+endsnippet
+
+#-----------
+# subprocess
+#-----------
+
+snippet function "function skeleton" bA
+function ${1:automatic }${2:func_name};
+$0
+endfunction
+endsnippet
+
+snippet task "task skeleton" bA
+task ${1:automatic }${2:task_name};
+$0
+endtask
 endsnippet
 
 #---------
@@ -78,5 +108,4 @@ endsnippet
 snippet bins "bins description" bw
 ${1|bins,ignore_bins,illegal_bins|} ${2:bin_name} = {$0};
 endsnippet
-
 
