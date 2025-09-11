@@ -1,0 +1,29 @@
+#===================================================================================================
+#
+#   Target Code     :   SystemVerilog
+#   Version         :   v1.0.0
+#
+#   Description     :   UVM based sequencer class
+#
+#   Additional info :   Get instruction with ":help UltiSnips".
+#                       Use "snippet" or "sn" to trigger snippet for snippet edition.
+#
+#   Author          :   TBD9rain
+#   Email           :
+#
+#===================================================================================================
+
+snippet class "UVM Sequencer" b
+class ${1:Sequencer}${2: #(
+	parameter type REQTXN = ${3:Txn}
+)} extends uvm_sequencer #(.REQ (REQTXN));
+	\`uvm_component${4:`!p snip.rv='_param' if t[2]
+	else ''`}_utils($1`!p snip.rv=' #(REQTXN)' if t[2] else ''`)
+
+	function new(string name="$1", uvm_component parent=null);
+		super.new(name, parent);
+	endfunction
+endclass
+endsnippet
+
+

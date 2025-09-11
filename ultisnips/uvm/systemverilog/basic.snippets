@@ -1,0 +1,101 @@
+#===================================================================================================
+#
+#   Target Code     :   SystemVerilog
+#   Version         :   v1.0.0
+#
+#   Description     :   Snippets for UVM Basic Codes
+#
+#   Additional info :   Get instruction with ":help UltiSnips".
+#                       Use "snippet" or "sn" to trigger snippet for snippet edition.
+#
+#   Author          :   TBD9rain
+#   Email           :
+#
+#===================================================================================================
+
+
+#--------------------------
+# Basic UVM Class Extension
+#--------------------------
+
+snippet class "UVM Component" b
+class ${1:Component} ${2:#() }extends uvm_component;
+	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1`!p snip.rv=' #()' if t[2] else ''`)
+
+	function new(string name="$1", uvm_component parent);
+		super.new(name, parent);
+	endfunction
+endclass
+endsnippet
+
+snippet class "UVM Object" b
+class ${1:Object} ${2:#() }extends uvm_object;
+	\`uvm_object`!p snip.rv='_param' if t[2] else ''`_utils($1`!p snip.rv=' #()' if t[2] else ''`)
+
+	function new(string name="$1");
+		super.new(name);
+	endfunction
+endclass
+endsnippet
+
+
+#------
+# TLM-1
+#------
+
+snippet port "UVM TLM-1 Port" b
+uvm${1|_blocking,_nonblocking|}_${2|put,get,peek,get_peek|}_port #(${3:txn}) ${4:port};
+endsnippet
+
+snippet export "UVM TLM-1 Export" b
+uvm${1|_blocking,_nonblocking|}_${2|put,get,peek,get_peek|}_export #(${3:txn}) ${4:export};
+endsnippet
+
+snippet imp "UVM TLM-1 Implemetation" b
+uvm${1|_blocking,_nonblocking|}_${2|put,get,peek,get_peek|}_imp #(${3:txn}) ${4:imp};
+endsnippet
+
+snippet analysis "UVM TLM-1 Analysis Communication" b
+uvm_analysis_${1|port,export,imp|} #(${2:txn}) ${3:imp};
+endsnippet
+
+
+#------------------
+# Factory Mechanism
+#------------------
+
+snippet create "Factory Create" wA
+${1:Class}${2: #($3)}::type_id::create("${4:name}"${5:, this});$0
+endsnippet
+
+
+#---------------------------
+# Field Automation Mechanism
+#---------------------------
+
+snippet field "Field Automation Registry" b
+\`uvm_field_${1:int}(${2:arg}, ${3:UVM_ALL_ON})$0
+endsnippet
+
+
+#-------------------------
+# UVM Message Print Macros
+#-------------------------
+
+snippet print "UVM Info Macro" b
+\`uvm_info("${1:ID}", ${2:"${3:message}"}, UVM_${4|NONE,LOW,MEDIUM,HIGH,FULL,DEBUG|})$0
+endsnippet
+
+snippet print "UVM Warning Macro" b
+\`uvm_warning("${1:ID}", ${2:"${3:message}"})$0
+endsnippet
+
+snippet print "UVM Error Macro" b
+\`uvm_error("${1:ID}", ${2:"${3:message}"})$0
+endsnippet
+
+snippet print "UVM Fatal Macro" b
+\`uvm_fatal("${1:ID}", ${2:"${3:message}"})$0
+endsnippet
+
+

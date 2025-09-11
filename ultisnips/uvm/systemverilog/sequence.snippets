@@ -1,0 +1,43 @@
+#===================================================================================================
+#
+#   Target Code     :   SystemVerilog
+#   Version         :   v1.0.0
+#
+#   Description     :   UVM based sequence class
+#
+#   Additional info :   Get instruction with ":help UltiSnips".
+#                       Use "snippet" or "sn" to trigger snippet for snippet edition.
+#
+#   Author          :   TBD9rain
+#   Email           :
+#
+#===================================================================================================
+
+snippet class "UVM Sequence" b
+class ${1:Seq}${2: #(
+	parameter type REQTXN = ${3:InTxn}
+)} extends uvm_sequence #(.REQ (REQTXN));
+	\`uvm_object`!p snip.rv='_param' if t[2] else ''`_utils($1`!p snip.rv=' #(REQTXN)' if t[2] else ''`)
+
+	function new(string name="$1");
+		super.new(name);
+	endfunction
+
+	virtual task body()$0
+		REQTXN tc_txn;
+
+		if (starting_phase != null) begin
+			starting_phase.raise_objection(this);
+			repeat (10) begin
+				\`uvm_do(tc_txn)
+			end
+		end
+		#5000;
+		if (starting_phase != null) begin
+			starting_phase.drop_objection(this);
+		end
+	endtask
+endclass
+endsnippet
+
+

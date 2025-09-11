@@ -1,0 +1,97 @@
+#===================================================================================================
+#
+#   Target Code     :   SystemVerilog
+#   Version         :   v1.0.0
+#
+#   Description     :   UVM based testbench
+#
+#   Additional info :   Get instruction with ":help UltiSnips".
+#                       Use "snippet" or "sn" to trigger snippet for snippet edition.
+#
+#   Author          :   TBD9rain
+#   Email           :
+#
+#===================================================================================================
+
+snippet tb "UVM testbench" b
+\`timescale 1ns/100ps
+
+module ${1:dut}_tb;
+
+//======================
+//  PARAMETER DEFINITION
+//======================
+
+parameter   CLK_HALF_PERIOD     = 10/2;
+
+
+//=====================
+//  PACKAGE IMPORTATION
+//=====================
+
+\`include "uvm_macros.svh"
+import uvm_pkg::*;
+
+import ${2:$1_pkg}::*;
+
+
+//=====================
+//  VARIABLE DEFINITION
+//=====================
+
+bit clk;
+bit rst_n;
+
+${3:$1_if}${4: #()} tb_if();$0
+
+
+//===================
+//  DUT INSTANTIATION
+//===================
+
+$1${5: #()}
+u_dut();
+
+
+//=====================
+//  VERIFICATION CODING
+//=====================
+
+assign  tb_if.clk   = clk;
+assign  tb_if.rst_n = rst_n;
+
+//  clock generator
+initial begin
+	forever begin
+		#(CLK_HALF_PERIOD);
+		clk = ~clk;
+	end
+end
+
+initial begin
+	rst_n = 1'b0;
+	#1000;
+	rst_n = 1'b1;
+end
+
+initial begin
+	$write("\n*****************************\n");
+	$write("Running UVM version: %s\n", \`UVM_VERSION_STRING);
+	$write("*****************************\n\n");
+end
+
+initial begin
+	uvm_config_db#(virtual $3)::set(null, "uvm_test_top.env.i_agt.drv", "vif", tb_if);
+	uvm_config_db#(virtual $3)::set(null, "uvm_test_top.env.i_agt.mon", "vif", tb_if);
+	uvm_config_db#(virtual $3)::set(null, "uvm_test_top.env.o_agt.mon", "vif", tb_if);
+end
+
+initial begin
+	run_test("${6:Test}");
+end
+
+
+endmodule
+endsnippet
+
+

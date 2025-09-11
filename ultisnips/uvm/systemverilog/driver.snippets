@@ -1,0 +1,56 @@
+#===================================================================================================
+#
+#   Target Code     :   SystemVerilog
+#   Version         :   v1.0.0
+#
+#   Description     :   UVM based driver class
+#
+#   Additional info :   Get instruction with ":help UltiSnips".
+#                       Use "snippet" or "sn" to trigger snippet for snippet edition.
+#
+#   Author          :   TBD9rain
+#   Email           :
+#
+#===================================================================================================
+
+snippet class "UVM Driver" b
+class ${1:Driver}${2: #(
+	parameter type REQTXN = ${3:Txn}
+)} extends uvm_driver #(.REQ (REQTXN));
+	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1`!p snip.rv=' #(REQTXN)' if t[2] else ''`)
+
+	//  variable definition
+	virtual interface ${4:dut_if}.drv_mb vif;$0
+
+	function new(string name="$1", uvm_component parent=null);
+		super.new(name, parent);
+	endfunction
+
+	function void build_phase(uvm_phase phase);
+		super.build_phase(phase);
+		if(!uvm_config_db #(virtual $4)::get(this, "", "vif", vif)) begin
+			\`uvm_fatal("$1", "Virtual interface is not set.")
+		end
+	endfunction
+
+	task reset_phase(uvm_phase phase);
+	endtask
+
+	task main_phase(uvm_phase phase);
+		while(!vif.rst_n) begin
+			@vif.drv_cb;
+		end
+		forever begin
+			seq_item_port.get_next_item(req);
+			drive_req(req);
+			seq_item_port.item_done();
+		end
+	endtask
+
+	task drive_req;
+		REQ txn;
+	endtask
+endclass
+endsnippet
+
+

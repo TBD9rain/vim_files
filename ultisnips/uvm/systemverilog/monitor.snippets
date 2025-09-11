@@ -1,0 +1,59 @@
+#===================================================================================================
+#
+#   Target Code     :   SystemVerilog
+#   Version         :   v1.0.0
+#
+#   Description     :   UVM based monitor class
+#
+#   Additional info :   Get instruction with ":help UltiSnips".
+#                       Use "snippet" or "sn" to trigger snippet for snippet edition.
+#
+#   Author          :   TBD9rain
+#   Email           :
+#
+#===================================================================================================
+
+snippet class "UVM Monitor" b
+class ${1:Monitor}${2: #(
+	parameter type TXN = ${3:Txn}
+)} extends uvm_monitor;
+	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1`!p snip.rv=' #(TXN)' if t[2] else ''`)
+
+	//  variable definition
+	virtual interface ${4:dut_if}.mon_cb vif;
+
+	uvm_analysis_port #(TXN) ap;$0
+
+	function new(string name="$1", uvm_component parent=null);
+		super.new(name, parent);
+	endfunction
+
+	function void build_phase(uvm_phase phase);
+		super.build_phase(phase);
+		if(!uvm_config_db #(virtual $4)::get(this, "", "vif", vif)) begin
+			\`uvm_fatal("$1", "Virtual interface is not set.")
+		end
+		ap = new("ap", this);
+	endfunction
+
+	task main_phase(uvm_phase phase);
+		TXN txn;
+
+		forever begin
+			while(!vif.rst_n) begin
+				@vif.drv_cb;
+			end
+			sample_txn(txn);
+			ap.write(txn);
+		end
+	endtask
+
+	task sample_txn;
+		output TXN txn;
+
+		txn = TXN::type_id::create("txn");
+	endtask
+endclass
+endsnippet
+
+
