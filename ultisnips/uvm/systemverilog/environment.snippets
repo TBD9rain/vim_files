@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.0
+#   Version         :   v1.0.1
 #
 #   Description     :   UVM based environment class
 #
@@ -44,8 +44,8 @@ class ${1:Env}${2: #(
 		mdl = $11$12::type_id::create("mdl", this);
 		scb = $13$14::type_id::create("scb", this);
 
-		i_agt.is_active = UVM_ACTIVE;
-		o_agt.is_active = UVM_PASSIVE;
+		uvm_config_db#(uvm_active_passive_enum)::set(this, "i_agt", "is_active", UVM_ACTIVE);${15:
+		uvm_config_db#(uvm_active_passive_enum)::set(this, "o_agt", "is_active", UVM_PASSIVE);}
 
 		iagt_mdl_fifo = new("iagt_mdl_fifo", this);
 		iagt_cov_fifo = new("iagt_cov_fifo", this);

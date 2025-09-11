@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.0
+#   Version         :   v1.0.1
 #
 #   Description     :   UVM based sequence class
 #
@@ -32,7 +32,8 @@ class ${1:Seq}${2: #(
 				\`uvm_do(tc_txn)
 			end
 		end
-		#5000;
+		//  delay before drop objection
+		starting_phase.phase_done.set_drain_time(this, 1000ns);
 		if (starting_phase != null) begin
 			starting_phase.drop_objection(this);
 		end

@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.0
+#   Version         :   v1.0.1
 #
 #   Description     :   Snippets for UVM Basic Codes
 #
@@ -64,8 +64,8 @@ endsnippet
 # Factory Mechanism
 #------------------
 
-snippet create "Factory Create" wA
-${1:Class}${2: #($3)}::type_id::create("${4:name}"${5:, this});$0
+snippet "=\s+create" "Factory Create" rA
+= ${1:Class}${2: #($3)}::type_id::create("${4:name}"${5:, this});$0
 endsnippet
 
 
