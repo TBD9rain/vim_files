@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.0
+#   Version         :   v1.0.3
 #
 #   Description     :   verification top
 #
@@ -10,12 +10,11 @@
 #
 #   Author          :   TBD9rain
 #   Email           :
-# 
+#
 #===================================================================================================
 
-snippet TestEnv "test environment skeleton" bw
+snippet class "test environment skeleton" b
 class ${1:TestEnv}${2: #()};
-
 	//  input transaction class
 	typedef InputTxn${3: #()} INPUT_TXN;
 	typedef OutputTxn${4: #()} OUTPUT_TXN;
@@ -55,7 +54,7 @@ class ${1:TestEnv}${2: #()};
 		if (this.drive_en) begin
 			this.seq = new();
 		end
-		this.input_agt = new(this.drive_en);
+		this.input_agt = new(this.drive_en, this.cover_en);
 		if (this.cover_en) begin
 			this.cov_coll = new();
 		end
@@ -145,14 +144,14 @@ class ${1:TestEnv}${2: #()};
 endclass
 endsnippet
 
-snippet package "verification environment package" bw
+snippet package "verification environment package" b
 package ${1:pkg_name};
 
 //=====================
 //  PACKAGE IMPORTATION
 //=====================
 
-${2:import msg_log_pkg::*;}
+${2:import msg_print_pkg::*;}
 
 
 //==================

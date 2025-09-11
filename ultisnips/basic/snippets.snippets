@@ -1,6 +1,6 @@
 #===================================================================================================
 #
-#   Target Code     :   Python
+#   Target Code     :   UltiSnips snippet
 #   Version         :   v1.0.0
 #
 #   Description     :
@@ -10,28 +10,33 @@
 #
 #   Author          :   TBD9rain
 #   Email           :
-# 
+#
 #===================================================================================================
 
-snippet "#   head info" "automatic filling head info" b
+snippet "# head info" "haed info" b
 #===================================================================================================
 #
-#   Project         :   ${1}
+#   Target Code     :   $1
 #   Version         :   v${2:1.0.0}
-#   Title           :   `!p import os; name, ext = os.path.splitext(fn); snip.rv = name`
 #
 #   Description     :   $0
 #
-#   Additional info :
+#   Additional info :   Get instruction with ":help UltiSnips".
+#                       Use "snippet" or "sn" to trigger snippet for snippet edition.
+#
 #   Author          :   ${3:`!p import os; snip.rv = os.getenv('USERNAME') or os.getenv('USER');`}
 #   Email           :
 #
 #===================================================================================================
 endsnippet
 
-snippet "todo" "to do message" bwA
-#   TODO
-#   ${0:what to do}
-#   BY `!p import os; snip.rv = os.getenv('USERNAME') or os.getenv('USER');` AT `!v strftime("%Y-%m-%d %H:%M")`
+snippet "sn(ippet)?" "ultisnips" br
+snippet ${1:trigger_str} "${2:Description}" ${3:b}
+$0
+${1/.*/endsnippet/}
+endsnippet
+
+snippet "py(thon)?" "python block" wr
+\`!p snip.rv='${1:return value}'\`
 endsnippet
 

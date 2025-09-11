@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.0
+#   Version         :   v1.0.1
 #
 #   Description     :
 #
@@ -10,7 +10,7 @@
 #
 #   Author          :   TBD9rain
 #   Email           :
-# 
+#
 #===================================================================================================
 
 extends verilog
@@ -37,11 +37,11 @@ endsnippet
 #---------
 
 snippet "rand " "rand variable definition" rbA
-rand    bit [ ${1:7}: 0] ${2:var_name};
+rand bit ${1:[${2: 7}: 0]} ${0:var_name};
 endsnippet
 
 snippet "randc " "randc variable definition" rbA
-randc   bit [ ${1:7}: 0] ${2:var_name};
+randc bit ${1:[${2: 7}: 0]} ${0:var_name};
 endsnippet
 
 snippet "mailbox " "mailbox definition" rbA
@@ -76,5 +76,36 @@ snippet task "task skeleton" bA
 task ${1:automatic }${2:task_name};
 $0
 endtask
+endsnippet
+
+#---------
+# coverage
+#---------
+
+snippet covergroup "coverage model definition" bw
+covergroup ${1:covergroup_name}${2: @(${3:sample_event})};
+	//  coverage point definition
+	$0
+	//  cross coverage definition
+
+endgroup
+endsnippet
+
+snippet coverpoint "coverage point definition" bw
+${1:label}`!p snip.rv = ': ' if t[1] else ''`coverpoint ${2:var_name} {
+	//  bins definition
+	$0
+}
+endsnippet
+
+snippet cross "cross coverage definition" bw
+${1:label}`!p snip.rv = ': ' if t[1] else ''`cross ${2:var_names and labels} {
+	//  bins definition
+	$0
+}
+endsnippet
+
+snippet bins "bins description" bw
+${1|bins,ignore_bins,illegal_bins|} ${2:bin_name} = {$0};
 endsnippet
 

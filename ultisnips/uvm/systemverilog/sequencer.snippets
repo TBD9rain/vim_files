@@ -1,33 +1,29 @@
 #===================================================================================================
 #
-#   Target Code     :   Markdown
+#   Target Code     :   SystemVerilog
 #   Version         :   v1.0.0
 #
-#   Description     :
+#   Description     :   UVM based sequencer class
 #
 #   Additional info :   Get instruction with ":help UltiSnips".
 #                       Use "snippet" or "sn" to trigger snippet for snippet edition.
 #
 #   Author          :   TBD9rain
 #   Email           :
-# 
+#
 #===================================================================================================
 
-snippet todo "to do message" bwA
-<!--
-TODO
-${0:what to do}
-BY `!p import os; snip.rv = os.getenv('USERNAME') or os.getenv('USER');` AT `!v strftime("%Y-%m-%d %H:%M")`
--->
+snippet class "UVM Sequencer" b
+class ${1:Sequencer}${2: #(
+	parameter type REQTXN = ${3:Txn}
+)} extends uvm_sequencer #(.REQ (REQTXN));
+	\`uvm_component${4:`!p snip.rv='_param' if t[2]
+	else ''`}_utils($1`!p snip.rv=' #(REQTXN)' if t[2] else ''`)
+
+	function new(string name="$1", uvm_component parent=null);
+		super.new(name, parent);
+	endfunction
+endclass
 endsnippet
 
-snippet table "insert table" bw
-|${1:header1}|${2:header1}|
-|${3|:---,:---:,---:|}|$3|
-|$0||
-endsnippet
-
-snippet comment "comment block" b
-<!-- ${0:comment} -->
-endsnippet
 

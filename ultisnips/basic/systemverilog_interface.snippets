@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.0
+#   Version         :   v1.0.3
 #
 #   Description     :   verification interface
 #
@@ -10,68 +10,71 @@
 #
 #   Author          :   TBD9rain
 #   Email           :
-# 
+#
 #===================================================================================================
 
 snippet interface "interface definition" bw
-interface ${1:if_name};
-
-	logic   ${2:clk};
-	logic   ${3:rst_n};
-
-	//  parameter
+interface ${1:if_name}${2: #()};
+	logic ${3:clk};
+	logic ${4:rst_n};
 
 	//  environment variable
-	longint unsigned    clk_cnt;
+	longint unsigned clk_cnt;
 
 	//  DUT IO port
-	logic           data_in_vld;
-	logic   [ ${6:7}: 0] ${7:data_in};$0
+	logic data_in_vld;
+	logic [${6: 7}: 0] ${7:data_in};$0
 
-	logic           data_out_vld;
-	logic   [ ${8:7}: 0] ${9:data_out};
+	logic data_out_vld;
+	logic [${8: 7}: 0] ${9:data_out};
 
 	//  environment
 	clocking env_cb @(${5|posedge,negedge|} clk);
-		output  clk_cnt;
+		output clk_cnt;
 	endclocking
 
-	modport env_mp (clocking env_cb);
+	modport env_mp (
+		input rst_n,
+		clocking env_cb);
 
 	//  driver
-	clocking drv_cb @($5 $2);
-		output  data_in_vld;
-		output  $7;
+	clocking drv_cb @($5 $3);
+		output data_in_vld;
+		output $7;
 
-		input   data_out_vld;
-		input   $9;
+		input data_out_vld;
+		input $9;
 	endclocking
 
-	modport drv_mp (clocking drv_cb);
+	modport drv_mp (
+		input $4,
+		clocking drv_cb);
 
 	//  monitor
-	clocking mon_cb @($5 $2);
-		input   clk_cnt;
+	clocking mon_cb @($5 $3);
+		input clk_cnt;
 
-		input   data_in_vld;
-		input   $7;
+		input data_in_vld;
+		input $7;
 
-		input   data_out_vld;
-		input   $9;
+		input data_out_vld;
+		input $9;
 	endclocking
 
-	modport mon_mp (clocking mon_cb);
+	modport mon_mp (
+		input $4,
+		clocking mon_cb);
 
 	//  DUT
 	modport dut_mp (
-		input   $2,
-		input   $3,
+		input $3,
+		input $4,
 
-		input   data_in_vld,
-		input   $7,
+		input data_in_vld,
+		input $7,
 
-		input   data_out_vld,
-		input   $9
+		output data_out_vld,
+		output $9
 	);
 endinterface
 endsnippet

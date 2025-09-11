@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.0
+#   Version         :   v1.1.1
 #
 #   Description     :   DUT in out transaction
 #
@@ -10,10 +10,10 @@
 #
 #   Author          :   TBD9rain
 #   Email           :
-# 
+#
 #===================================================================================================
 
-snippet "Input(Txn)?" "DUT input transaction skeleton" rb
+snippet class "DUT input transaction skeleton" b
 class ${1:InputTxn}${2: #()};
 	//  variable definition
 	${3|rand,randc|} bit [${4: 7}: 0] ${5:var_name};$0
@@ -28,10 +28,16 @@ class ${1:InputTxn}${2: #()};
 		this.$5 = $5;
 		this.timestamp = timestamp;
 	endfunction
+
+	function string print;
+		print = $sformatf({
+			"$5 : %0d\n",
+			}, $5):
+	endfunction
 endclass
 endsnippet
 
-snippet "Output(Txn)?" "DUT output transaction skeleton" rb
+snippet class "DUT output transaction skeleton" b
 class ${1:OutputTxn}${2: #()};
 	//  variable definition
 	logic [${3: 7}: 0] ${4:var_name};$0
@@ -46,18 +52,30 @@ class ${1:OutputTxn}${2: #()};
 		this.$4 = $4;
 		this.timestamp = timestamp;
 	endfunction
+
+	function string print;
+		print = $sformatf({
+			"$4 : %0d\n",
+			}, $4):
+	endfunction
+
+	function bit compare(
+		input OutputTxn txn);
+
+		compare = (txn.$4 === $4);
+	endfunction
 endclass
 endsnippet
 
-snippet ClockCnt "clock counter for timestamp" bw
+snippet class "clock counter for timestamp" b
 class ${1:ClockCnt};
 	virtual interface ${2:if_name}.env_mp vif;
 
 	longint unsigned clk_cnt;
 
 	function new();
-		this.clk_cnt = 0;
-		print_msg($typename(this), "initialization completed.", INFO, HIGH, LOG);
+		this.clk_cnt = 0;$0
+		print_msg($typename(this), "initialization completed.", INFO, MEDIUM, LOG);
 	endfunction
 
 	task run;
@@ -67,10 +85,10 @@ class ${1:ClockCnt};
 			vif.env_cb.clk_cnt  <= clk_cnt;
 		end
 	endtask
-endclass$0
+endclass
 endsnippet
 
-snippet "Input(Seqr)?" "testcase sequencer skeleton" rb
+snippet class "testcase sequencer skeleton" b
 class ${1:InputSeqr}${2: #()};
 
 	//  input transaction class
@@ -85,7 +103,7 @@ class ${1:InputSeqr}${2: #()};
 	function new();
 		this.seqr_mbox = new();
 		this.txn_num = 0;$0
-		print_msg($typename(this), "initialization completed.", INFO, HIGH, LOG);
+		print_msg($typename(this), "initialization completed.", INFO, MEDIUM, LOG);
 	endfunction
 
 	task put(
@@ -116,7 +134,7 @@ class ${1:InputSeqr}${2: #()};
 endclass
 endsnippet
 
-snippet "Input(Seq)?" "testcase sequence skeleton" rb
+snippet class "testcase sequence skeleton" b
 class ${1:InputSeq}${2: #()};
 	//  input transaction class
 	typedef InputTxn${3: #()} INPUT_TXN;
@@ -124,7 +142,7 @@ class ${1:InputSeq}${2: #()};
 	InputSeqr seqr;
 
 	function new();
-		print_msg($typename(this), "initialization completed.", INFO, HIGH, LOG);
+		print_msg($typename(this), "initialization completed.", INFO, MEDIUM, LOG);
 	endfunction
 
 	task gen_rand_tc(
@@ -136,11 +154,11 @@ class ${1:InputSeq}${2: #()};
 			txn_data = new();
 			assert(txn_data.randomize())
 			else begin
-				print_msg($typename(this), "randomization failed.", ERROR, HIGHEST, STOP);
+				print_msg($typename(this), "randomization failed.", FATAL, HIGHEST, STOP);
 			end
-			seqr.put(txn_data);$0
-		end
-		print_msg($typename(this), $sformatf("added %0d random testcases.", tc_num), INFO, MEDIUM, LOG);
+			seqr.put(txn_data);
+		end$0
+		print_msg($typename(this), $sformatf("added %0d random testcases.", tc_num), INFO, HIGH, LOG);
 	endtask
 
 	task add_case(

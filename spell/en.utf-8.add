@@ -66,6 +66,7 @@ jitter
 json
 JTAG
 JTCK
+lifecycle
 linter
 LSB
 LUT
@@ -127,6 +128,7 @@ rom
 rtl
 runtime
 rx
+severities
 SoC
 spi
 SRAM
@@ -155,6 +157,7 @@ untagged
 Untrack
 untracked
 untriggered
+uvm
 vba
 verible
 verilog

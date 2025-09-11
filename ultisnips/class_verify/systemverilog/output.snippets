@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.0
+#   Version         :   v1.1.2
 #
 #   Description     :   DUT output
 #
@@ -10,12 +10,11 @@
 #
 #   Author          :   TBD9rain
 #   Email           :
-# 
+#
 #===================================================================================================
 
-snippet "Output(Mon)?" "output monitor skeleton" rb
+snippet class "output monitor skeleton" b
 class ${1:OutputMon}${2: #()};
-
 	//  input transaction class
 	typedef OutputTxn${3: #()} OUTPUT_TXN;
 
@@ -27,7 +26,7 @@ class ${1:OutputMon}${2: #()};
 
 	function new();
 		this.ptn_cnt = 0;
-		print_msg($typename(this), "initialization completed.", INFO, HIGH, LOG);
+		print_msg($typename(this), "initialization completed.", INFO, MEDIUM, LOG);
 	endfunction
 
 	task run;
@@ -48,7 +47,7 @@ class ${1:OutputMon}${2: #()};
 
 		longint unsigned timestamp;
 
-		if (vif.mon_cb.${7:data_out_vld}) begin
+		if (vif.mon_cb.data_out_vld) begin
 			$6 = vif.mon_cb.$6;
 
 			timestamp = vif.mon_cb.clk_cnt;
@@ -58,29 +57,20 @@ class ${1:OutputMon}${2: #()};
 			msg = $sformatf({
 				"DUT input pattern caught:\n",
 				"\tNO. %0d\n",
-				data_print_str(txn_caught)},
+				txn_caught.print},
 				ptn_cnt);
-			print_msg($typename(this), msg, INFO, LOW, LOG);
+			print_msg($typename(this), msg, INFO, DEBUG, LOG);
 
 			o2score_mbox.put(txn_caught);
 
 			ptn_cnt++;
 		end
 	endtask
-
-	function string data_print_str(
-		input OUTPUT_TXN txn_print);
-
-		data_print_str  = $sformatf({
-			"\t$6: %d\n"
-			}, txn_print.$6);
-	endfunction
 endclass
 endsnippet
 
-snippet "Output(Agent)?" "output agent skeleton" rb
+snippet class "output agent skeleton" b
 class ${1:OutputAgent}${2: #()};
-
 	//  input transaction class
 	typedef OutputTxn${3: #()} OUTPUT_TXN;
 
@@ -92,13 +82,13 @@ class ${1:OutputAgent}${2: #()};
 
 	function new();
 		this.monitor = new();$0
-		print_msg($typename(this), "initialization completed.", INFO, HIGH, LOG);
+		print_msg($typename(this), "initialization completed.", INFO, MEDIUM, LOG);
 	endfunction
 
 	function void connect;
 		monitor.vif = vif;
 		monitor.o2score_mbox = o2score_mbox;
-		print_msg($typename(this), "connection completed.", INFO, HIGH, LOG);
+		print_msg($typename(this), "connection completed.", INFO, MEDIUM, LOG);
 	endfunction
 
 	task run;

@@ -24,7 +24,5 @@ autocmd BufNewFile .gitignore execute '0r ' . g:my_template_path . '/template.gi
 " snippet template
 autocmd BufNewFile *.snippets execute '0r ' . g:my_template_path . '/template.snippets'
 " systemverilog code template
-autocmd BufNewFile *{_tb}\@<!.sv execute '0r ' . g:my_template_path . '/general.sv'
-" systemverilog testbench template
-autocmd BufNewFile *_tb.sv execute '0r ' . g:my_template_path . '/testbench.sv'
+autocmd BufNewFile *.sv execute '0r ' . g:my_template_path . '/general.sv'
 
