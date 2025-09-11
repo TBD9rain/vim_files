@@ -50,7 +50,7 @@ if {$sim_time <= 0} {
 # add "+typdelays" or "+maxdelays" or "+mindelays" for timing simulation
 
 # add "-g<param_name>=<param_value>" to assign a value to a parameter without explicit value
-# add "-G<param_name>=<param_value>" to assign or override a parameter 
+# add "-G<param_name>=<param_value>" to assign or override a parameter
 
 vsim -lib work \
     opt_tb \
