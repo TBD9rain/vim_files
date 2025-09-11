@@ -3,7 +3,9 @@ let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol = '󰈔'
 " add or override individual additional file types
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {} " needed
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['v'] = '󰻟'
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vh'] = '󰻟'
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['sv'] = '󰻠'
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['svh'] = '󰻠'
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['m'] = '󰯃'
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['tcl'] = '󰯃'
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['do'] = '󰯃'
