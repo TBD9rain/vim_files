@@ -1,0 +1,37 @@
+#===================================================================================================
+#
+#   Target Code : Vim script
+#   Version     : v1.0.0
+#
+#   Description:
+#
+#   Additional info:
+#       Get instruction with ":help UltiSnips".
+#       Use "snippet" or "sn" to trigger snippet for snippet edition.
+#
+#   Author  : TBD9rain
+#   Email   :
+#
+#===================================================================================================
+
+snippet fileHeader "automatic filling head info" b
+"===================================================================================================
+"
+"   Version : v${1:1.0.0}
+"   Title   : `!p import os; name, ext = os.path.splitext(fn); snip.rv = name`
+"
+"   Description${3:
+"       ${4:text}}
+"
+"   Additional info${5:
+"       ${6:text}}
+"
+"   Author  : ${2:`!p import os; snip.rv = os.getenv('USERNAME') or os.getenv('USER');`}
+"   Email   :
+"
+"===================================================================================================
+
+$0
+endsnippet
+
+

@@ -38,4 +38,5 @@ autocmd BufNewFile *.py call s:InsertSnippet('fileHeader')
 autocmd BufNewFile *.c call s:InsertSnippet('fileHeader')
 autocmd BufNewFile *.sv call s:InsertSnippet('fileHeader')
 autocmd BufNewFile *.snippets call s:InsertSnippet('fileHeader')
+autocmd BufNewFile *.vim call s:InsertSnippet('fileHeader')
 
