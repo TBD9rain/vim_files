@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   Python
-#   Version         :   v1.0.0
+#   Version         :   v1.0.2
 #
 #   Description     :
 #
@@ -13,20 +13,25 @@
 #
 #===================================================================================================
 
-snippet "#   head info" "automatic filling head info" b
+snippet fileHeader "automatic filling head info" b
 #===================================================================================================
 #
-#   Project         :   ${1}
-#   Version         :   v${2:1.0.0}
-#   Title           :   `!p import os; name, ext = os.path.splitext(fn); snip.rv = name`
+#   Project : ${1}
+#   Version : 1.0.0
+#   Title   : ${2:`!p import os; name, ext = os.path.splitext(fn); snip.rv = name`}
 #
-#   Description     :   $0
+#   Description${3:
+#       ${4:text}}
 #
-#   Additional info :
-#   Author          :   ${3:`!p import os; snip.rv = os.getenv('USERNAME') or os.getenv('USER');`}
-#   Email           :
+#   Additional info${5:
+#       ${6:text}}${7:
+#
+#   Author  : ${8:`!p import os; snip.rv = os.getenv('USERNAME') or os.getenv('USER');`}${9:
+#   Email   : $10}}
 #
 #===================================================================================================
+
+$0
 endsnippet
 
 snippet "todo" "to do message" bwA

@@ -1,0 +1,51 @@
+#===================================================================================================
+#
+#   Target Code : Verilog
+#   Version     : v1.0.0
+#
+#   Description
+#		module definition
+#
+#   Additional info
+#		Get instruction with ":help UltiSnips".
+#       Use "snippet" or "sn" to trigger snippet for snippet edition.
+#
+#   Author  : TBD9rain
+#   Email   :
+#
+#===================================================================================================
+
+snippet module "module block definition" bA
+module ${1:`!p import os; name, ext = os.path.splitext(fn); snip.rv = name`} #(
+//======================
+//  PARAMETER DEFINITION
+//======================
+
+parameter ${2:DATA_WIDTH} = ${3:8},
+)
+(
+//=================
+//  PORT DEFINITION
+//=================
+
+input clk,
+input rst_n,
+);$0
+
+
+//=====================
+//  VARIABLE DEFINITION
+//=====================
+
+
+
+//===============
+//  DESIGN CODING
+//===============
+
+
+
+endmodule
+endsnippet
+
+

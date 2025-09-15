@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   UltiSnips snippet
-#   Version         :   v1.0.0
+#   Version         :   v1.0.2
 #
 #   Description     :
 #
@@ -13,21 +13,25 @@
 #
 #===================================================================================================
 
-snippet "# head info" "haed info" b
+snippet fileHeader "haed info" b
 #===================================================================================================
 #
-#   Target Code     :   $1
-#   Version         :   v${2:1.0.0}
+#   Target Code : $1
+#   Version     : 1.0.0
 #
-#   Description     :   $0
+#   Description${2:
+#       ${3:text}}
 #
-#   Additional info :   Get instruction with ":help UltiSnips".
-#                       Use "snippet" or "sn" to trigger snippet for snippet edition.
+#   Additional info
+#       Get instruction with ":help UltiSnips".
+#       Use "snippet" or "sn" to trigger snippet for snippet edition.${4:
 #
-#   Author          :   ${3:`!p import os; snip.rv = os.getenv('USERNAME') or os.getenv('USER');`}
-#   Email           :
+#   Author  : ${5:`!p import os; snip.rv = os.getenv('USERNAME') or os.getenv('USER');`}${6:
+#   Email   : $7}}
 #
 #===================================================================================================
+
+$0
 endsnippet
 
 snippet "sn(ippet)?" "ultisnips" br

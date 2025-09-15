@@ -1,3 +1,17 @@
+"===================================================================================================
+"
+"   Version : 1.0.0
+"   Title   : Python Syntax
+"
+"   Description
+"       customized python syntax
+"
+"   Additional info
+"
+"   Author  : TBD9rain
+"
+"===================================================================================================
+
 " f-string 
 syn region   pythonFString
     \ matchgroup=pythonQuotes

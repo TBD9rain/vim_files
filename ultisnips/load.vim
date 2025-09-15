@@ -1,7 +1,17 @@
-"====================
-"   TBD9rain SNIPPETS
-"====================
-
+"===================================================================================================
+"
+"   Version : 1.0.0
+"   Title   : UltiSnips Load
+"
+"   Description
+"       UltiSnips load configuration
+"
+"   Additional info
+"
+"   Author  : TBD9rain
+"   Email   :
+"
+"===================================================================================================
 
 "-----------------------
 "   Collect Snippet Path
@@ -19,4 +29,24 @@ call add(s:snippet_dir_list, s:snippet_path.'/uvm')
 "--------------------------------
 
 let g:UltiSnipsSnippetDirectories = s:snippet_dir_list
+
+
+"----------------------------
+"   File Head Info Automation
+"----------------------------
+
+function! s:InsertSnippet(name)
+    let s:key = eval('"'.substitute(g:UltiSnipsJumpOrExpandTrigger, '<', '\\<', 'g').'"')
+
+    call setline('.', a:name)
+    call feedkeys('A', 'nt')
+    call feedkeys(s:key, 'mt')
+endfunction
+
+autocmd BufNewFile *.v call s:InsertSnippet('fileHeader')
+autocmd BufNewFile *.py call s:InsertSnippet('fileHeader')
+autocmd BufNewFile *.c call s:InsertSnippet('fileHeader')
+autocmd BufNewFile *.sv call s:InsertSnippet('fileHeader')
+autocmd BufNewFile *.snippets call s:InsertSnippet('fileHeader')
+autocmd BufNewFile *.vim call s:InsertSnippet('fileHeader')
 

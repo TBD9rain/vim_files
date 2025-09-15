@@ -1,0 +1,93 @@
+#===================================================================================================
+#
+#   Target Code : Verilog
+#   Version     : v1.0.0
+#
+#   Description
+#		testbench definition
+#
+#   Additional info
+#       Get instruction with ":help UltiSnips".
+#       Use "snippet" or "sn" to trigger snippet for snippet edition.
+#
+#   Author  : TBD9rain
+#   Email   :
+#
+#===================================================================================================
+
+snippet testbench "testbench definition" b
+\`timescale 1ns/100ps
+
+module ${1:`!p import os; name, ext = os.path.splitext(fn); snip.rv = name`};
+
+//======================
+//  PARAMETER DEFINITION
+//======================
+
+parameter   CLK_PERIOD  = 10;
+
+
+//=====================
+//  VARIABLE DEFINITION
+//=====================
+
+//  sim ctrl
+reg disp_en = 'b1;
+reg sim_end = 'b0;
+
+//  clock and reset
+reg clk;
+reg rst_n;$0
+
+
+//======================
+//  MODULE INSTANTIATION
+//======================
+
+${2:dut_name}${3: #(
+
+)}
+u_dut ();
+
+
+//====================
+//  SIMULATION CONTROL
+//====================
+
+//  clock generator
+initial begin: clk_sim
+	# 10
+	clk = 'b1;
+	forever begin:  clock_gen_dead_loop
+		#(CLK_PERIOD / 2) clk = ~clk;
+	end
+end
+
+initial begin: init_stimulus
+	# 10;
+	rst_n   = 'b0;
+
+	# ({$urandom} % 100)
+	//  stimulus editing
+	rst_n   = 'b1;
+
+	# 50000
+	$finish(2);
+end
+
+
+//==================
+//  DUT OUTPUT CHECK
+//==================
+
+
+
+//============================
+//  TASK & FUNCTION DEFINITION
+//============================
+
+
+
+endmodule
+endsnippet
+
