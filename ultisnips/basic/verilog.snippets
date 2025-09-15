@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   Verilog
-#   Version         :   v1.0.3
+#   Version         :   v1.0.4
 #
 #   Description     :
 #
@@ -17,17 +17,17 @@ snippet fileHeader "automatic filling head info" b
 //==================================================================================================
 //
 //  Project : ${1}
-//  Version : v${2:1.0.0}
-//  Title   : `!p import os; name, ext = os.path.splitext(fn); snip.rv = name`
+//  Version : 1.0.0
+//  Title   : ${2:`!p import os; name, ext = os.path.splitext(fn); snip.rv = name`}
 //
-//  Description${4:
-//      ${5:text}}
+//  Description${3:
+//      ${4:text}}
 //
-//  Additional info${6:
-//      ${7:text}}
+//  Additional info${5:
+//      ${6:text}}${7:
 //
-//  Author  : ${3:`!p import os; snip.rv = os.getenv('USERNAME') or os.getenv('USER');`}
-//  Email   :
+//  Author  : ${8:`!p import os; snip.rv = os.getenv('USERNAME') or os.getenv('USER');`}${9:
+//  Email   : $10}}
 //
 //==================================================================================================
 
