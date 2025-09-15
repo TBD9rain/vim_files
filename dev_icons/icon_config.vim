@@ -1,3 +1,17 @@
+"===================================================================================================
+"
+"   Version : 1.0.0
+"   Title   : Icon Configuration
+"
+"   Description
+"       DevIcons symbol configurations
+"
+"   Additional info
+"
+"   Author  : TBD9rain
+"
+"===================================================================================================
+
 " change the default character when no match found
 let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol = '󰈔'
 " add or override individual additional file types
