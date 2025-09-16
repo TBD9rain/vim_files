@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : Verilog
-#   Version     : v1.0.0
+#   Version     : v1.0.1
 #
 #   Description
 #		module definition
@@ -17,19 +17,19 @@
 
 snippet module "module block definition" bA
 module ${1:`!p import os; name, ext = os.path.splitext(fn); snip.rv = name`} #(
-//======================
-//  PARAMETER DEFINITION
-//======================
+	//======================
+	//  PARAMETER DEFINITION
+	//======================
 
-parameter ${2:DATA_WIDTH} = ${3:8},
+	parameter ${2:DATA_WIDTH} = ${3:8},
 )
 (
-//=================
-//  PORT DEFINITION
-//=================
+	//=================
+	//  PORT DEFINITION
+	//=================
 
-input clk,
-input rst_n,
+	input clk,
+	input rst_n,
 );$0
 
 
