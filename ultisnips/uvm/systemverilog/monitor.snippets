@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.0
+#   Version         :   v1.0.1
 #
 #   Description     :   UVM based monitor class
 #
@@ -20,7 +20,7 @@ class ${1:Monitor}${2: #(
 	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1`!p snip.rv=' #(TXN)' if t[2] else ''`)
 
 	//  variable definition
-	virtual interface ${4:dut_if}.mon_cb vif;
+	virtual interface ${4:dut_if}.mon_mp vif;
 
 	uvm_analysis_port #(TXN) ap;$0
 
