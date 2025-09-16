@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.0
+#   Version         :   v1.0.1
 #
 #   Description     :   UVM based testbench
 #
@@ -42,7 +42,11 @@ import ${2:$1_pkg}::*;
 bit clk;
 bit rst_n;
 
-${3:$1_if}${4: #()} tb_if();$0
+${3:$1_if}${4: #(
+)} tb_if(
+	.clk    (clk),
+	.rst_n  (rst_n)
+);$0
 
 
 //===================
@@ -56,9 +60,6 @@ u_dut();
 //=====================
 //  VERIFICATION CODING
 //=====================
-
-assign  tb_if.clk   = clk;
-assign  tb_if.rst_n = rst_n;
 
 //  clock generator
 initial begin
