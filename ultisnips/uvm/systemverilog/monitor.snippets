@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.0
+#   Version         :   v1.1.0
 #
 #   Description     :   UVM based monitor class
 #
@@ -20,7 +20,7 @@ class ${1:Monitor}${2: #(
 	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1`!p snip.rv=' #(TXN)' if t[2] else ''`)
 
 	//  variable definition
-	virtual interface ${4:dut_if}.mon_cb vif;
+	virtual interface ${4:dut_if}.mon_mp vif;
 
 	uvm_analysis_port #(TXN) ap;$0
 
@@ -40,9 +40,6 @@ class ${1:Monitor}${2: #(
 		TXN txn;
 
 		forever begin
-			while(!vif.rst_n) begin
-				@vif.drv_cb;
-			end
 			sample_txn(txn);
 			ap.write(txn);
 		end
@@ -51,7 +48,12 @@ class ${1:Monitor}${2: #(
 	task sample_txn;
 		output TXN txn;
 
+		@${5:vif.mon_cb};
+		while (1 !== 0) begin
+			@$5;
+		end
 		txn = TXN::type_id::create("txn");
+		txn.timestamp = vif.clk_cnt;
 	endtask
 endclass
 endsnippet

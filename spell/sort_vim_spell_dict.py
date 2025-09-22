@@ -8,9 +8,9 @@
 #
 #   Additional info :
 #   Version history :
-#                       v1.0.0
+#                       v1.1.0
 #
-#   Author          :   lshi1
+#   Author          :   TBD9rain
 #   Email           :
 #
 #===================================================================================================
@@ -77,7 +77,8 @@ if not spelldict_path in git_staged_files:
 with open(spelldict_path, 'r', encoding='utf-8') as spelldict_r:
     lines = spelldict_r.readlines()
 
-sorted_lines = sorted(lines, key=str.lower)
+unique_lines = list(set(lines))
+sorted_lines = sorted(unique_lines, key=str.lower)
 
 try:
     with open(spelldict_path, 'w', encoding='utf-8') as spelldict_w:

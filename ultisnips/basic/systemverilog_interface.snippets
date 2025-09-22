@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code     :   SystemVerilog
-#   Version         :   v1.0.3
+#   Version         :   v1.1.0
 #
 #   Description     :   verification interface
 #
@@ -14,36 +14,37 @@
 #===================================================================================================
 
 snippet interface "interface definition" bw
-interface ${1:if_name}${2: #()};
-	logic ${3:clk};
-	logic ${4:rst_n};
-
-	//  environment variable
-	longint unsigned clk_cnt;
+interface ${1:if_name}${2: #()} (
+	input logic ${3:clk},
+	input logic ${4:rst_n}
+);
 
 	//  DUT IO port
 	logic data_in_vld;
-	logic [${6: 7}: 0] ${7:data_in};$0
+	logic [${7: 7}: 0] ${8:data_in};$0
 
 	logic data_out_vld;
-	logic [${8: 7}: 0] ${9:data_out};
+	logic [${9: 7}: 0] ${10:data_out};
 
-	//  environment
-	clocking env_cb @(${5|posedge,negedge|} clk);
-		output clk_cnt;
-	endclocking
+	//  clock counter for time stamp
+	longint unsigned clk_cnt;
 
-	modport env_mp (
-		input rst_n,
-		clocking env_cb);
+	always_ff @(${5|posedge,negedge|} $3 or ${6|posedge,negedge|} $4) begin
+		if (`!p snip.rv = '~' if t[6]=='negedge' else ''`$4) begin
+			clk_cnt <= 0;
+		end
+		else begin
+			clk_cnt <= clk_cnt + 1;
+		end
+	end
 
 	//  driver
 	clocking drv_cb @($5 $3);
 		output data_in_vld;
-		output $7;
+		output $8;
 
 		input data_out_vld;
-		input $9;
+		input $10;
 	endclocking
 
 	modport drv_mp (
@@ -52,13 +53,13 @@ interface ${1:if_name}${2: #()};
 
 	//  monitor
 	clocking mon_cb @($5 $3);
-		input clk_cnt;
-
 		input data_in_vld;
-		input $7;
+		input $8;
 
 		input data_out_vld;
-		input $9;
+		input $10;
+
+		input clk_cnt;
 	endclocking
 
 	modport mon_mp (
@@ -71,10 +72,10 @@ interface ${1:if_name}${2: #()};
 		input $4,
 
 		input data_in_vld,
-		input $7,
+		input $8,
 
 		output data_out_vld,
-		output $9
+		output $10
 	);
 endinterface
 endsnippet
