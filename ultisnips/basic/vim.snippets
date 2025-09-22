@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : Vim script
-#   Version     : v1.0.0
+#   Version     : v1.0.1
 #
 #   Description:
 #
@@ -17,17 +17,17 @@
 snippet fileHeader "automatic filling head info" b
 "===================================================================================================
 "
-"   Version : v${1:1.0.0}
-"   Title   : `!p import os; name, ext = os.path.splitext(fn); snip.rv = name`
+"   Title   : ${1:`!p import os; name, ext = os.path.splitext(fn); snip.rv = name`}
+"   Version : 1.0.0
 "
-"   Description${3:
-"       ${4:text}}
+"   Description${2:
+"       ${3:text}}
 "
-"   Additional info${5:
-"       ${6:text}}
+"   Additional info${4:
+"       ${5:text}}${6:
 "
-"   Author  : ${2:`!p import os; snip.rv = os.getenv('USERNAME') or os.getenv('USER');`}
-"   Email   :
+"   Author  : ${7:`!p import os; snip.rv = os.getenv('USERNAME') or os.getenv('USER');`}${8:
+"   Email   : $9}}
 "
 "===================================================================================================
 
