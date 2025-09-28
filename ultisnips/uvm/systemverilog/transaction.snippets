@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.1.0
+#   Version     : 1.1.1
 #
 #   Description
 #       UVM based transaction
@@ -19,18 +19,32 @@ class ${1:Txn}${2: #(
 	parameter int unsigned DATA_WIDTH = ${3:8}
 )} extends uvm_sequence_item;
 
-	//  variable Definition$0
+	//----------
+	//  Variable
+	//----------
+
+	$0
 
 	//  time stamp
 	longint unsigned timestamp = 0;
 
-	function new(string name="$1");
-		super.new(name);
-	endfunction
+
+	//----------
+	//  Registry
+	//----------
 
 	\`uvm_object`!p snip.rv='_param' if t[2] else ''`_utils_begin($1`!p snip.rv=' #(DATA_WIDTH)' if t[2] else ''`)
 		\`uvm_field_int(timestamp, UVM_ALL_ON | UVM_NOCOMPARE)
 	\`uvm_object_utils_end
+
+
+	//--------
+	//  Method
+	//--------
+
+	function new(string name="$1");
+		super.new(name);
+	endfunction
 endclass
 endsnippet
 

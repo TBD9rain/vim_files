@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.1.0
+#   Version     : 1.1.1
 #
 #   Description
 #       UVM based test
@@ -33,11 +33,13 @@ class ${1:Test} extends uvm_test;
 
 	virtual function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
-		uvm_config_db#(uvm_object_wrapper)::set(this,
+		uvm_config_db #(uvm_object_wrapper)::set(this,
 			"env.i_agt.sqr.main_phase",
 			"default_sequence",
 			${8:Sequence}${9: #(ITXN)}::type_id::get());
 		env = $6$7::type_id::create("env", this);
+
+		set_report_verbosity_level_hier(UVM_MEDIUM);
 	endfunction
 
 	virtual function void report_phase(uvm_phase phase);
@@ -54,6 +56,12 @@ class ${1:Test} extends uvm_test;
 		else begin
 			$write("\nTest passed.\n");
 		end
+	endfunction
+
+	virtual function void final_phase (uvm_phase phase);
+		super.final_phase(phase);
+
+		$stop(2);
 	endfunction
 endclass
 endsnippet

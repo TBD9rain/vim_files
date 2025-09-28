@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.0.0
+#   Version     : 1.0.1
 #
 #   Description
 #       UVM based coverage collector
@@ -15,7 +15,7 @@
 #===================================================================================================
 
 snippet class "UVM Coverage Collector" b
-class ${1:CovColl}${2: #(
+class ${1:CoverageCollector}${2: #(
 	parameter type TXN = ${3:Txn}
 )} extends uvm_subscriber #(.T (TXN));
 	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1`!p snip.rv=' #(TXN)' if t[2] else ''`)

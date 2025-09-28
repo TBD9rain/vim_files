@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.0.1
+#   Version     : 1.1.0
 #
 #   Description
 #       UVM based sequence
@@ -15,23 +15,38 @@
 #===================================================================================================
 
 snippet class "UVM Sequence" b
-class ${1:Seq}${2: #(
+class ${1:Sequence}${2: #(
 	parameter type REQTXN = ${3:InTxn}
 )} extends uvm_sequence #(.REQ (REQTXN));
 	\`uvm_object`!p snip.rv='_param' if t[2] else ''`_utils($1`!p snip.rv=' #(REQTXN)' if t[2] else ''`)
 
-	function new(string name="$1");
+	${4://  handler to sequencer
+	\`uvm_declare_q_sequencer(${5:Sequencer});}
+
+	function new(string name="$1")
 		super.new(name);
 	endfunction
 
-	virtual task body()$0
+	virtual task body();$0
 		REQTXN tc_txn;
 
 		if (starting_phase != null) begin
-			starting_phase.raise_objection(this);
+			starting_phase.raise_objection(this);${6:
+
 			repeat (10) begin
 				\`uvm_do(tc_txn)
-			end
+			end}${7:
+
+			\`uvm_create(tc_txn)
+			//  transaction prepare
+
+			\`uvm_send(tc_txn)}${8:
+
+			tc_txn = REQTXN::type_id::create("tc_txn");
+			start_item(tc_txn);
+			//  transaction prepare
+
+			finish_item(tc_txn);}
 		end
 		//  delay before drop objection
 		starting_phase.phase_done.set_drain_time(this, 1000ns);

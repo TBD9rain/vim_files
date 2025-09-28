@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.0.1
+#   Version     : 1.0.2
 #
 #   Description
 #       testbench for UVM
@@ -14,7 +14,7 @@
 #
 #===================================================================================================
 
-snippet tb "UVM testbench" b
+snippet testbench "UVM testbench" b
 \`timescale 1ns/100ps
 
 module ${1:dut}_tb;
@@ -83,9 +83,9 @@ initial begin
 end
 
 initial begin
-	uvm_config_db#(virtual $3)::set(null, "uvm_test_top.env.i_agt.drv", "vif", tb_if);
-	uvm_config_db#(virtual $3)::set(null, "uvm_test_top.env.i_agt.mon", "vif", tb_if);
-	uvm_config_db#(virtual $3)::set(null, "uvm_test_top.env.o_agt.mon", "vif", tb_if);
+	uvm_config_db #(virtual $3)::set(null, "uvm_test_top.env.i_agt.drv", "vif", tb_if);
+	uvm_config_db #(virtual $3)::set(null, "uvm_test_top.env.i_agt.mon", "vif", tb_if);
+	uvm_config_db #(virtual $3)::set(null, "uvm_test_top.env.o_agt.mon", "vif", tb_if);
 end
 
 initial begin
