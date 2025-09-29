@@ -1,6 +1,6 @@
 "===================================================================================================
 "
-"   Version : 1.0.0
+"   Version : 1.0.1
 "   Title   : Syntax Load
 "
 "   Description
@@ -26,6 +26,8 @@ autocmd BufNewFile,BufRead *.c set filetype=c
 autocmd BufNewFile,BufRead *.do set filetype=tcl
 " git ignore files
 autocmd BufNewFile,BufRead .gitignore set filetype=gitignore
+" snippets files in UltiSnips
+autocmd BufNewFile,BufRead *.snippets set filetype=snippets
 
 
 "-----------------
@@ -52,4 +54,7 @@ autocmd FileType markdown execute "source " . my_syntax_path . "/markdown.vim"
 
 " systemverilog
 autocmd FileType systemverilog execute "source " . my_syntax_path . "/systemverilog.vim"
+
+" snippets in UltiSnips
+autocmd FileType snippets execute("source " . my_syntax_path ."/snippets.vim")
 
