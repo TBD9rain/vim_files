@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.1.0
+#   Version     : 1.1.1
 #
 #   Description
 #
@@ -20,11 +20,11 @@ interface ${1:if_name}${2: #()} (
 );
 
 	//  DUT IO port
-	logic data_in_vld;
-	logic [${7: 7}: 0] ${8:data_in};$0
+	logic ${7:data_in_vld};
+	logic [${8: 7}: 0] ${9:data_in};$0
 
-	logic data_out_vld;
-	logic [${9: 7}: 0] ${10:data_out};
+	logic ${10:data_out_vld};
+	logic [${11: 7}: 0] ${12:data_out};
 
 	//  clock counter for time stamp
 	longint unsigned clk_cnt;
@@ -38,45 +38,38 @@ interface ${1:if_name}${2: #()} (
 		end
 	end
 
-	//  driver
-	clocking drv_cb @($5 $3);
-		output data_in_vld;
-		output $8;
+	clocking cb @($5 $3);
+		inout $7;
+		inout $9;
 
-		input data_out_vld;
 		input $10;
+		input $12;
 	endclocking
 
+	//  driver
 	modport drv_mp (
+		clocking cb,
 		input $4,
-		clocking drv_cb);
+		output $7,
+		output $9);
 
 	//  monitor
-	clocking mon_cb @($5 $3);
-		input data_in_vld;
-		input $8;
-
-		input data_out_vld;
-		input $10;
-
-		input clk_cnt;
-	endclocking
-
 	modport mon_mp (
+		clocking cb,
 		input $4,
-		clocking mon_cb);
+		input $7,
+		input $9);
 
 	//  DUT
 	modport dut_mp (
 		input $3,
 		input $4,
 
-		input data_in_vld,
-		input $8,
+		input $7,
+		input $9,
 
-		output data_out_vld,
-		output $10
-	);
+		output $10,
+		output $12);
 endinterface
 endsnippet
 
