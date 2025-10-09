@@ -1,15 +1,16 @@
 #===================================================================================================
 #
-#   Target Code     :   SystemVerilog
-#   Version         :   v1.0.1
+#   Target Code : SystemVerilog
+#   Version     : 1.0.2
 #
-#   Description     :   UVM based driver class
+#   Description
+#       UVM based driver
 #
-#   Additional info :   Get instruction with ":help UltiSnips".
-#                       Use "snippet" or "sn" to trigger snippet for snippet edition.
+#   Additional info
+#       Get instruction with ":help UltiSnips".
+#       Use "snippet" or "sn" to trigger snippet for snippet edition.
 #
-#   Author          :   TBD9rain
-#   Email           :
+#   Author  : TBD9rain
 #
 #===================================================================================================
 
@@ -29,7 +30,7 @@ class ${1:Driver}${2: #(
 	function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
 		if(!uvm_config_db #(virtual $4)::get(this, "", "vif", vif)) begin
-			\`uvm_fatal("$1", "Virtual interface is not set.")
+			\`uvm_fatal(get_name(), "virtual interface is not set.")
 		end
 	endfunction
 
@@ -47,8 +48,7 @@ class ${1:Driver}${2: #(
 		end
 	endtask
 
-	task drive_req;
-		REQ txn;
+	task drive_req(REQ txn);
 	endtask
 endclass
 endsnippet

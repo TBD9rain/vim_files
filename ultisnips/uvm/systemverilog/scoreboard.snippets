@@ -1,22 +1,23 @@
 #===================================================================================================
 #
-#   Target Code     :   SystemVerilog
-#   Version         :   v1.1.0
+#   Target Code : SystemVerilog
+#   Version     : 1.1.1
 #
-#   Description     :   UVM based scoreboard snippets
+#   Description
+#       UVM based scoreboard
 #
-#   Additional info :   Get instruction with ":help UltiSnips".
-#                       Use "snippet" or "sn" to trigger snippet for snippet edition.
+#   Additional info
+#       Get instruction with ":help UltiSnips".
+#       Use "snippet" or "sn" to trigger snippet for snippet edition.
 #
-#   Author          :   TBD9rain
-#   Email           :
+#   Author  : TBD9rain
 #
 #===================================================================================================
 
 snippet class "UVM Scoreboard" b
 class ${1:Scoreboard}${2: #(
 	parameter type ITXN = ${3:InTxn},
-	parameter type OTXN = ${3:OutTxn},
+	parameter type OTXN = ${4:OutTxn},
 	parameter longint unsigned LATENCY = 1
 )} extends uvm_scoreboard;
 	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1`!p snip.rv=' #(ITXN, OTXN, LATENCY)' if t[2] else ''`)
@@ -70,7 +71,7 @@ class ${1:Scoreboard}${2: #(
 					expected_output.copy(otxn);
 
 					stimulus_input = ITXN::type_id::create("stimulus_input");
-					itxn = itxn_q.pop_back();
+					itxn = imon_txn_q.pop_back();
 					stimulus_input.copy(itxn);
 
 					value_check(expected_output, actual_output);

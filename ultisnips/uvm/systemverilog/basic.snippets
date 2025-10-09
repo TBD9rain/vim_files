@@ -1,15 +1,15 @@
 #===================================================================================================
 #
-#   Target Code     :   SystemVerilog
-#   Version         :   v1.0.1
+#   Target Code : SystemVerilog
+#   Version     : 1.0.2
 #
-#   Description     :   Snippets for UVM Basic Codes
+#   Description
 #
-#   Additional info :   Get instruction with ":help UltiSnips".
-#                       Use "snippet" or "sn" to trigger snippet for snippet edition.
+#   Additional info
+#       Get instruction with ":help UltiSnips".
+#       Use "snippet" or "sn" to trigger snippet for snippet edition.
 #
-#   Author          :   TBD9rain
-#   Email           :
+#   Author  : TBD9rain
 #
 #===================================================================================================
 
@@ -19,8 +19,10 @@
 #--------------------------
 
 snippet class "UVM Component" b
-class ${1:Component} ${2:#() }extends uvm_component;
-	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1`!p snip.rv=' #()' if t[2] else ''`)
+class ${1:Component}${2: #(
+	parameter DATA_WIDTH = ${3:8}
+)} extends uvm_component;
+	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1`!p snip.rv=' #(DATA_WIDTH)' if t[2] else ''`)
 
 	function new(string name="$1", uvm_component parent);
 		super.new(name, parent);
@@ -29,8 +31,10 @@ endclass
 endsnippet
 
 snippet class "UVM Object" b
-class ${1:Object} ${2:#() }extends uvm_object;
-	\`uvm_object`!p snip.rv='_param' if t[2] else ''`_utils($1`!p snip.rv=' #()' if t[2] else ''`)
+class ${1:Object}${2: #(
+	parameter DATA_WIDTH = ${3:8}
+)} extends uvm_object;
+	\`uvm_object`!p snip.rv='_param' if t[2] else ''`_utils($1`!p snip.rv=' #(DATA_WIDTH)' if t[2] else ''`)
 
 	function new(string name="$1");
 		super.new(name);
@@ -44,19 +48,36 @@ endsnippet
 #------
 
 snippet port "UVM TLM-1 Port" b
-uvm${1|_blocking,_nonblocking|}_${2|put,get,peek,get_peek|}_port #(${3:txn}) ${4:port};
+uvm${1|_blocking,_nonblocking|}_${2|put,get,peek,get_peek|}_port #(${3:int}) ${4:port};
 endsnippet
 
 snippet export "UVM TLM-1 Export" b
-uvm${1|_blocking,_nonblocking|}_${2|put,get,peek,get_peek|}_export #(${3:txn}) ${4:export};
+uvm${1|_blocking,_nonblocking|}_${2|put,get,peek,get_peek|}_export #(${3:int}) ${4:export};
 endsnippet
 
 snippet imp "UVM TLM-1 Implemetation" b
-uvm${1|_blocking,_nonblocking|}_${2|put,get,peek,get_peek|}_imp #(${3:txn}) ${4:imp};
+uvm${1|_blocking,_nonblocking|}_${2|put,get,peek,get_peek|}_imp #(${3:int}) ${4:imp};
 endsnippet
 
 snippet analysis "UVM TLM-1 Analysis Communication" b
-uvm_analysis_${1|port,export,imp|} #(${2:txn}) ${3:imp};
+uvm_analysis_${1|port,export,imp|} #(${2:int}) ${3:imp};
+endsnippet
+
+snippet fifo "UVM TLM-1 FIFO" b
+uvm_tlm${1:_analysis}_fifo #(${2:int}) ${3:fifo};
+endsnippet
+
+
+#-----------
+# UVM Config
+#-----------
+
+snippet config "UVM Config Set" w
+uvm_config_db #(${1:int})::set(${2|this,null|}, "${3:hier_path}", "${4:var_name}", $4);
+endsnippet
+
+snippet config "UVM Config Get" w
+uvm_config_db #(${1:int})::get(${2|this,null|}, "${3:hier_path}", "${4:var_name}", $4);
 endsnippet
 
 
@@ -73,8 +94,16 @@ endsnippet
 # Field Automation Mechanism
 #---------------------------
 
-snippet field "Field Automation Registry" b
-\`uvm_field_${1:int}(${2:arg}, ${3:UVM_ALL_ON})$0
+snippet field "Singluar Variable Field Automation Registry" b
+\`uvm_field_${1|int,object,string,enum,real,event|}(${2:arg}, ${3:UVM_ALL_ON})$0
+endsnippet
+
+snippet field "Static Array/Dynamic Array/Queue Field Automation Registry" b
+\`uvm_field_${1|sarray,array,queue|}_${2|int,object,string,enum|}(${3:arg}, ${4:UVM_ALL_ON})
+endsnippet
+
+snippet field "Associated Array Field Automation Registry" b
+\`uvm_field_aa_${1:key_type}_${2:value_type}(${3:arg}, ${4:UVM_ALL_ON})
 endsnippet
 
 
@@ -83,19 +112,19 @@ endsnippet
 #-------------------------
 
 snippet print "UVM Info Macro" b
-\`uvm_info("${1:ID}", ${2:"${3:message}"}, UVM_${4|NONE,LOW,MEDIUM,HIGH,FULL,DEBUG|})$0
+\`uvm_info(${1:"ID"}, ${2:"${3:message}"}, UVM_${4|NONE,LOW,MEDIUM,HIGH,FULL,DEBUG|})$0
 endsnippet
 
 snippet print "UVM Warning Macro" b
-\`uvm_warning("${1:ID}", ${2:"${3:message}"})$0
+\`uvm_warning((${1:"ID"}, ${2:"${3:message}"})$0
 endsnippet
 
 snippet print "UVM Error Macro" b
-\`uvm_error("${1:ID}", ${2:"${3:message}"})$0
+\`uvm_error($(${1:"ID"}, ${2:"${3:message}"})$0
 endsnippet
 
 snippet print "UVM Fatal Macro" b
-\`uvm_fatal("${1:ID}", ${2:"${3:message}"})$0
+\`uvm_fatal($(${1:"ID"}, ${2:"${3:message}"})$0
 endsnippet
 
 
