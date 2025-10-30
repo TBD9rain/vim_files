@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.0.2
+#   Version     : 1.0.3
 #
 #   Description
 #
@@ -116,15 +116,15 @@ snippet print "UVM Info Macro" b
 endsnippet
 
 snippet print "UVM Warning Macro" b
-\`uvm_warning((${1:"ID"}, ${2:"${3:message}"})$0
+\`uvm_warning(${1:"ID"}, ${2:"${3:message}"})$0
 endsnippet
 
 snippet print "UVM Error Macro" b
-\`uvm_error($(${1:"ID"}, ${2:"${3:message}"})$0
+\`uvm_error(${1:"ID"}, ${2:"${3:message}"})$0
 endsnippet
 
 snippet print "UVM Fatal Macro" b
-\`uvm_fatal($(${1:"ID"}, ${2:"${3:message}"})$0
+\`uvm_fatal(${1:"ID"}, ${2:"${3:message}"})$0
 endsnippet
 
 

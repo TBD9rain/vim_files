@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : Verilog
-#   Version     : 1.0.1
+#   Version     : 1.0.2
 #
 #   Description
 #		module skeleton
@@ -15,21 +15,26 @@
 #===================================================================================================
 
 snippet module "module block definition" bA
-module ${1:`!p import os; name, ext = os.path.splitext(fn); snip.rv = name`} #(
-	//======================
-	//  PARAMETER DEFINITION
-	//======================
+module ${1:`!p import os; name, ext = os.path.splitext(fn); snip.rv = name`} (
+	clk,
+	rst_n,
 
-	parameter ${2:DATA_WIDTH} = ${3:8},
-)
-(
-	//=================
-	//  PORT DEFINITION
-	//=================
+	$0
+);
 
-	input clk,
-	input rst_n,
-);$0
+
+//======================
+//  PARAMETER DEFINITION
+//======================
+
+
+
+//=================
+//  PORT DEFINITION
+//=================
+
+input clk;
+input rst_n;
 
 
 //=====================
