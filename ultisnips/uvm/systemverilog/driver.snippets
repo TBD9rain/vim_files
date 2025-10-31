@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.0.2
+#   Version     : 1.0.3
 #
 #   Description
 #       UVM based driver
@@ -39,7 +39,7 @@ class ${1:Driver}${2: #(
 
 	task main_phase(uvm_phase phase);
 		while(!vif.rst_n) begin
-			@vif.drv_cb;
+			@vif.cb;
 		end
 		forever begin
 			seq_item_port.get_next_item(req);
