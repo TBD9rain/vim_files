@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.1.2
+#   Version     : 1.1.3
 #
 #   Description
 #       UVM based scoreboard
@@ -76,8 +76,8 @@ class ${1:Scoreboard}${2: #(
 			ref_mdl_txn_got = 0;
 			fork
 				begin
-					imon_getp.get(itxn);
-					imon_txn_got = 1;
+					mdl_getp.get(itxn);
+					ref_mdl_txn_got = 1;
 				end
 				begin
 					#1;
