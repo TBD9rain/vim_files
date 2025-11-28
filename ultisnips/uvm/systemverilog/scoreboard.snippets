@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.1.3
+#   Version     : 1.1.4
 #
 #   Description
 #       UVM based scoreboard
@@ -16,16 +16,20 @@
 
 snippet class "UVM Scoreboard" b
 class ${1:Scoreboard}${2: #(
-	parameter type ITXN = ${3:InTxn},
-	parameter type OTXN = ${4:OutTxn},
-	parameter longint unsigned LATENCY = 1
+	$3
 )} extends uvm_scoreboard;
-	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1`!p snip.rv=' #(ITXN, OTXN, LATENCY)' if t[2] else ''`)
+
+	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1${4: #($5)})
 
 	//  variable definition
+	typedef ${6:InTxn}${7: #($8)} ITXN;
+	typedef ${9:OutTxn}${10: #($11)} OTXN;
+
 	uvm_blocking_get_port #(ITXN) imon_getp;
 	uvm_blocking_get_port #(OTXN) omon_getp;
 	uvm_blocking_get_port #(OTXN) mdl_getp;$0
+
+	int unsigned ref_latency = 0;
 
 	function new(string name="$1", uvm_component parent=null);
 		super.new(name, parent);
@@ -33,6 +37,9 @@ class ${1:Scoreboard}${2: #(
 
 	function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
+		if (!uvm_config_db #(int unsigned)::get(this, "", "ref_latency", ref_latency)) begin
+			\`uvm_fatal("$1", "Reference latency is not set.")
+		end
 		imon_getp = new("imon_getp", this);
 		omon_getp = new("omon_getp", this);
 		mdl_getp = new("mdl_getp", this);
@@ -64,7 +71,7 @@ class ${1:Scoreboard}${2: #(
 				begin
 					#1;
 					if (!imon_txn_got) begin
-						\`uvm_fatal("Scb", "no input for DUT output.")
+						\`uvm_fatal("$1", "no input for DUT output.")
 					end
 				end
 			join_any
@@ -76,16 +83,22 @@ class ${1:Scoreboard}${2: #(
 			ref_mdl_txn_got = 0;
 			fork
 				begin
-					mdl_getp.get(itxn);
+					mdl_getp.get(otxn);
 					ref_mdl_txn_got = 1;
 				end
 				begin
 					#1;
 					if (!ref_mdl_txn_got) begin
-						\`uvm_fatal("Scb", "no expected output for DUT output.")
+						\`uvm_fatal("$1", "no expected output for DUT output.")
 					end
 				end
 			join_any
+
+			expected_output = TXN::type_id::create("expected_output");
+			expected_output.copy(otxn);
+
+			value_check(expected_output, actual_output);
+			latency_check(stimulus_input, actual_output);
 		end
 	endtask
 
@@ -94,13 +107,13 @@ class ${1:Scoreboard}${2: #(
 
 		txn_equal = exp_txn.compare(act_txn);
 		if (txn_equal) begin
-			\`uvm_info("Scb", "expected output and actual output match.", UVM_MEDIUM)
+			\`uvm_info("$1", "expected output and actual output match.", UVM_MEDIUM)
 		end
 		else begin
-			\`uvm_error("Scb", "expected output and actual output mismatch.")
-			\`uvm_info("Scb", "expected output:", UVM_NONE)
+			\`uvm_error("$1", "expected output and actual output mismatch.")
+			\`uvm_info("$1", "expected output:", UVM_NONE)
 			exp_txn.print();
-			\`uvm_info("Scb", "actual output:", UVM_NONE)
+			\`uvm_info("$1", "actual output:", UVM_NONE)
 			act_txn.print();
 		end
 	endfunction
@@ -109,13 +122,13 @@ class ${1:Scoreboard}${2: #(
 		longint unsigned dut_latency;
 
 		dut_latency = act_txn.timestamp - stm_txn.timestamp;
-		if (dut_latency == LATENCY) begin
-			\`uvm_info("Scb", "DUT latency is as expected.", UVM_MEDIUM)
+		if (dut_latency == ref_latency) begin
+			\`uvm_info("$1", "DUT latency is as expected.", UVM_MEDIUM)
 		end
 		else begin
-			\`uvm_error("Scb", "DUT latency is not as expected.")
-			\`uvm_info("Scb", $sformatf("expected latency is %0d clocks.", LATENCY), UVM_NONE)
-			\`uvm_info("Scb", $sformatf("actual latency is %0d clocks.", dut_latency), UVM_NONE)
+			\`uvm_error("$1", "DUT latency is not as expected.")
+			\`uvm_info("$1", $sformatf("expected latency is %0d clocks.", ref_latency), UVM_NONE)
+			\`uvm_info("$1", $sformatf("actual latency is %0d clocks.", dut_latency), UVM_NONE)
 		end
 	endfunction
 endclass

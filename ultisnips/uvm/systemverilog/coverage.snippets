@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.0.1
+#   Version     : 1.0.2
 #
 #   Description
 #       UVM based coverage collector
@@ -16,13 +16,14 @@
 
 snippet class "UVM Coverage Collector" b
 class ${1:CoverageCollector}${2: #(
-	parameter type TXN = ${3:Txn}
-)} extends uvm_subscriber #(.T (TXN));
-	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1`!p snip.rv=' #(TXN)' if t[2] else ''`)
+	$3
+)} extends uvm_subscriber #(.T ($4));
+
+	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1${5: #($6)})
 
 	//  variable definition
-	uvm_blocking_get_port #(TXN) imon_getp;
-	TXN tc_txn;
+	uvm_blocking_get_port #(T) imon_getp;
+	T tc_txn;
 
 	//  coverage group definition
 	$0

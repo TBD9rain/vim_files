@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.1.1
+#   Version     : 1.1.2
 #
 #   Description
 #       UVM based environment
@@ -16,18 +16,20 @@
 
 snippet class "UVM Environment" b
 class ${1:Environment}${2: #(
-	parameter type ITXN = ${3:InTxn},
-	parameter type OTXN = ${4:OutTxn},
-	parameter longint unsigned LATENCY = 1
+	$3
 )} extends uvm_env;
-	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1`!p snip.rv=' #(ITXN, OTXN, LATENCY)' if t[2] else ''`)
+
+	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1${4: #($5)})
 
 	//  variable definition
-	${5:InAgt}${6: #(ITXN)} i_agt;
-	${7:OutAgt}${8: #(OTXN)} o_agt;
-	${9:Cov}${10: #(ITXN)} cov;
-	${11:Mdl}${12: #(ITXN, OTXN)} mdl;
-	${13:Scb}${14: #(ITXN, OTXN, LATENCY)} scb;
+	typedef ${6:InTxn}${7: #($8)} ITXN;
+	typedef ${9:OutTxn}${10: #($11)} OTXN;
+
+	${12:InAgt}${13: #($14)} i_agt;
+	${15:OutAgt}${16: #($17)} o_agt;
+	${18:Cov}${19: #($20)} cov;
+	${21:Mdl}${22: #($23)} mdl;
+	${24:Scb}${25: #($26)} scb;
 
 	uvm_tlm_analysis_fifo #(ITXN) iagt_cov_fifo;
 	uvm_tlm_analysis_fifo #(ITXN) iagt_mdl_fifo;
@@ -41,11 +43,11 @@ class ${1:Environment}${2: #(
 
 	function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
-		i_agt = $5$6::type_id::create("i_agt", this);
-		o_agt = $7$8::type_id::create("o_agt", this);
-		cov = $9$10::type_id::create("cov", this);
-		mdl = $11$12::type_id::create("mdl", this);
-		scb = $13$14::type_id::create("scb", this);
+		i_agt = $12$13::type_id::create("i_agt", this);
+		o_agt = $15$16::type_id::create("o_agt", this);
+		cov = $18$19::type_id::create("cov", this);
+		mdl = $21$22::type_id::create("mdl", this);
+		scb = $24$25::type_id::create("scb", this);
 
 		iagt_cov_fifo = new("iagt_cov_fifo", this);
 		iagt_mdl_fifo = new("iagt_mdl_fifo", this);
@@ -53,8 +55,8 @@ class ${1:Environment}${2: #(
 		oagt_scb_fifo = new("oagt_scb_fifo", this);
 		mdl_scb_fifo = new("mdl_scb_fifo", this, 64);
 
-		uvm_config_db #(uvm_active_passive_enum)::set(this, "i_agt", "is_active", UVM_ACTIVE);${15:
-		uvm_config_db #(uvm_active_passive_enum)::set(this, "o_agt", "is_active", UVM_PASSIVE);}
+		uvm_config_db #(uvm_active_passive_enum)::set(this, "i_agt", "is_active", UVM_ACTIVE);
+		uvm_config_db #(uvm_active_passive_enum)::set(this, "o_agt", "is_active", UVM_PASSIVE);
 	endfunction
 
 	function void connect_phase(uvm_phase phase);

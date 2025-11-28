@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.1.1
+#   Version     : 1.1.2
 #
 #   Description
 #       UVM based test
@@ -16,16 +16,11 @@
 
 snippet class "UVM Test" b
 class ${1:Test} extends uvm_test;
+
 	\`uvm_component_utils($1)
 
-	localparam ${2:DATA_WIDTH = 8};
-
-	localparam type ITXN = ${3:InTxn};
-	localparam type OTXN = ${4:OutTxn};
-	localparam longint unsigned LATENCY = ${5:1};
-
 	//  variable definition
-	${6:Env}${7: #(ITXN, OTXN, LATENCY)} env;$0
+	${2:Env}${3: #($4)} env;$0
 
 	function new(string name="$1", uvm_component parent=null);
 		super.new(name, parent);
@@ -33,11 +28,13 @@ class ${1:Test} extends uvm_test;
 
 	virtual function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
+
+		env = $2$3::type_id::create("env", this);
+
 		uvm_config_db #(uvm_object_wrapper)::set(this,
 			"env.i_agt.sqr.main_phase",
 			"default_sequence",
-			${8:Sequence}${9: #(ITXN)}::type_id::get());
-		env = $6$7::type_id::create("env", this);
+			${5:Sequence}${6: #($7)}::type_id::get());
 
 		set_report_verbosity_level_hier(UVM_MEDIUM);
 	endfunction
@@ -51,10 +48,18 @@ class ${1:Test} extends uvm_test;
 		err_num = rpt_ser.get_severity_count(UVM_ERROR);
 
 		if (err_num) begin
-			$write("\nTest failed.\n");
+			$write("\n");
+			$write("============\n");
+			$write("Test failed.\n");
+			$write("============\n");
+			$write("\n");
 		end
 		else begin
-			$write("\nTest passed.\n");
+			$write("\n");
+			$write("============\n");
+			$write("Test passed.\n");
+			$write("============\n");
+			$write("\n");
 		end
 	endfunction
 

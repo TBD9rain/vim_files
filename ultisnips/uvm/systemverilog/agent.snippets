@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.0.2
+#   Version     : 1.0.3
 #
 #   Description
 #       UVM based agent
@@ -16,14 +16,17 @@
 
 snippet class "UVM Agent" b
 class ${1:Agent}${2: #(
-	parameter type TXN = ${3:Txn}
+	$3
 )} extends uvm_agent;
-	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1`!p snip.rv=' #(TXN)' if t[2] else ''`)
 
-	//  variable definition${5:
-	${5:Sqr}${6: #(TXN)} sqr;
-	${7:Drv}${8: #(TXN)} drv;}
-	${9:Mon}${10: #(TXN)} mon;
+	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1${4: #($5)})
+
+	//  variable definition
+	typedef ${6:Txn}${7: #($8)} TXN;
+${9:
+	${10:Sqr}${11: #($12)} sqr;
+	${13:Drv}${14: #($15)} drv;}
+	${16:Mon}${17: #($18)} mon;
 
 	uvm_analysis_port #(TXN) ap;$0
 
@@ -32,20 +35,20 @@ class ${1:Agent}${2: #(
 	endfunction
 
 	function void build_phase(uvm_phase phase);
-		super.build_phase(phase);${11:
+		super.build_phase(phase);${19:
 		if (!uvm_config_db#(uvm_active_passive_enum)::get(this, "", "is_active", is_active)) begin
-			\`uvm_fatal(get_name(), "is_active is not set.")
+			\`uvm_fatal("$1", "is_active is not set.")
 		end
 		if (is_active == UVM_ACTIVE) begin
-			sqr = $5$6::type_id::create("sqr", this);
-			drv = $7$8::type_id::create("drv", this);
+			sqr = $10$11::type_id::create("sqr", this);
+			drv = $13$14::type_id::create("drv", this);
 		end}
-		mon = $9$10::type_id::create("mon", this);
+		mon = $16$17::type_id::create("mon", this);
 		ap = new("ap", this);
 	endfunction
 
 	function void connect_phase(uvm_phase phase);
-		super.connect_phase(phase);${12:
+		super.connect_phase(phase);${20:
 		if (is_active == UVM_ACTIVE) begin
 			drv.seq_item_port.connect(sqr.seq_item_export);
 		end}
