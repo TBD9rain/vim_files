@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.1.1
+#   Version     : 1.1.2
 #
 #   Description
 #
@@ -16,20 +16,19 @@
 snippet interface "interface definition" bw
 interface ${1:if_name}${2: #()} (
 	input logic ${3:clk},
-	input logic ${4:rst_n}
-);
+	input logic ${4:rst_n});
 
 	//  DUT IO port
-	logic ${7:data_in_vld};
-	logic [${8: 7}: 0] ${9:data_in};$0
+	logic data_in_vld;
+	logic [7: 0] data_in;$0
 
-	logic ${10:data_out_vld};
-	logic [${11: 7}: 0] ${12:data_out};
+	logic data_out_vld;
+	logic [ 7: 0] data_out;
 
 	//  clock counter for time stamp
 	longint unsigned clk_cnt;
 
-	always_ff @(${5|posedge,negedge|} $3 or ${6|posedge,negedge|} $4) begin
+	always_ff @($5 $3 or ${6|posedge,negedge|} $4) begin
 		if (`!p snip.rv = '~' if t[6]=='negedge' else ''`$4) begin
 			clk_cnt <= 0;
 		end
@@ -38,38 +37,41 @@ interface ${1:if_name}${2: #()} (
 		end
 	end
 
-	clocking cb @($5 $3);
-		inout $7;
-		inout $9;
+	clocking cb @(${5|posedge,negedge|} $3);
+		output data_in_vld;
+		output data_in;
 
-		input $10;
-		input $12;
+		input clk_cnt;
 	endclocking
 
 	//  driver
 	modport drv_mp (
 		clocking cb,
-		input $4,
-		output $7,
-		output $9);
+		input $4);
 
 	//  monitor
 	modport mon_mp (
-		clocking cb,
+		input $3,
 		input $4,
-		input $7,
-		input $9);
+
+		input data_in_vld,
+		input data_in,
+
+		input data_out_vld,
+		input data_out,
+
+		input clk_cnt);
 
 	//  DUT
 	modport dut_mp (
 		input $3,
 		input $4,
 
-		input $7,
-		input $9,
+		input data_in_vld,
+		input data_in,
 
-		output $10,
-		output $12);
+		output data_out_vld,
+		output data_out);
 endinterface
 endsnippet
 
