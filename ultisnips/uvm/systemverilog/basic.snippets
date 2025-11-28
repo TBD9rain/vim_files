@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.0.3
+#   Version     : 1.0.4
 #
 #   Description
 #
@@ -20,9 +20,12 @@
 
 snippet class "UVM Component" b
 class ${1:Component}${2: #(
-	parameter DATA_WIDTH = ${3:8}
+	$3
 )} extends uvm_component;
-	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1`!p snip.rv=' #(DATA_WIDTH)' if t[2] else ''`)
+
+	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1${4: #($5)})
+
+	//  variable definition$0
 
 	function new(string name="$1", uvm_component parent);
 		super.new(name, parent);
@@ -32,9 +35,11 @@ endsnippet
 
 snippet class "UVM Object" b
 class ${1:Object}${2: #(
-	parameter DATA_WIDTH = ${3:8}
+	$3
 )} extends uvm_object;
-	\`uvm_object`!p snip.rv='_param' if t[2] else ''`_utils($1`!p snip.rv=' #(DATA_WIDTH)' if t[2] else ''`)
+	\`uvm_object`!p snip.rv='_param' if t[2] else ''`_utils($1${4: #($5)})
+
+	//  variable definition$0
 
 	function new(string name="$1");
 		super.new(name);
@@ -112,19 +117,19 @@ endsnippet
 #-------------------------
 
 snippet print "UVM Info Macro" b
-\`uvm_info(${1:"ID"}, ${2:"${3:message}"}, UVM_${4|NONE,LOW,MEDIUM,HIGH,FULL,DEBUG|})$0
+\`uvm_info("${1:ID}", ${2:"${3:message}"}, UVM_${4|NONE,LOW,MEDIUM,HIGH,FULL,DEBUG|})$0
 endsnippet
 
 snippet print "UVM Warning Macro" b
-\`uvm_warning(${1:"ID"}, ${2:"${3:message}"})$0
+\`uvm_warning("${1:ID}", ${2:"${3:message}"})$0
 endsnippet
 
 snippet print "UVM Error Macro" b
-\`uvm_error(${1:"ID"}, ${2:"${3:message}"})$0
+\`uvm_error("${1:ID}", ${2:"${3:message}"})$0
 endsnippet
 
 snippet print "UVM Fatal Macro" b
-\`uvm_fatal(${1:"ID"}, ${2:"${3:message}"})$0
+\`uvm_fatal("${1:ID}", ${2:"${3:message}"})$0
 endsnippet
 
 

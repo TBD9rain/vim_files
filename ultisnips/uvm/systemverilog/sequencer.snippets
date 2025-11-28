@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.0.1
+#   Version     : 1.0.2
 #
 #   Description
 #       UVM based sequencer
@@ -16,9 +16,9 @@
 
 snippet class "UVM Sequencer" b
 class ${1:Sequencer}${2: #(
-	parameter type REQTXN = ${3:Txn}
-)} extends uvm_sequencer #(.REQ (REQTXN));
-	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1`!p snip.rv=' #(REQTXN)' if t[2] else ''`)
+	$3
+)} extends uvm_sequencer #(.REQ ($4));
+	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1${5: #($6)})
 
 	function new(string name="$1", uvm_component parent=null);
 		super.new(name, parent);

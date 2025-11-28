@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.1.2
+#   Version     : 1.1.4
 #
 #   Description
 #       UVM based monitor
@@ -16,12 +16,16 @@
 
 snippet class "UVM Monitor" b
 class ${1:Monitor}${2: #(
-	parameter type TXN = ${3:Txn}
+	$3
 )} extends uvm_monitor;
-	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1`!p snip.rv=' #(TXN)' if t[2] else ''`)
+
+	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1${4: #($5)})
 
 	//  variable definition
-	virtual interface ${4:dut_if}.mon_mp vif;
+	typedef virtual ${6:dut_if}${7: #($8)}.mon_mp mon_vif;
+	typedef ${9:Txn}${10: #($11)} TXN;
+
+	mon_vif vif;
 
 	uvm_analysis_port #(TXN) ap;$0
 
@@ -31,8 +35,8 @@ class ${1:Monitor}${2: #(
 
 	function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
-		if(!uvm_config_db #(virtual $4)::get(this, "", "vif", vif)) begin
-			\`uvm_fatal(get_name(), "Virtual interface is not set.")
+		if(!uvm_config_db #(mon_vif)::get(this, "", "vif", vif)) begin
+			\`uvm_fatal("$1", "virtual interface is not set.")
 		end
 		ap = new("ap", this);
 	endfunction
@@ -51,11 +55,11 @@ class ${1:Monitor}${2: #(
 
 		txn = TXN::type_id::create("txn");
 
-		@vif.cb;
+		@(${12|posedge,negedge|} vif.clk);
 		while (1 !== 0) begin
-			@vif.cb;
+			@($12 vif.clk);
 		end
-		txn.timestamp = vif.cb.clk_cnt;
+		txn.timestamp = vif.clk_cnt;
 	endtask
 endclass
 endsnippet

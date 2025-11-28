@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.1.1
+#   Version     : 1.1.2
 #
 #   Description
 #       UVM based transaction
@@ -16,7 +16,7 @@
 
 snippet class "UVM Transaction" b
 class ${1:Txn}${2: #(
-	parameter int unsigned DATA_WIDTH = ${3:8}
+	$3
 )} extends uvm_sequence_item;
 
 	//----------
@@ -33,7 +33,7 @@ class ${1:Txn}${2: #(
 	//  Registry
 	//----------
 
-	\`uvm_object`!p snip.rv='_param' if t[2] else ''`_utils_begin($1`!p snip.rv=' #(DATA_WIDTH)' if t[2] else ''`)
+	\`uvm_object`!p snip.rv='_param' if t[2] else ''`_utils_begin($1${4: #($5)})
 		\`uvm_field_int(timestamp, UVM_ALL_ON | UVM_NOCOMPARE)
 	\`uvm_object_utils_end
 

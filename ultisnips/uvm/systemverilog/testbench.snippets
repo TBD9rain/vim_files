@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.0.2
+#   Version     : 1.0.3
 #
 #   Description
 #       testbench for UVM
@@ -44,17 +44,24 @@ bit clk;
 bit rst_n;
 
 ${3:$1_if}${4: #(
-)} tb_if(
+	$5
+)}
+tb_if(
 	.clk    (clk),
 	.rst_n  (rst_n)
 );$0
+
+typedef virtual $3${6: #($7)}.drv_mp drv_vif;
+typedef virtual $3$6.mon_mp mon_vif;
 
 
 //===================
 //  DUT INSTANTIATION
 //===================
 
-$1${5: #()}
+$1${8: #(
+	$9
+)}
 u_dut();
 
 
@@ -83,13 +90,13 @@ initial begin
 end
 
 initial begin
-	uvm_config_db #(virtual $3)::set(null, "uvm_test_top.env.i_agt.drv", "vif", tb_if);
-	uvm_config_db #(virtual $3)::set(null, "uvm_test_top.env.i_agt.mon", "vif", tb_if);
-	uvm_config_db #(virtual $3)::set(null, "uvm_test_top.env.o_agt.mon", "vif", tb_if);
+	uvm_config_db #(drv_vif)::set(null, "uvm_test_top.env.i_agt.drv", "vif", tb_if);
+	uvm_config_db #(mon_vif)::set(null, "uvm_test_top.env.i_agt.mon", "vif", tb_if);
+	uvm_config_db #(mon_vif)::set(null, "uvm_test_top.env.o_agt.mon", "vif", tb_if);
 end
 
 initial begin
-	run_test("${6:Test}");
+	run_test("${10:Test}");
 end
 
 endmodule
