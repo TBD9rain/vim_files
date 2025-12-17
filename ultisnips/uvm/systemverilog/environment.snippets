@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.1.2
+#   Version     : 1.2.1
 #
 #   Description
 #       UVM based environment
@@ -14,7 +14,7 @@
 #
 #===================================================================================================
 
-snippet class "UVM Environment" b
+snippet "Env(ironment)?" "UVM Environment" rb
 class ${1:Environment}${2: #(
 	$3
 )} extends uvm_env;
@@ -76,6 +76,40 @@ class ${1:Environment}${2: #(
 
 		mdl.scb_putp.connect(mdl_scb_fifo.blocking_put_export);
 		scb.mdl_getp.connect(mdl_scb_fifo.blocking_get_export);
+	endfunction
+endclass
+endsnippet
+
+snippet "Env(ironment)?" "UVM Integrated Environment" rb
+class ${1:Environment}${2: #(
+	$3
+)} extends uvm_env;
+
+	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1${4: #($5)})
+
+	//  variable definition
+	${6:Env0}${7: #($8)} ${9:env0};
+	${10:Env1}${11: #($12)} ${13:env0};
+
+	${14:VSqr}${15: #($16)} ${17:vsqr};
+
+	function new(string name="$1", uvm_component parent=null);
+		super.new(name, parent);
+	endfunction
+
+	function void build_phase(uvm_phase phase);
+		super.build_phase(phase);
+
+		$9 = $6$7::type_id::create("$9", this);
+		$13 = $10$11::type_id::create("$13", this);
+		$17 = $14$15::type_id::create("$17", this);
+	endfunction
+
+	function void connect_phase(uvm_phase phase);
+		super.connect_phase(phase);
+
+		$17.sqr0 = $9.i_agt.sqr;
+		$17.sqr1 = $13.i_agt.sqr;
 	endfunction
 endclass
 endsnippet

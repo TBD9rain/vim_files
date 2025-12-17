@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.1.1
+#   Version     : 1.2.1
 #
 #   Description
 #       UVM based sequence
@@ -14,34 +14,34 @@
 #
 #===================================================================================================
 
-snippet class "UVM Sequence" b
+snippet "Seq(uence)?" "UVM Sequence" rb
 class ${1:Sequence}${2: #(
 	$3
-)} extends uvm_sequence #(.REQ ($5));
+)} extends uvm_sequence #(.REQ ($4));
 
-	\`uvm_object`!p snip.rv='_param' if t[2] else ''`_utils($1${6: #($7)})
+	\`uvm_object`!p snip.rv='_param' if t[2] else ''`_utils($1${5: #($6)})
 
-	${8://  handler to sequencer
-	\`uvm_declare_p_sequencer(${9:Sequencer #()})}
+	${7://  handler to sequencer
+	\`uvm_declare_p_sequencer(${8:Sequencer}${9: #($10)})}
 
 	function new(string name="$1");
 		super.new(name);
 	endfunction
 
 	virtual task body();$0
-		REQTXN tc_txn;
+		REQ tc_txn;
 
 		if (starting_phase != null) begin
-			starting_phase.raise_objection(this);${10:
+			starting_phase.raise_objection(this);${11:
 
 			repeat (10) begin
 				\`uvm_do(tc_txn)
-			end}${11:
+			end}${12:
 
 			\`uvm_create(tc_txn)
 			//  transaction prepare
 
-			\`uvm_send(tc_txn)}${12:
+			\`uvm_send(tc_txn)}${13:
 
 			tc_txn = REQTXN::type_id::create("tc_txn");
 			start_item(tc_txn);
@@ -54,6 +54,30 @@ class ${1:Sequence}${2: #(
 		if (starting_phase != null) begin
 			starting_phase.drop_objection(this);
 		end
+	endtask
+endclass
+endsnippet
+
+snippet "Seq(uence)?" "UVM Virtual Sequence" rb
+class ${1:VirtualSequence}${2: #(
+	$3
+)} extends uvm_sequence;
+
+	\`uvm_object`!p snip.rv='_param' if t[2] else ''`_utils($1${4: #($5)})
+
+	${6://  handler to sequencer
+	\`uvm_declare_p_sequencer(${7:Sequencer}${8: #($9)})}
+
+	function new(string name="$1");
+		super.new(name);
+	endfunction
+
+	virtual task body();$0
+		${10:Seq0}${11: #($12)} ${13:seq0};
+		${14:Seq1}${15: #($16)} ${17:seq1};
+
+		$13.start(p_sequencer.${18:sqr0});
+		$17.start(p_sequencer.${19:sqr1});
 	endtask
 endclass
 endsnippet
