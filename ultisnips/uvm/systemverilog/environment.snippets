@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.2.0
+#   Version     : 1.2.1
 #
 #   Description
 #       UVM based environment
@@ -14,7 +14,7 @@
 #
 #===================================================================================================
 
-snippet class "UVM Environment" b
+snippet "Env(ironment)?" "UVM Environment" rb
 class ${1:Environment}${2: #(
 	$3
 )} extends uvm_env;
@@ -80,7 +80,7 @@ class ${1:Environment}${2: #(
 endclass
 endsnippet
 
-snippet class "UVM Integrated Environment" b
+snippet "Env(ironment)?" "UVM Integrated Environment" rb
 class ${1:Environment}${2: #(
 	$3
 )} extends uvm_env;

@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.2.0
+#   Version     : 1.2.1
 #
 #   Description
 #       UVM based sequence
@@ -14,7 +14,7 @@
 #
 #===================================================================================================
 
-snippet class "UVM Sequence" b
+snippet "Seq(uence)?" "UVM Sequence" rb
 class ${1:Sequence}${2: #(
 	$3
 )} extends uvm_sequence #(.REQ ($4));
@@ -58,7 +58,7 @@ class ${1:Sequence}${2: #(
 endclass
 endsnippet
 
-snippet class "UVM Virtual Sequence" b
+snippet "Seq(uence)?" "UVM Virtual Sequence" rb
 class ${1:VirtualSequence}${2: #(
 	$3
 )} extends uvm_sequence;

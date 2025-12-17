@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.0.2
+#   Version     : 1.0.3
 #
 #   Description
 #       UVM based coverage collector
@@ -14,7 +14,7 @@
 #
 #===================================================================================================
 
-snippet class "UVM Coverage Collector" b
+snippet "Cov(Col|erageCollector)?" "UVM Coverage Collector" rb
 class ${1:CoverageCollector}${2: #(
 	$3
 )} extends uvm_subscriber #(.T ($4));
