@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.2.1
+#   Version     : 1.2.2
 #
 #   Description
 #       UVM based sequence
@@ -28,32 +28,43 @@ class ${1:Sequence}${2: #(
 		super.new(name);
 	endfunction
 
+	virtual task pre_start();
+		super.pre_start();
+
+		if (starting_phase == null) begin
+			if (get_parent_sequence() != null) begin
+				starting_phase = get_parent_sequence().starting_phase;
+			end
+			else begin
+				\`uvm_fatal("$1", "starting_phase is null.")
+			end
+		end
+	endtask
+
 	virtual task body();$0
 		REQ tc_txn;
 
-		if (starting_phase != null) begin
-			starting_phase.raise_objection(this);${11:
+		starting_phase.raise_objection(this);${11:
 
-			repeat (10) begin
-				\`uvm_do(tc_txn)
-			end}${12:
+		repeat (10) begin
+			\`uvm_do(tc_txn)
+		end}${12:
 
-			\`uvm_create(tc_txn)
-			//  transaction prepare
+		\`uvm_create(tc_txn)
+		//  transaction prepare
 
-			\`uvm_send(tc_txn)}${13:
+		\`uvm_send(tc_txn)}${13:
 
-			tc_txn = REQTXN::type_id::create("tc_txn");
-			start_item(tc_txn);
-			//  transaction prepare
+		tc_txn = REQTXN::type_id::create("tc_txn");
+		start_item(tc_txn);
+		//  transaction prepare
 
-			finish_item(tc_txn);}
-		end
+		finish_item(tc_txn);}
+
 		//  delay before drop objection
 		starting_phase.phase_done.set_drain_time(this, 1000ns);
-		if (starting_phase != null) begin
-			starting_phase.drop_objection(this);
-		end
+
+		starting_phase.drop_objection(this);
 	endtask
 endclass
 endsnippet
