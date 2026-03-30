@@ -32,8 +32,8 @@ DRD
 dsi
 DSP
 DUT
-EBR
 ebr
+EBR
 EBRs
 ECP5
 ECP5U
@@ -49,8 +49,8 @@ FMEDA
 Foreach
 fpga
 FSM
-FuSa
 fusa
+FuSa
 FUTURUS
 github
 gitignore
@@ -61,6 +61,7 @@ http
 https
 i2c
 IC
+IEC
 inlined
 inout
 Inovance
@@ -80,10 +81,11 @@ Junguo
 LD
 lifecycle
 linter
+lossless
 LSB
 LUT
-LUT4
 lut4
+LUT4
 lut6
 lvds
 marco
@@ -91,8 +93,8 @@ matlab
 mcu
 metadata
 mipi
-ModelSim
 modelsim
+ModelSim
 modport
 modports
 MSB
@@ -109,15 +111,15 @@ nvim
 nxt
 onboard
 OneDrive
-OSD
 osd
+OSD
 pc
 pdf
 phy
 PLI
 PLL
-PMI
 pmi
+PMI
 powerline
 powershell
 pre
@@ -126,6 +128,7 @@ preponed
 prev
 procedurally
 QuestaSim
+QuestSim
 randc
 README
 rebase
@@ -150,12 +153,13 @@ src
 struct
 subclass
 subclasses
+subclause
 submodule
 submodules
 subprocess
 sv
-systemverilog
 SystemVerilog
+systemverilog
 tb
 TBD9rain
 testbench
@@ -177,6 +181,7 @@ verible
 verilog
 Vim9
 visio
+Vivado
 vsync
 wildcard
 wildcards
@@ -185,3 +190,4 @@ worktree
 worktrees
 x64
 Xiaojun
+xsim
