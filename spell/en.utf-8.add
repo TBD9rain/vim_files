@@ -39,8 +39,8 @@ FMEDA
 Foreach
 fpga
 FSM
-fusa
 FuSa
+fusa
 github
 gitignore
 gvim
@@ -66,8 +66,8 @@ linter
 lossless
 LSB
 LUT
-lut4
 LUT4
+lut4
 lut6
 lvds
 marco
@@ -75,8 +75,8 @@ matlab
 mcu
 metadata
 mipi
-modelsim
 ModelSim
+modelsim
 modport
 modports
 MSB
@@ -123,6 +123,8 @@ spi
 SRAM
 src
 struct
+subagent
+subagents
 subclass
 subclasses
 subclause
@@ -154,6 +156,7 @@ verilog
 Vim9
 visio
 Vivado
+VPN
 vsync
 wildcard
 wildcards
