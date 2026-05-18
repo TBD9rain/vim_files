@@ -1,6 +1,6 @@
 "===================================================================================================
 "
-"   Version : 1.0.0
+"   Version : 1.0.1
 "   Title   : UltiSnips Load
 "
 "   Description
@@ -43,9 +43,14 @@ function! s:InsertSnippet(name)
 endfunction
 
 autocmd BufNewFile *.v call s:InsertSnippet('fileHeader')
+autocmd BufNewFile *.vh call s:InsertSnippet('fileHeader')
 autocmd BufNewFile *.py call s:InsertSnippet('fileHeader')
 autocmd BufNewFile *.c call s:InsertSnippet('fileHeader')
 autocmd BufNewFile *.sv call s:InsertSnippet('fileHeader')
+autocmd BufNewFile *.svh call s:InsertSnippet('fileHeader')
 autocmd BufNewFile *.snippets call s:InsertSnippet('fileHeader')
 autocmd BufNewFile *.vim call s:InsertSnippet('fileHeader')
+autocmd BufNewFile sim.do call s:InsertSnippet('simulate')
+autocmd BufNewFile rpt.do call s:InsertSnippet('report')
+autocmd BufNewFile makefile call s:InsertSnippet('makefile')
 
