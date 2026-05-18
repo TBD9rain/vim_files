@@ -20,6 +20,7 @@ cpu
 CRC
 ctrl
 curr
+Cybersecurity
 datasheet
 datasheets
 ddr
@@ -39,8 +40,8 @@ FMEDA
 Foreach
 fpga
 FSM
-FuSa
 fusa
+FuSa
 github
 gitignore
 gvim
@@ -66,8 +67,8 @@ linter
 lossless
 LSB
 LUT
-LUT4
 lut4
+LUT4
 lut6
 lvds
 marco
@@ -75,8 +76,8 @@ matlab
 mcu
 metadata
 mipi
-ModelSim
 modelsim
+ModelSim
 modport
 modports
 MSB
@@ -104,6 +105,7 @@ pre-process
 preponed
 prev
 procedurally
+Questa
 QuestaSim
 QuestSim
 randc
@@ -140,8 +142,8 @@ testbench
 testcase
 testcases
 tx
-UltiSnips
 ultisnips
+UltiSnips
 unmerged
 unregister
 unstaged
