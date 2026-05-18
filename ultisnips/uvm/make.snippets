@@ -1,0 +1,190 @@
+#===================================================================================================
+#
+#   Target Code : make
+#   Version     : 1.0.0
+#
+#   Description
+#
+#   Additional info
+#       Get instruction with ":help UltiSnips".
+#       Use "snippet" or "sn" to trigger snippet for snippet edition.
+#
+#   Author  : TBD9rain
+#
+#===================================================================================================
+
+snippet makefile "Makefile for Questa Sim 2024.2.1 Verification" b
+SHELL := cmd
+.SHELLFLAGS := /C
+
+#=============================================
+#   QuestaSim 2024.2.1 UVM Simulation Makefile
+#=============================================
+$0
+#----------
+# Variables
+#----------
+
+SIM_TIME ?= 0
+TB_MODULE ?= ${1:test_tb}
+UVM_TEST ?= BaseTest
+RANDSEED ?= 0
+ONFINISH ?= stop
+DEBUG ?= 0
+VSIM_EXTRA_ARGS ?=
+
+QUESTA_HOME ?= D:/questasim64_2024.2_1
+UVM_LIB_DIR := $(QUESTA_HOME)/uvm-1.2
+UVM_SRC_DIR := $(QUESTA_HOME)/verilog_src/uvm-1.2/src
+UVM_DPI_LIB := $(UVM_LIB_DIR)/win64/uvm_dpi
+
+SRC_FILELIST := src_filelist.txt
+TB_FILELIST := tb_file_list.txt
+SIM_LOG := sim.log
+
+
+#-------------
+# Make Targets
+#-------------
+
+.PHONY: help all init compile run run-all run-time cov-merge cov-report visualizer clean
+
+help:
+	@echo Targets:
+	@echo   make all        - init + compile + run-all
+	@echo   make init       - initialize simulation environment
+	@echo   make compile    - compile RTL and TB files and optimize design
+	@echo   make run-all    - load design and run to end of simulation
+	@echo   make run-time   - load design and run for SIM_TIME
+	@echo   make cov-merge  - merge coverage DB into sum.ucdb
+	@echo   make cov-report - generate HTML coverage report from sum.ucdb
+	@echo   make visualizer - launch Visualizer to inspect qwave.db
+	@echo.
+	@echo   make clean    - remove generated simulation data
+	@echo.
+	@echo Overridable vars:
+	@echo   UVM_TEST=^<name^> - default: BaseTest, designate test to run
+	@echo   RANDSEED=^<int^> - default: 0, assign randomization seed
+	@echo   SIM_TIME=^<time^> - default: 0, assign time to run for run-time
+	@echo   ONFINISH=^<stop^|exit^> - default: stop
+	@echo                	- stop: use $stop when $finish
+	@echo                	- exit: use $exit when $finish
+	@echo   DEBUG=^<0^|1^>  - default: 0
+	@echo                	- 0: batch sim with code/functional coverage collection
+	@echo                	- 1: launch Visualizer LiveSim, no coverage
+	@echo   VSIM_EXTRA_ARGS=^<args^> - default: empty, append extra vsim options
+
+
+#--------------
+# Make Commands
+#--------------
+
+all: init compile run-all
+
+init:
+	@echo [Make Command: init] Initialize simulation environment
+	@if exist work rmdir /S /Q work
+	@vlib work
+	@vmap uvm-1.2 "$(UVM_LIB_DIR)"
+	@vmap work ./work
+
+ifeq ($(DEBUG),1)
+VLOG_COVER_ARGS :=
+VOPT_DEBUG_ARGS := -debug,livesim
+else
+VLOG_COVER_ARGS := +cover=bcefst
+VOPT_DEBUG_ARGS := -debug
+endif
+
+compile:
+	@echo [Make Command: compile] RTL and TB files
+	@vlog -work work $(VLOG_COVER_ARGS) -f "$(SRC_FILELIST)"
+	@vlog -work work -sv -sv17compat +incdir+"$(UVM_SRC_DIR)" -L uvm-1.2 -f "$(TB_FILELIST)"
+	@echo [Make Command: optimize] Build optimized design
+	@vopt -64 -O4 -designfile design.bin $(VOPT_DEBUG_ARGS) -L uvm-1.2 "$(TB_MODULE)" -o opt_tb
+
+run: run-all
+
+ifeq ($(DEBUG),1)
+VSIM_MODE_ARGS  := -visualizer
+VSIM_COVER_ARGS :=
+else
+VSIM_MODE_ARGS  := -c
+VSIM_COVER_ARGS := -coverage -coverstore cov_db
+endif
+
+VSIM_BASE_ARGS := $(VSIM_MODE_ARGS) -lib work \
+	-L uvm-1.2 \
+	-sv_lib "$(UVM_DPI_LIB)" \
+	-nodpiexports \
+	-qwavedb=+signal \
+	$(VSIM_COVER_ARGS) \
+	+UVM_TESTNAME="$(UVM_TEST)" \
+	-uvmtestname \
+	-sv_seed "$(RANDSEED)" \
+	-onfinish "$(ONFINISH)" \
+	$(VSIM_EXTRA_ARGS) \
+	opt_tb \
+	-t 1ps -l "$(SIM_LOG)"
+
+ifeq ($(DEBUG),1)
+LOAD_WAVE_DO := if {[file exists wave.do]} {do wave.do};
+else
+LOAD_WAVE_DO :=
+endif
+
+RUN_ALL_DO := set UserTimeUnit ns; \
+	$(LOAD_WAVE_DO) \
+	run -all; \
+	simstats;
+
+run-all:
+	@echo [Make Command: run-all] Load design and run to end of simulation
+	@vsim $(VSIM_BASE_ARGS) \
+		-do "$(RUN_ALL_DO)"
+
+RUN_TIME_DO := set UserTimeUnit ns; \
+	$(LOAD_WAVE_DO) \
+	set RunLength 1000; \
+	run $(SIM_TIME); \
+	wave zoom full; \
+	configure wave -timelineunits ns;
+
+run-time:
+	@echo [Make Command: run-time] Load design and run for SIM_TIME=$(SIM_TIME)
+	@vsim $(VSIM_BASE_ARGS) \
+		-do "$(RUN_TIME_DO)"
+
+cov-merge:
+	@echo [Make Command: cov-merge] Merge coverage DB
+	@vcover merge -out sum.ucdb cov_db
+
+VISUALIZER_DO := if {[file exists wave.do]} {do wave.do};
+
+ifneq ($(wildcard sum.ucdb),)
+VISUALIZER_COV_ARGS := -viewcov sum.ucdb
+else
+VISUALIZER_COV_ARGS :=
+endif
+
+visualizer:
+	@echo [Make Command: visualizer] Launch Visualizer to inspect qwave.db
+	@start "" visualizer -designfile design.bin -wavefile qwave.db $(VISUALIZER_COV_ARGS) -do "$(VISUALIZER_DO)"
+	@echo Visualizer will be launched in a new window, please wait for it to load...
+
+cov-report: cov-merge
+	@echo [Make Command: cov-report] Generate HTML coverage report
+	@vcover report -details -html -output cov_rpt_html sum.ucdb
+
+CLEAN_DIRS := work .visualizer cov_rpt_html
+CLEAN_FILES := modelsim.ini design.bin $(SIM_LOG) qwave.db \
+	sum.ucdb transcript visualizer.log tr_db.log sysinfo.log
+
+clean:
+	@echo [Make Command: clean] Remove generated simulation outputs
+	@echo   - remove directories
+	@for %%d in ($(CLEAN_DIRS)) do @if exist "%%d" rmdir /S /Q "%%d"
+	@echo   - remove files
+	@for %%f in ($(CLEAN_FILES)) do @if exist "%%f" del /F /Q "%%f"
+endsnippet
+

@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.1.2
+#   Version     : 1.1.3
 #
 #   Description
 #
@@ -20,28 +20,21 @@ interface ${1:if_name}${2: #()} (
 
 	//  DUT IO port
 	logic data_in_vld;
-	logic [7: 0] data_in;$0
+	logic [ 7: 0] data_in;$0
 
 	logic data_out_vld;
 	logic [ 7: 0] data_out;
 
 	//  clock counter for time stamp
-	longint unsigned clk_cnt;
+	longint unsigned clk_cnt = 0;
 
-	always_ff @($5 $3 or ${6|posedge,negedge|} $4) begin
-		if (`!p snip.rv = '~' if t[6]=='negedge' else ''`$4) begin
-			clk_cnt <= 0;
-		end
-		else begin
-			clk_cnt <= clk_cnt + 1;
-		end
+	always_ff @(${5|posedge,negedge|} $3) begin
+		clk_cnt <= clk_cnt + 1;
 	end
 
-	clocking cb @(${5|posedge,negedge|} $3);
+	clocking cb @($5 $3);
 		output data_in_vld;
 		output data_in;
-
-		input clk_cnt;
 	endclocking
 
 	//  driver

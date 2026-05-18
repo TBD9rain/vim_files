@@ -22,6 +22,7 @@ cpu
 CRC
 ctrl
 curr
+Cybersecurity
 datasheet
 datasheets
 ddr
@@ -32,8 +33,8 @@ DRD
 dsi
 DSP
 DUT
-EBR
 ebr
+EBR
 EBRs
 ECP5
 ECP5U
@@ -68,8 +69,8 @@ Inovance
 instantiation
 IOs
 iteratively
-IVC
 ivc
+IVC
 JEDEC
 Jingwen
 JIRA
@@ -127,6 +128,7 @@ pre-process
 preponed
 prev
 procedurally
+Questa
 QuestaSim
 QuestSim
 randc
@@ -160,8 +162,8 @@ submodule
 submodules
 subprocess
 sv
-systemverilog
 SystemVerilog
+systemverilog
 tb
 TBD9rain
 testbench

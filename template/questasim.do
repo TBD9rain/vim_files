@@ -26,9 +26,6 @@ vmap work ./work
 
 # 4. COMPILE CODES
 
-# add "-sv" to explicitly compile systemverilog files
-# add "+cover=bcefst" to enable code coverage measurement
-
 # add "+incdir+<directory>" to specify directories to search "`include" files
 # add "+define+<marco_name>[=<macro_text>] to define or override a macro
 
@@ -48,18 +45,15 @@ if {$sim_time <= 0} {
 
 # replace "opt_tb" with "work.$tb_module" in ModelSim
 
-# add "-coverage" to enable functional coverage measurement
-
 # add "-L <device_lib>" for post simulation and timing simulation
 # add "-sdftyp <sdf_file>" for timing simulation
 # add "+transport_int_delays" and "+transport_path_delays" for timing simulation
 # add "+typdelays" or "+maxdelays" or "+mindelays" for timing simulation
 
-# add "-g<param_name>=<param_value>" to assign a value to a parameter without explicit value
 # add "-G<param_name>=<param_value>" to assign or override a parameter
 
-vsim -lib work \
-    opt_tb \
+vsim -lib work\
+    opt_tb\
     -t 1ps -l sim.log
 
 # 7 RUN
@@ -68,8 +62,8 @@ if {$sim_time <= 0} {
     run -all
 } else {
     # ADD WAVEFORM
-    if {[file exists $wave_do]} {
-        do $wave_do
+    if {[file exists wave.do]} {
+        do wave.do
     }
 
     # RUN sim_time

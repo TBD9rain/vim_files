@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.0.3
+#   Version     : 1.0.4
 #
 #   Description
 #       testbench for UVM
@@ -15,7 +15,7 @@
 #===================================================================================================
 
 snippet testbench "UVM testbench" b
-\`timescale 1ns/100ps
+\`timescale 1ns/1ps
 
 module ${1:dut}_tb;
 
@@ -23,7 +23,7 @@ module ${1:dut}_tb;
 //  PARAMETER DEFINITION
 //======================
 
-parameter   CLK_HALF_PERIOD     = 10/2;
+localparam  CLK_HALF_PERIOD     = 10/2;
 
 
 //=====================
@@ -40,13 +40,13 @@ import ${2:$1_pkg}::*;
 //  VARIABLE DEFINITION
 //=====================
 
-bit clk;
-bit rst_n;
+bit clk = 0;
+bit rst_n = 0;
 
 ${3:$1_if}${4: #(
 	$5
 )}
-tb_if(
+tb_if (
 	.clk    (clk),
 	.rst_n  (rst_n)
 );$0
