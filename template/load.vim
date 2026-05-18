@@ -1,6 +1,6 @@
 "===================================================================================================
 "
-"   Version : 1.0.0
+"   Version : 1.0.1
 "   Title   : load
 "
 "   Description
@@ -23,7 +23,7 @@ let g:my_template_path = expand('<sfile>:p:h')
 " verilog testbench template
 " autocmd BufNewFile *_tb.v execute '0r ' . g:my_template_path . '/testbench.v'
 " modelsim do file template
-autocmd BufNewFile *.do execute '0r ' . g:my_template_path . '/questasim.do'
+" autocmd BufNewFile *.do execute '0r ' . g:my_template_path . '/questasim.do'
 " c code template
 " autocmd BufNewFile *.c execute '0r ' . g:my_template_path . '/source.c'
 " python code template
