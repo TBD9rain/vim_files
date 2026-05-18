@@ -33,6 +33,11 @@ ONFINISH ?= stop
 DEBUG ?= 0
 VSIM_EXTRA_ARGS ?=
 
+# diamond pmi source library
+PMI_LIB ?= D:/lscc/diamond/3.11_x64/cae_library/simulation/verilog/pmi
+# radiant pmi source library
+# PMI_LIB ?= D:/lscc/radiant/3.2/ip/pmi0
+
 QUESTA_HOME ?= D:/questasim64_2024.2_1
 UVM_LIB_DIR := $(QUESTA_HOME)/uvm-1.2
 UVM_SRC_DIR := $(QUESTA_HOME)/verilog_src/uvm-1.2/src
@@ -98,7 +103,7 @@ endif
 
 compile:
 	@echo [Make Command: compile] RTL and TB files
-	@vlog -work work $(VLOG_COVER_ARGS) -f "$(SRC_FILELIST)"
+	@vlog -work work $(VLOG_COVER_ARGS) +libext+.v -y "$(PMI_LIB)" -f "$(SRC_FILELIST)"
 	@vlog -work work -sv -sv17compat +incdir+"$(UVM_SRC_DIR)" -L uvm-1.2 -f "$(TB_FILELIST)"
 	@echo [Make Command: optimize] Build optimized design
 	@vopt -64 -O4 -designfile design.bin $(VOPT_DEBUG_ARGS) -L uvm-1.2 "$(TB_MODULE)" -o opt_tb

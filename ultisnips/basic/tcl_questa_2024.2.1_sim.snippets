@@ -27,6 +27,11 @@ set sim_time        ${2:100}
 
 set tb_module       ${3:tb_name}$0
 
+# diamond pmi source library
+set pmi_lib         D:/lscc/diamond/3.11_x64/cae_library/simulation/verilog/pmi
+# radiant pmi source library
+# set pmi_lib         D:/lscc/radiant/3.2/ip/pmi0
+
 
 #-------------------------
 #   Prepare for Simulation
@@ -57,6 +62,7 @@ vmap work ./work
 # "+define+<marco_name>[=<macro_text>]": define or override a macro
 
 vlog -work work\
+	+libext+.v -y $pmi_lib\
 	-f file_list.txt
 
 # "-debug,livesim": enable better simulation step control
