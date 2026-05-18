@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.0.2
+#   Version     : 1.0.3
 #
 #   Description
 #       UVM based reference model
@@ -34,6 +34,7 @@ class ${1:Model}${2: #(
 
 	function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
+
 		imon_getp = new("imon_getp", this);
 		scb_putp = new("scb_putp", this);
 	endfunction

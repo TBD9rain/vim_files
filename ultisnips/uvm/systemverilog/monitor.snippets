@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.1.5
+#   Version     : 1.1.6
 #
 #   Description
 #       UVM based monitor
@@ -35,6 +35,7 @@ class ${1:Monitor}${2: #(
 
 	function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
+
 		if(!uvm_config_db #(mon_vif)::get(this, "", "vif", vif)) begin
 			\`uvm_fatal("$1", "virtual interface is not set.")
 		end
@@ -55,11 +56,11 @@ class ${1:Monitor}${2: #(
 
 		txn = TXN::type_id::create("txn");
 
-		@(${12|posedge,negedge|} vif.clk);
-		while (1 !== 0) begin
-			@($12 vif.clk);
+		while (${12:1 !== 0}) begin
+			@(${13|posedge,negedge|} vif.clk);
 		end
 		txn.timestamp = vif.clk_cnt;
+		@($13 vif.clk);
 	endtask
 endclass
 endsnippet

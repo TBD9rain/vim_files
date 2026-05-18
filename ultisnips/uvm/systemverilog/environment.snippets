@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.2.1
+#   Version     : 1.2.2
 #
 #   Description
 #       UVM based environment
@@ -30,12 +30,16 @@ class ${1:Environment}${2: #(
 	${18:Cov}${19: #($20)} cov;
 	${21:Mdl}${22: #($23)} mdl;
 	${24:Scb}${25: #($26)} scb;
+	${27:ScbFI}${28: #($29)} fi;
 
-	uvm_tlm_analysis_fifo #(ITXN) iagt_cov_fifo;
-	uvm_tlm_analysis_fifo #(ITXN) iagt_mdl_fifo;
-	uvm_tlm_analysis_fifo #(ITXN) iagt_scb_fifo;
-	uvm_tlm_analysis_fifo #(OTXN) oagt_scb_fifo;
-	uvm_tlm_fifo #(OTXN) mdl_scb_fifo;$0
+	bit fault_inject_en = 0;
+	int unsigned ref_latency = 0;
+
+	uvm_tlm_analysis_fifo #(ITXN) cov_sti_fifo;
+	uvm_tlm_analysis_fifo #(ITXN) mdl_sti_fifo;
+	uvm_tlm_analysis_fifo #(ITXN) scb_sti_fifo;
+	uvm_tlm_analysis_fifo #(OTXN) scb_obs_fifo;
+	uvm_tlm_fifo #(OTXN) scb_exp_fifo;$0
 
 	function new(string name="$1", uvm_component parent=null);
 		super.new(name, parent);
@@ -43,17 +47,30 @@ class ${1:Environment}${2: #(
 
 	function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
+
+		if (!uvm_config_db #(bit)::get(this, "", "fault_inject_en", fault_inject_en)) begin
+			\`uvm_fatal("$1", "fault inject enable is not set")
+		end
+		uvm_config_db #(bit)::set(this, "scb", "fault_inject_en", fault_inject_en);
+		if (!uvm_config_db #(int unsigned)::get(this, "", "ref_latency", ref_latency)) begin
+			\`uvm_fatal("$1", "Reference latency is not set.")
+		end
+		uvm_config_db #(int unsigned)::set(this, "scb", "ref_latency", ref_latency);
+
 		i_agt = $12$13::type_id::create("i_agt", this);
 		o_agt = $15$16::type_id::create("o_agt", this);
 		cov = $18$19::type_id::create("cov", this);
 		mdl = $21$22::type_id::create("mdl", this);
 		scb = $24$25::type_id::create("scb", this);
+		if (fault_inject_en) begin
+			fi = $27$28::type_id::create("fi", this);
+		end
 
-		iagt_cov_fifo = new("iagt_cov_fifo", this);
-		iagt_mdl_fifo = new("iagt_mdl_fifo", this);
-		iagt_scb_fifo = new("iagt_scb_fifo", this);
-		oagt_scb_fifo = new("oagt_scb_fifo", this);
-		mdl_scb_fifo = new("mdl_scb_fifo", this, 64);
+		cov_sti_fifo = new("cov_sti_fifo", this);
+		mdl_sti_fifo = new("mdl_sti_fifo", this);
+		scb_sti_fifo = new("scb_sti_fifo", this);
+		scb_obs_fifo = new("scb_obs_fifo", this);
+		scb_exp_fifo = new("scb_exp_fifo", this, ref_latency);
 
 		uvm_config_db #(uvm_active_passive_enum)::set(this, "i_agt", "is_active", UVM_ACTIVE);
 		uvm_config_db #(uvm_active_passive_enum)::set(this, "o_agt", "is_active", UVM_PASSIVE);
@@ -62,20 +79,26 @@ class ${1:Environment}${2: #(
 	function void connect_phase(uvm_phase phase);
 		super.connect_phase(phase);
 
-		i_agt.ap.connect(iagt_cov_fifo.analysis_export);
-		cov.imon_getp.connect(iagt_cov_fifo.blocking_get_export);
+		i_agt.ap.connect(cov_sti_fifo.analysis_export);
+		cov.imon_getp.connect(cov_sti_fifo.blocking_get_export);
 
-		i_agt.ap.connect(iagt_mdl_fifo.analysis_export);
-		mdl.imon_getp.connect(iagt_mdl_fifo.blocking_get_export);
+		i_agt.ap.connect(mdl_sti_fifo.analysis_export);
+		mdl.imon_getp.connect(mdl_sti_fifo.blocking_get_export);
 
-		i_agt.ap.connect(iagt_scb_fifo.analysis_export);
-		scb.imon_getp.connect(iagt_scb_fifo.blocking_get_export);
+		i_agt.ap.connect(scb_sti_fifo.analysis_export);
+		scb.imon_getp.connect(scb_sti_fifo.nonblocking_get_export);
 
-		o_agt.ap.connect(oagt_scb_fifo.analysis_export);
-		scb.omon_getp.connect(oagt_scb_fifo.blocking_get_export);
+		if (fault_inject_en) begin
+			o_agt.ap.connect(fi.imp);
+			fi.ap.connect(scb_obs_fifo.analysis_export);
+		end
+		else begin
+			o_agt.ap.connect(scb_obs_fifo.analysis_export);
+		end
+		scb.omon_getp.connect(scb_obs_fifo.blocking_get_export);
 
-		mdl.scb_putp.connect(mdl_scb_fifo.blocking_put_export);
-		scb.mdl_getp.connect(mdl_scb_fifo.blocking_get_export);
+		mdl.scb_putp.connect(scb_exp_fifo.blocking_put_export);
+		scb.mdl_getp.connect(scb_exp_fifo.nonblocking_get_export);
 	endfunction
 endclass
 endsnippet
