@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.0.4
+#   Version     : 1.0.5
 #
 #   Description
 #       UVM based coverage collector
@@ -17,9 +17,11 @@
 snippet "Cov(Col|erageCollector)?" "UVM Coverage Collector" rb
 class ${1:CoverageCollector}${2: #(
 	$3
-)} extends uvm_subscriber #(.T (${4:InTxn}));
+)} extends uvm_component;
 
-	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1${5: #($6)})
+	\`uvm_component`!p snip.rv='_param' if t[2] else ''`_utils($1${4: #($5)})
+
+	typedef ${6:Txn} T;
 
 	//  variable definition
 	uvm_blocking_get_port #(T) imon_getp;
@@ -43,10 +45,6 @@ class ${1:CoverageCollector}${2: #(
 			imon_getp.get(tc_txn);
 		end
 	endtask
-
-	function void write(T t);
-		//  not used
-	endfunction
 endclass
 endsnippet
 
