@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.2.0
+#   Version     : 1.2.2
 #
 #   Description
 #       UVM based test
@@ -22,7 +22,7 @@ class ${1:Test} extends uvm_test;
 	//  variable definition
 	${2:Env}${3: #($4)} env;$0
 	bit fault_inject_en = 0;
-	int unsigned ref_latency = ${13:2};
+	int unsigned ref_latency = ${8:2};
 	string txn_rcd_fn = "err_txn.txt";
 
 	function new(string name="$1", uvm_component parent=null);
@@ -90,7 +90,7 @@ endclass
 endsnippet
 
 
-snippet "Test" "UVM Test Extending Base Test" rb
+snippet "Test" "UVM Test to Extend" rb
 class ${1:Test} extends ${2:BaseTest};
 
 	\`uvm_component_utils($1)

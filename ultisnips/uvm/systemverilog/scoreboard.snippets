@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.2.0
+#   Version     : 1.2.1
 #
 #   Description
 #       UVM based scoreboard
@@ -41,7 +41,7 @@ class ${1:Scoreboard}${2: #(
 		super.build_phase(phase);
 
 		if (!uvm_config_db #(bit)::get(this, "", "fault_inject_en", fault_inject_en)) begin
-			\`uvm_fatal("Scb", "fault inject enable is not set")
+			\`uvm_fatal("$1", "fault inject enable is not set")
 		end
 		if (!uvm_config_db #(int unsigned)::get(this, "", "ref_latency", ref_latency)) begin
 			\`uvm_fatal("$1", "Reference latency is not set.")
