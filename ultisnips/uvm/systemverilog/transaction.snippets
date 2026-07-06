@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.1.5
+#   Version     : 1.1.6
 #
 #   Description
 #       UVM based transaction
@@ -45,10 +45,61 @@ class ${1:Txn}${2: #(
 	function new(string name="$1");
 		super.new(name);
 	endfunction
-
-	function void dump(int fp);
-	endfunction
 endclass
+endsnippet
+
+
+snippet "do_" "Reload do_copy function" Abr
+virtual function void do_copy(uvm_object rhs);
+	//  called by copy() function
+
+	${1:Txn} rhs_;
+	if(!\$cast(rhs_, rhs)) begin
+		\`uvm_fatal("$1", "do_copy type conversion failed.")
+	end
+
+	super.do_copy(rhs);
+
+	//  this class property copy
+	$0
+endfunction
+endsnippet
+
+
+snippet "do_" "Reload do_compare() function" Abr
+virtual function bit do_compare(uvm_object rhs, uvm_comparer comparer);
+	//  called by compare() function
+
+	${1:Txn} rhs_;
+	do_compare = super.do_compare(rhs, comparer);
+	if(!\$cast(rhs_, rhs)) begin
+		\`uvm_fatal("$1", "do_compare type conversion failed.")
+	end
+
+	//  this class property compare
+	do_compare &= (this.${2:property} === rhs_.$2);
+endfunction
+endsnippet
+
+
+snippet "do_" "Reload convert2string() function" Abr
+virtual function string convert2string();
+	string s = super.convert2string();
+
+	//  this class property to string
+	s = {s, \$sformatf($0)};
+
+	return s;
+endfunction
+endsnippet
+
+
+snippet "do_" "Reload do_print() function" Abr
+virtual function void do_print(uvm_printer printer);
+	//  called by sprint()
+
+	printer.m_string = convert2string();
+endfunction
 endsnippet
 
 
