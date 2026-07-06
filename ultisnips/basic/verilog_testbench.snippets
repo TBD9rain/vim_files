@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : Verilog
-#   Version     : v1.0.0
+#   Version     : v1.0.1
 #
 #   Description
 #		testbench skeleton
@@ -16,7 +16,7 @@
 #===================================================================================================
 
 snippet testbench "testbench definition" b
-\`timescale 1ns/100ps
+\`timescale 1ns/1ps
 
 module ${1:`!p import os; name, ext = os.path.splitext(fn); snip.rv = name`};
 
