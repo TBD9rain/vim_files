@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.0.4
+#   Version     : 1.0.5
 #
 #   Description
 #       testbench for UVM
@@ -16,6 +16,7 @@
 
 snippet testbench "UVM testbench" b
 \`timescale 1ns/1ps
+\`default_nettype none
 
 module ${1:dut}_tb;
 
@@ -100,6 +101,8 @@ initial begin
 end
 
 endmodule
+
+\`default_nettype wire
 endsnippet
 
 
