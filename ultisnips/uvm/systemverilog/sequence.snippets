@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.2.3
+#   Version     : 1.2.4
 #
 #   Description
 #       UVM based sequence
@@ -29,23 +29,15 @@ class ${1:Sequence}${2: #(
 	endfunction
 
 	virtual task body();$0
-		REQ tc_txn;${10:
+		REQ txn;
 
-		repeat (10) begin
-			\`uvm_do(tc_txn)
-		end}${11:
-
-		\`uvm_create(tc_txn)
-		//  transaction prepare
-
-		\`uvm_send(tc_txn)}${12:
-
-		tc_txn = REQ::type_id::create("tc_txn");
+		txn = REQ::type_id::create("txn");
+		//  transaction send request
+		start_item(txn);
 		//  transaction prepare
 
 		//  transaction send
-		start_item(tc_txn);
-		finish_item(tc_txn);}
+		finish_item(txn);
 	endtask
 endclass
 endsnippet

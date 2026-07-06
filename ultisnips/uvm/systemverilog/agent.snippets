@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.0.5
+#   Version     : 1.0.6
 #
 #   Description
 #       UVM based agent
@@ -37,7 +37,7 @@ ${9:
 	function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
 ${19:
-		if (!uvm_config_db#(uvm_active_passive_enum)::get(this, "", "is_active", is_active)) begin
+		if (!uvm_config_db #(uvm_active_passive_enum)::get(this, "", "is_active", is_active)) begin
 			\`uvm_fatal("$1", "is_active is not set.")
 		end
 		if (is_active == UVM_ACTIVE) begin

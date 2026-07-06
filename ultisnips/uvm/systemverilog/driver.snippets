@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.0.6
+#   Version     : 1.0.7
 #
 #   Description
 #       UVM based driver
@@ -33,7 +33,7 @@ class ${1:Driver}${2: #(
 	function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
 
-		if(!uvm_config_db #(drv_vif)::get(this, "", "vif", vif)) begin
+		if (!uvm_config_db #(drv_vif)::get(this, "", "vif", vif)) begin
 			\`uvm_fatal("$1", "virtual interface is not set.")
 		end
 	endfunction
@@ -45,7 +45,7 @@ class ${1:Driver}${2: #(
 
 	task pre_main_phase(uvm_phase phase);
 		phase.raise_objection(this);
-		while(!vif.rst_n) begin
+		while(vif.rst_n !== 0) begin
 			@vif.cb;
 		end
 		phase.drop_objection(this);
