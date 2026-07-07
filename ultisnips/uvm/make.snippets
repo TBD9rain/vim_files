@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : make
-#   Version     : 1.0.1
+#   Version     : 1.0.2
 #
 #   Description
 #
@@ -35,7 +35,7 @@ SIM_TIME ?= 0
 VOPT_EXTRA_ARGS ?=
 VSIM_EXTRA_ARGS ?=
 
-QUESTA_HOME ?= D:/questasim64_2024.2_1
+QUESTA_HOME ?= D:/questasim64_2026.2
 UVM_LIB_DIR := $(QUESTA_HOME)/uvm-1.2
 UVM_SRC_DIR := $(QUESTA_HOME)/verilog_src/uvm-1.2/src
 UVM_DPI_LIB := $(UVM_LIB_DIR)/win64/uvm_dpi
@@ -95,8 +95,8 @@ init:
 	@echo [Make Command: init] Initialize simulation environment
 	@if exist work rmdir /S /Q work
 	@vlib work
-	@vmap uvm-1.2 "$(UVM_LIB_DIR)"
-	@vmap work ./work
+	@vmap -suppress 223 uvm-1.2 "$(UVM_LIB_DIR)"
+	@vmap -suppress 223 work ./work
 
 ifeq ($(COV_EN),1)
 VLOG_COVER_ARGS := +cover=bcefst
@@ -114,12 +114,12 @@ endif
 
 compile:
 	@echo [Make Command: compile] Compile RTL and TB files
-	@vlog -work work $(VLOG_COVER_ARGS) -f "$(SRC_FILELIST)"
-	@vlog -work work -sv -sv17compat +incdir+"$(UVM_SRC_DIR)" -L uvm-1.2 -f "$(TB_FILELIST)"
+	@vlog -work work -suppress 223 $(VLOG_COVER_ARGS) -f "$(SRC_FILELIST)"
+	@vlog -work work -suppress 223 -sv -sv17compat +incdir+"$(UVM_SRC_DIR)" -L uvm-1.2 -f "$(TB_FILELIST)"
 
 optimize:
 	@echo [Make Command: optimize] Optimize compiled design
-	@vopt -64 -O4 $(VOPT_DEBUG_ARGS) $(VOPT_EXTRA_ARGS) -L uvm-1.2 "$(TB_MODULE)" -o opt_tb
+	@vopt -64 -O4 -suppress 223,2240,53 $(VOPT_DEBUG_ARGS) $(VOPT_EXTRA_ARGS) -L uvm-1.2 "$(TB_MODULE)" -o opt_tb
 
 run: run-time
 
@@ -145,6 +145,7 @@ VSIM_BASE_ARGS := $(VSIM_DEBUG_ARGS) \
 	-sv_seed "$(RANDSEED)" \
 	-onfinish "$(ON_STOP)" \
 	$(VSIM_EXTRA_ARGS) \
+	-suppress 223 \
 	opt_tb \
 	-t 1ps -l "$(SIM_LOG)"
 
@@ -191,9 +192,9 @@ reload-do:
 	@(echo # It quits the current sim, recompiles, reloads design, and re-runs --) >> reload.do
 	@(echo # all inside the current Visualizer process.) >> reload.do
 	@(echo quit -sim) >> reload.do
-	@(echo vlog -work work $(VLOG_COVER_ARGS) +libext+.v -y "$(PMI_LIB)" -f "$(SRC_FILELIST)") >> reload.do
-	@(echo vlog -work work -sv -sv17compat +incdir+"$(UVM_SRC_DIR)" -L uvm-1.2 -f "$(TB_FILELIST)") >> reload.do
-	@(echo vopt -64 -O4 $(VOPT_DEBUG_ARGS) $(VOPT_EXTRA_ARGS) -L uvm-1.2 "$(TB_MODULE)" -o opt_tb) >> reload.do
+	@(echo vlog -work work -suppress 223 $(VLOG_COVER_ARGS) -f "$(SRC_FILELIST)") >> reload.do
+	@(echo vlog -work work -suppress 223 -sv -sv17compat +incdir+"$(UVM_SRC_DIR)" -L uvm-1.2 -f "$(TB_FILELIST)") >> reload.do
+	@(echo vopt -64 -O4 -suppress 223,2240,53 $(VOPT_DEBUG_ARGS) $(VOPT_EXTRA_ARGS) -L uvm-1.2 "$(TB_MODULE)" -o opt_tb) >> reload.do
 	@(echo vsim $(RELOAD_VSIM_ARGS) -do {$(RUN_TIME_DO)}) >> reload.do
 
 cov-merge:
