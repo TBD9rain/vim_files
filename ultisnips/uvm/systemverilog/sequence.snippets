@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.2.3
+#   Version     : 1.3.0
 #
 #   Description
 #       UVM based sequence
@@ -24,28 +24,30 @@ class ${1:Sequence}${2: #(
 	//  handler to sequencer
 	\`uvm_declare_p_sequencer(${7:Sequencer}${8: #($9)})
 
+	${10:Config}${11: #($12)} ${13:cfg};
+
 	function new(string name="$1");
 		super.new(name);
 	endfunction
 
+	virtual task pre_start();
+		super.pre_start();
+
+		if (!uvm_config_db #($10$11)::get(p_sequencer, "", "$13", $13)) begin
+			\`uvm_fatal("$1", "configuration is not set.")
+		end
+	endtask
+
 	virtual task body();$0
-		REQ tc_txn;${10:
+		REQ txn;
 
-		repeat (10) begin
-			\`uvm_do(tc_txn)
-		end}${11:
-
-		\`uvm_create(tc_txn)
-		//  transaction prepare
-
-		\`uvm_send(tc_txn)}${12:
-
-		tc_txn = REQ::type_id::create("tc_txn");
+		txn = REQ::type_id::create("txn");
+		//  transaction send request
+		start_item(txn);
 		//  transaction prepare
 
 		//  transaction send
-		start_item(tc_txn);
-		finish_item(tc_txn);}
+		finish_item(txn);
 	endtask
 endclass
 endsnippet
@@ -60,21 +62,29 @@ class ${1:VirtualSequence}${2: #(
 	//  handler to sequencer
 	\`uvm_declare_p_sequencer(${6:Sequencer}${7: #($8)})
 
+	${9:Config}${10: #($11)} ${12:cfg};
+
 	function new(string name="$1");
 		super.new(name);
 	endfunction
 
+	virtual task pre_start();
+		super.pre_start();
+
+		if (!uvm_config_db #($9$10)::get(p_sequencer, "", "$12", $12)) begin
+			\`uvm_fatal("$1", "configuration is not set.")
+		end
+	endtask
+
 	virtual task body();$0
-		${9:Seq0}${10: #($11)} ${12:seq0};
-		${13:Seq1}${14: #($15)} ${16:seq1};
+		${13:Seq0}${14: #($15)} ${16:seq0};
+		${17:Seq1}${18: #($19)} ${20:seq1};
 
-		$12 = $9$10::type_id::create("$12");
 		$16 = $13$14::type_id::create("$16");
+		$20 = $17$18::type_id::create("$20");
 
-		$12.start(p_sequencer.${17:sqr0});
-		$16.start(p_sequencer.${18:sqr1});
+		$16.start(p_sequencer.${21:sqr0});
+		$20.start(p_sequencer.${22:sqr1});
 	endtask
 endclass
 endsnippet
-
-

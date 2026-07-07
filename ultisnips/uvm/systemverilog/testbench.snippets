@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.0.4
+#   Version     : 1.1.0
 #
 #   Description
 #       testbench for UVM
@@ -16,6 +16,7 @@
 
 snippet testbench "UVM testbench" b
 \`timescale 1ns/1ps
+\`default_nettype none
 
 module ${1:dut}_tb;
 
@@ -43,24 +44,23 @@ import ${2:$1_pkg}::*;
 bit clk = 0;
 bit rst_n = 0;
 
-${3:$1_if}${4: #(
-	$5
+${3:Config}${4: #($5)} ${6:cfg};
+
+${7:$1_if}${8: #(
+	$9
 )}
 tb_if (
 	.clk    (clk),
 	.rst_n  (rst_n)
 );$0
 
-typedef virtual $3${6: #($7)}.drv_mp drv_vif;
-typedef virtual $3$6.mon_mp mon_vif;
-
 
 //===================
 //  DUT INSTANTIATION
 //===================
 
-$1${8: #(
-	$9
+$1${10: #(
+	$11
 )}
 u_dut();
 
@@ -90,16 +90,17 @@ initial begin
 end
 
 initial begin
-	uvm_config_db #(drv_vif)::set(null, "uvm_test_top.env.i_agt.drv", "vif", tb_if);
-	uvm_config_db #(mon_vif)::set(null, "uvm_test_top.env.i_agt.mon", "vif", tb_if);
-	uvm_config_db #(mon_vif)::set(null, "uvm_test_top.env.o_agt.mon", "vif", tb_if);
+	$6 = $3$4::type_id::create("$6");
+	$6.vif = tb_if;
+
+	uvm_config_db #($3$4)::set(null, "uvm_test_top", "$6", $6);
 end
 
 initial begin
-	run_test("${10:Test}");
+	run_test("${12:Test}");
 end
 
 endmodule
+
+\`default_nettype wire
 endsnippet
-
-

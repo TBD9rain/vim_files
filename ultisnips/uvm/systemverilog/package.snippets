@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.0.1
+#   Version     : 1.1.0
 #
 #   Description
 #       UVM component package
@@ -20,6 +20,8 @@ package ${1:`!p import os; name, ext = os.path.splitext(fn); snip.rv = name`};
 \`include "uvm_macros.svh"
 import uvm_pkg::*;
 $0
+\`include "Config.sv"
+
 \`include "Txn.sv"
 \`include "Sqr.sv"
 \`include "Drv.sv"
@@ -35,4 +37,3 @@ $0
 
 endpackage
 endsnippet
-
