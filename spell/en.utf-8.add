@@ -42,6 +42,7 @@ fpga
 FSM
 fusa
 FuSa
+GDDR
 github
 gitignore
 gvim
@@ -67,8 +68,8 @@ linter
 lossless
 LSB
 LUT
-lut4
 LUT4
+lut4
 lut6
 lvds
 marco
@@ -76,8 +77,8 @@ matlab
 mcu
 metadata
 mipi
-modelsim
 ModelSim
+modelsim
 modport
 modports
 MSB
@@ -142,8 +143,8 @@ testbench
 testcase
 testcases
 tx
-ultisnips
 UltiSnips
+ultisnips
 unmerged
 unregister
 unstaged
