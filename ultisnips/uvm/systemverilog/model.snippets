@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.0.3
+#   Version     : 1.1.0
 #
 #   Description
 #       UVM based reference model
@@ -25,6 +25,8 @@ class ${1:Model}${2: #(
 	typedef ${6:InTxn}${7: #($8)} ITXN;
 	typedef ${9:OutTxn}${10: #($11)} OTXN;
 
+	${12:Config}${13: #($14)} ${15:cfg};
+
 	uvm_blocking_get_port #(ITXN) imon_getp;
 	uvm_blocking_put_port #(OTXN) scb_putp;$0
 
@@ -34,6 +36,10 @@ class ${1:Model}${2: #(
 
 	function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
+
+		if (!uvm_config_db #($12$13)::get(this, "", "$15", $15)) begin
+			\`uvm_fatal("$1", "configuration is not set.")
+		end
 
 		imon_getp = new("imon_getp", this);
 		scb_putp = new("scb_putp", this);
@@ -58,5 +64,3 @@ class ${1:Model}${2: #(
 	endtask
 endclass
 endsnippet
-
-
