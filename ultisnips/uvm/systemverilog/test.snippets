@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.2.3
+#   Version     : 1.2.4
 #
 #   Description
 #       UVM based test
@@ -23,7 +23,6 @@ class ${1:Test} extends uvm_test;
 	${2:Env}${3: #($4)} env;$0
 	bit fault_inject_en = 0;
 	int unsigned ref_latency = ${8:2};
-	string txn_rcd_fn = "err_txn.txt";
 
 	function new(string name="$1", uvm_component parent=null);
 		super.new(name, parent);
@@ -36,9 +35,8 @@ class ${1:Test} extends uvm_test;
 
 		uvm_config_db #(bit)::set(this, "env", "fault_inject_en", fault_inject_en);
 		uvm_config_db #(int unsigned)::set(this, "env", "ref_latency", ref_latency);
-		uvm_config_db #(string)::set(this, "env.scb", "txn_rcd_fn", txn_rcd_fn);
 
-		//  simulation exit due to timeout
+		//  global timeout watchdog; 0 disables the timeout (runs until objections drop)
 		uvm_root::get().set_timeout(0);
 		//  simulation exit due to too many errors
 		//  UVM 1.1d uses \`get_server()\`, UVM 1.1 uses \`get()\`

@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.2.2
+#   Version     : 1.2.3
 #
 #   Description
 #       UVM based scoreboard
@@ -31,7 +31,6 @@ class ${1:Scoreboard}${2: #(
 
 	bit fault_inject_en = 0;
 	int unsigned ref_latency = 0;
-	string txn_rcd_fn = "";
 
 	function new(string name="$1", uvm_component parent=null);
 		super.new(name, parent);
@@ -45,9 +44,6 @@ class ${1:Scoreboard}${2: #(
 		end
 		if (!uvm_config_db #(int unsigned)::get(this, "", "ref_latency", ref_latency)) begin
 			\`uvm_fatal("$1", "Reference latency is not set.")
-		end
-		if (!uvm_config_db #(string)::get(this, "", "txn_rcd_fn", txn_rcd_fn)) begin
-			\`uvm_fatal("$1", "File name for transaction record is not set.")
 		end
 		imon_getp = new("imon_getp", this);
 		omon_getp = new("omon_getp", this);
@@ -90,7 +86,6 @@ class ${1:Scoreboard}${2: #(
 
 	function void value_check(const ref ITXN sti_itxn, const ref OTXN exp_otxn, const ref OTXN obs_otxn);
 		bit txn_equal;
-		int txn_rcd_fp;
 
 		txn_equal = exp_otxn.compare(obs_otxn);
 		if (txn_equal) begin
@@ -98,17 +93,6 @@ class ${1:Scoreboard}${2: #(
 		end
 		else begin
 			\`uvm_error("$1", "expected output and actual output mismatch.")
-
-			if (!fault_inject_en) begin
-				txn_rcd_fp = $fopen(txn_rcd_fn, "a");
-				if (txn_rcd_fp) begin
-					sti_itxn.dump(txn_rcd_fp);
-				end
-				else begin
-					\`uvm_fatal("$1", "can not open file for transaction recording.")
-				end
-				$fclose(txn_rcd_fp);
-			end
 		end
 
 		if ((get_report_verbosity_level() == UVM_DEBUG) || (!txn_equal)) begin

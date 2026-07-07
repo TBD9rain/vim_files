@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.0.6
+#   Version     : 1.0.7
 #
 #   Description
 #
@@ -35,7 +35,7 @@ class ${1:Component}${2: #(
 	//  Method
 	//--------
 
-	function new(string name="$1", uvm_component parent);
+	function new(string name="$1", uvm_component parent=null);
 		super.new(name, parent);
 	endfunction
 endclass
@@ -70,19 +70,23 @@ endsnippet
 #------
 
 snippet port "UVM TLM-1 Port" b
-uvm${1|_blocking,_nonblocking|}_${2|put,get,peek,get_peek|}_port #(${3:int}) ${4:port};
+uvm${1|,_blocking,_nonblocking|}_${2|put,get,peek,get_peek|}_port #(${3:int}) ${4:port};
 endsnippet
 
 snippet export "UVM TLM-1 Export" b
-uvm${1|_blocking,_nonblocking|}_${2|put,get,peek,get_peek|}_export #(${3:int}) ${4:export};
+uvm${1|,_blocking,_nonblocking|}_${2|put,get,peek,get_peek|}_export #(${3:int}) ${4:export};
 endsnippet
 
 snippet imp "UVM TLM-1 Implementation" b
-uvm${1|_blocking,_nonblocking|}_${2|put,get,peek,get_peek|}_imp #(${3:int}) ${4:imp};
+uvm${1|,_blocking,_nonblocking|}_${2|put,get,peek,get_peek|}_imp #(${3:int}, ${4:class}) ${5:imp};
 endsnippet
 
 snippet analysis "UVM TLM-1 Analysis Communication" b
-uvm_analysis_${1|port,export,imp|} #(${2:int}) ${3:ap};
+uvm_analysis_${1|port,export|} #(${2:int}) ${3:ap};
+endsnippet
+
+snippet analysis "UVM TLM-1 Analysis Implementation" b
+uvm_analysis_imp #(${1:int}, ${2:class}) ${3:imp};
 endsnippet
 
 snippet fifo "UVM TLM-1 FIFO" b
@@ -116,16 +120,24 @@ endsnippet
 # Field Automation Mechanism
 #---------------------------
 
-snippet field "Singluar Variable Field Automation Registry" b
-\`uvm_field_${1|int,object,string,enum,real,event|}(${2:arg}, ${3:UVM_ALL_ON})$0
+snippet field "Singular Variable Field Automation Registry" b
+\`uvm_field_${1|int,object,string,real,event|}(${2:arg}, ${3:UVM_ALL_ON})$0
+endsnippet
+
+snippet field "Singular Enum Field Automation Registry" b
+\`uvm_field_enum(${1:enum_type}, ${2:arg}, ${3:UVM_ALL_ON})$0
 endsnippet
 
 snippet field "Static Array/Dynamic Array/Queue Field Automation Registry" b
-\`uvm_field_${1|sarray,array,queue|}_${2|int,object,string,enum|}(${3:arg}, ${4:UVM_ALL_ON})
+\`uvm_field_${1|sarray,array,queue|}_${2|int,object,string|}(${3:arg}, ${4:UVM_ALL_ON})
+endsnippet
+
+snippet field "Enum Static Array/Dynamic Array/Queue Field Automation Registry" b
+\`uvm_field_${1|sarray,array,queue|}_enum(${2:enum_type}, ${3:arg}, ${4:UVM_ALL_ON})
 endsnippet
 
 snippet field "Associated Array Field Automation Registry" b
-\`uvm_field_aa_${1:key_type}_${2:value_type}(${3:arg}, ${4:UVM_ALL_ON})
+\`uvm_field_aa_${1:value_type}_${2:key_type}(${3:arg}, ${4:UVM_ALL_ON})
 endsnippet
 
 

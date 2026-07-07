@@ -1,7 +1,7 @@
 #===================================================================================================
 #
 #   Target Code : SystemVerilog
-#   Version     : 1.1.7
+#   Version     : 1.1.8
 #
 #   Description
 #       UVM based monitor
@@ -56,7 +56,8 @@ class ${1:Monitor}${2: #(
 
 		txn = TXN::type_id::create("txn");
 
-		while (1 !== 0) begin
+		//  sample until the condition holds (use "===" / "!==")
+		while (${14:vif.valid !== 1'b1}) begin
 			@(${12|posedge,negedge|} vif.clk);
 		end
 		txn.timestamp = vif.clk_cnt;
