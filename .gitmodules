@@ -1,3 +1,3 @@
 [submodule "ultisnips/uvm"]
 	path = ultisnips/uvm
-	url = C:/Users/lshi1/vim_config/uvm-snippets.git
+	url = git@github.com:TBD9rain/UVM-Snippet.git
