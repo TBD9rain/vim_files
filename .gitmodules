@@ -1,0 +1,4 @@
+[submodule "ultisnips/uvm"]
+	path = ultisnips/uvm
+	url = git@github.com:TBD9rain/UVM-Snippet.git
+	branch = lattice
