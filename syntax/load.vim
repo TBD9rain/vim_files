@@ -1,6 +1,6 @@
 "===================================================================================================
 "
-"   Version : 1.0.1
+"   Version : 1.0.2
 "   Title   : Syntax Load
 "
 "   Description
@@ -18,8 +18,10 @@
 
 " verilog files
 autocmd BufNewFile,BufRead *.v set filetype=verilog
+autocmd BufNewFile,BufRead *.vh set filetype=verilog
 " systemverilog files
 autocmd BufNewFile,BufRead *.sv set filetype=systemverilog
+autocmd BufNewFile,BufRead *.svh set filetype=systemverilog
 " c files
 autocmd BufNewFile,BufRead *.c set filetype=c
 " modelsim do files
