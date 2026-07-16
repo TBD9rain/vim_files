@@ -1,6 +1,6 @@
 "===================================================================================================
 "
-"   Version : 1.0.2
+"   Version : 1.0.3
 "   Title   : UltiSnips Load
 "
 "   Description
@@ -20,7 +20,7 @@ let s:snippet_path = expand('<sfile>:p:h')
 let s:snippet_dir_list = []
 call add(s:snippet_dir_list, s:snippet_path.'/basic')
 " call add(s:snippet_dir_list, s:snippet_path.'/class_verify')
-call add(s:snippet_dir_list, s:snippet_path.'/uvm/ultisnips')
+call add(s:snippet_dir_list, s:snippet_path.'/uvm-snippet/ultisnips')
 
 
 "--------------------------------
