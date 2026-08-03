@@ -25,6 +25,7 @@ datasheet
 datasheets
 ddr
 decompresser
+deserializer
 DevIcons
 dsi
 DSP
@@ -40,8 +41,8 @@ FMEDA
 Foreach
 fpga
 FSM
-fusa
 FuSa
+fusa
 GDDR
 github
 gitignore
@@ -63,6 +64,7 @@ jitter
 json
 JTAG
 JTCK
+languageserver
 lifecycle
 linter
 lossless
@@ -77,8 +79,8 @@ matlab
 mcu
 metadata
 mipi
-ModelSim
 modelsim
+ModelSim
 modport
 modports
 MSB
@@ -120,6 +122,7 @@ rom
 rtl
 runtime
 rx
+serializer
 severities
 SoC
 spi
