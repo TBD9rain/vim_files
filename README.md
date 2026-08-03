@@ -40,8 +40,11 @@ Only the relevant configuration files are tracked.
 Verible is a language server for for verilog and systemverilog coding.
 Download the Verible from [Verible Release](https://github.com/chipsalliance/verible/releases).
 
-`.\languageserver\verible\verible-verilog-lint.config` is a Verible linter configuration file.
+`.\languageserver_config\verible\lint.config` is a Verible linter configuration file.
 For instruction about lint rule configuration, refer to *Rule Configuration* in [Verible Lint README](https://github.com/chipsalliance/verible/blob/master/verible/verilog/tools/lint/README.md).
+
+`.\languageserver_config\verible\format.config` is a Verible formatter configuration file.
+For instruction about formatter configuration, refer to [Verible Format README](https://github.com/chipsalliance/verible/blob/master/verible/verilog/tools/formatter/README.md).
 
 
 ## clangd
